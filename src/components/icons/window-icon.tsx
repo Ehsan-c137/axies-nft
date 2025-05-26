@@ -1,5 +1,5 @@
 import type { SVGProps } from "react";
-const SvgWindowIcon = (props: SVGProps<SVGSVGElement>) => (
+const WindowIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
@@ -14,4 +14,4 @@ const SvgWindowIcon = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-export default SvgWindowIcon;
+export default WindowIcon;

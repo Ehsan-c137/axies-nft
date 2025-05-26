@@ -1,5 +1,5 @@
 import type { SVGProps } from "react";
-const SvgSearchIcon = (props: SVGProps<SVGSVGElement>) => (
+const SearchIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
@@ -17,4 +17,4 @@ const SvgSearchIcon = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 );
-export default SvgSearchIcon;
+export default SearchIcon;
