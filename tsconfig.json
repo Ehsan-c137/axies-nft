@@ -20,9 +20,18 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@ui/*": ["./src/components/ui/*"],
       "@icons/*": ["./src/components/icons/*"],
+      "@illustrations/*": ["./src/components/illustrations/*"]
     }
   },
-  "include": ["svgr.d.ts","next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/common/header/header.tsx"],
+  "include": [
+    "svgr.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/components/common/header/header.tsx"
+  ],
   "exclude": ["node_modules"]
 }
