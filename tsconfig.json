@@ -31,7 +31,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/common/header/header.tsx"
+    "src/components/common/header.tsx"
   ],
   "exclude": ["node_modules"]
 }
