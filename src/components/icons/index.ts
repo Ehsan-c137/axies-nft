@@ -1,4 +1,4 @@
-export { default as Bookmark } from "./bookmark";
+export { default as Bookmark } from "./bookmark-icon";
 export { default as PackageIcon } from "./package-icon";
 export { default as PictureIcon } from "./picture-icon";
 export { default as RocketIcon } from "./rocket-icon";
