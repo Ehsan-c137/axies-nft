@@ -5,7 +5,7 @@ import Picture from "@icons/picture-icon";
 
 export function HeroOverview() {
   return (
-    <div className="flex-col md:flex-row md:flex items-center gap-14">
+    <div className="flex-col md:flex-row md:flex items-center gap-14 py-20">
       {Array.from({ length: 4 }).map((_, index) => {
         const colors = ["#5142FB", "#46A433", "#9835FB", "#DF4949"];
         const icons = [
