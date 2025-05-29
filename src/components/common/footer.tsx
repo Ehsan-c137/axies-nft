@@ -70,10 +70,10 @@ export default function Footer() {
       </div>
       <div className="grid grid-cols-1 gap-4">
         <p>Subscribe us</p>
-        <form className="border-[1px] pl-3 flex items-center rounded-sm">
+        <form className="border-[1px] pl-3 flex items-center rounded-sm focus-within:border-[var(--primary)] transition">
           <input
             placeholder="info@youreamil.com"
-            className="outline-none py-2"
+            className="outline-none py-2 flex-1"
           />
           <button className="bg-[#5142FB] flex items-center justify-center w-full h-full max-w-[50px] px-3 rounded-r-sm rounded-br-sm">
             <SendIcon />
