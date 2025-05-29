@@ -39,7 +39,7 @@ const imageArray = [
   },
 ];
 export function LiveAuctions() {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 768px)", { defaultValue: true });
   const isTablet = useMediaQuery("(max-width: 1024px)");
 
   const swiper_config = {
