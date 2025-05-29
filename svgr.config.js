@@ -19,30 +19,43 @@ module.exports = {
     });
     return exportEntries.join("\n");
   },
-  // Multiple configurations based on input path pattern
   multipass: true,
   ext: "tsx",
   config: (opts) => {
-    // Check if the file is from the illustrations folder
-    if (opts.filePath.includes("illustrations")) {
-      return {
-        ...baseConfig,
-        outDir: "src/components/illustrations",
-        icon: false,
-      };
-    }
+    const config = opts.filePath.includes("illustrations")
+      ? {
+          ...baseConfig,
+          outDir: "src/components/illustrations",
+          icon: false,
+        }
+      : {
+          ...baseConfig,
+          outDir: "src/components/icons",
+          icon: true,
+        };
+
     return {
-      ...baseConfig,
-      outDir: "src/components/icons",
-      icon: true,
+      ...config,
+      prettierConfig: {
+        ...config.prettierConfig,
+        parser: "typescript",
+      },
+      filenameCase: "kebab",
+      template: ({ componentName, jsx }, { tpl }) => {
+        // Convert component name to kebab case for the file name
+        const kebabName = componentName
+          .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+          .replace(/([A-Z])([A-Z])(?=[a-z])/g, "$1-$2")
+          .toLowerCase()
+          .replace(/^svg-/, "");
+
+        return tpl`
+          import type { SVGProps } from "react";
+          const ${componentName.replace("Svg", "")} = (props: SVGProps<SVGSVGElement>) => ${jsx};
+          export default ${componentName.replace("Svg", "")};
+        `;
+      },
     };
-  },
-  template: ({ componentName, jsx }, { tpl }) => {
-    return tpl`
-      import type { SVGProps } from "react";
-      const ${componentName.replace("Svg", "")} = (props: SVGProps<SVGSVGElement>) => ${jsx};
-      export default ${componentName.replace("Svg", "")};
-    `;
   },
   svgoConfig: {
     plugins: [
@@ -56,5 +69,4 @@ module.exports = {
       },
     ],
   },
-  filenameCase: "kebab",
 };
