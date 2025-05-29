@@ -5,6 +5,11 @@ import Swiper from "@/components/ui/swiper/swiper";
 import image from "../../../public/assets/Rectangle.png";
 import { LiveAuctionsCard } from "@/components/common/live-auctions-card-";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import dynamic from "next/dynamic";
+
+const DynamicSwiper = dynamic(() => import("@/components/ui/swiper/swiper"), {
+  ssr: false,
+});
 
 const imageArray = [
   {
@@ -40,19 +45,25 @@ const imageArray = [
 ];
 export function LiveAuctions() {
   const isMobile = useMediaQuery("(max-width: 768px)", { defaultValue: true });
-  const isTablet = useMediaQuery("(max-width: 1024px)");
+  const isTablet = useMediaQuery("(max-width: 1024px)", {
+    defaultValue: false,
+  });
 
   const swiper_config = {
     itemPerPage: isMobile ? 1 : isTablet ? 2 : 5,
   };
 
   return (
-    <section className="flex flex-col gap-10 bg-black p-8 mt-[32px]">
+    <section className="flex flex-col gap-10 bg-black p-8">
       <div className="flex items-center justify-between">
         <h3 className="text-4xl font-bold">Live Auctions</h3>
         <Button variant="link">EXPLORE MORE</Button>
       </div>
-      <Swiper images={imageArray} isLoading={false} config={swiper_config} />
+      <DynamicSwiper
+        images={imageArray}
+        isLoading={false}
+        config={swiper_config}
+      />
     </section>
   );
 }
