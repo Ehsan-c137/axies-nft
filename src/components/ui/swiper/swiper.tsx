@@ -102,10 +102,10 @@ const Swiper = ({ images, isLoading, config }: IProps) => {
 
   const onTouchEnd = () => {
     const currentOffsetX = getRefValue(currentOffsetXRef);
-    const containerWidth = getRefValue(containerWidthRef) / 4;
+    const containerWidth = getRefValue(containerWidthRef) / itemPerPage;
     let newOffsetX = getRefValue(offsetXRef);
 
-    const diff = -newOffsetX;
+    const diff = currentOffsetX - newOffsetX;
 
     if (Math.abs(diff) > MIN_SWIPE_Required) {
       if (diff > 0) {
@@ -148,7 +148,7 @@ const Swiper = ({ images, isLoading, config }: IProps) => {
           transform: `translateX(${offsetX}px)`,
         }}
         className={clsx(styles.swiper_list, {
-          "animate-pulse bg-inputBackground": isLoading,
+          "animate-pulse bg-inputBackground duration-[350]": isLoading,
           is_swiping: isSwiping,
         })}
       >
