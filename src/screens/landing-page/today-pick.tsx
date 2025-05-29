@@ -1,6 +1,6 @@
 import { Button } from "@ui/button";
 import { LiveAuctionsCard } from "@/components/common/live-auctions-card-";
-export default function TodayPick() {
+export function TodayPick() {
   return (
     <>
       <div className="flex flex-col gap-10 py-10">

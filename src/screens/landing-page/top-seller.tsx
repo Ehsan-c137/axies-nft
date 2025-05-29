@@ -1,7 +1,7 @@
 import { Image } from "@ui/image";
 import { Button } from "@ui/button";
 
-export default function TopSeller() {
+export function TopSeller() {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex items-center justify-between">
