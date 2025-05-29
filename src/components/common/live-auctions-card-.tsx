@@ -3,7 +3,7 @@ import HeartIcon from "@icons/heart-icon";
 
 export function LiveAuctionsCard() {
   return (
-    <div className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-card max-w-[320px]">
+    <div className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-[var(--card)] max-w-[320px]">
       <div className="flex justify-center select-none">
         <Image
           className="rounded-4xl select-none shadow-md"
