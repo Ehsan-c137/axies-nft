@@ -3,7 +3,7 @@ import { Image } from "@ui/image";
 export default function PopularCollectionCard() {
   return (
     <div
-      className="grid grid-cols-6 grid-rows-2 gap-2"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-2 gap-2"
       style={{
         display: "grid",
         gridTemplateColumns: "repeat(6, 1fr)",
