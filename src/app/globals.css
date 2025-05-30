@@ -138,3 +138,21 @@
     color: var(--theme-text-dark);
   }
 }
+
+.explore_more {
+  @apply relative p-0 font-bold text-[14px] leading-[20px] tracking-[0.1em] bg-gradient-to-r from-[#E250E5] via-[#4B50E6] to-[#E250E5] bg-clip-text bg-[length:200%_200%] 
+                                                                animate-[rainbow_2s_ease-in-out_infinite] duration-200 ease-in-out transition-[color] hover:!text-[rgba(0,0,0,0)]
+                                                                before:content-[''] before:absolute before:left-0 before:bottom-[2px] before:w-full before:h-[1px] before:bg-[linear-gradient(216.56deg,#E250E5_5.32%,#4B50E6_94.32%)];
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: left;
+  }
+  50% {
+    background-position: right;
+  }
+  100% {
+    background-position: left;
+  }
+}
