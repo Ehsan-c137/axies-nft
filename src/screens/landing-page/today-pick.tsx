@@ -6,7 +6,9 @@ export function TodayPick() {
       <div className="flex flex-col gap-10 py-10">
         <div className="flex items-center justify-between">
           <h3 className="text-3xl font-bold">Today's Pick</h3>
-          <Button>EXPLORE MORE</Button>
+          <Button variant="link" className="explore_more">
+            EXPLORE MORE
+          </Button>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">

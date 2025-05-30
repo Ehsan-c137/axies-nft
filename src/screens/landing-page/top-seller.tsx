@@ -6,7 +6,9 @@ export function TopSeller() {
     <div className="flex flex-col gap-10">
       <div className="flex items-center justify-between">
         <h3 className="text-3xl font-bold">Top Seller</h3>
-        <Button>EXPLORE MORE</Button>
+        <Button className="explore_more" variant="link">
+          EXPLORE MORE
+        </Button>
       </div>
       <div className="flex flex-wrap gap-10">
         <TopSellerItem />

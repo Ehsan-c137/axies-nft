@@ -55,9 +55,11 @@ export function LiveAuctions() {
 
   return (
     <section className="flex flex-col gap-10 bg-black p-8">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between container mx-auto">
         <h3 className="text-4xl font-bold">Live Auctions</h3>
-        <Button variant="link">EXPLORE MORE</Button>
+        <Button className="explore_more" variant="link">
+          EXPLORE MORE
+        </Button>
       </div>
       <DynamicSwiper
         images={imageArray}
