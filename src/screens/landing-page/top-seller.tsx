@@ -1,9 +1,20 @@
 import { Image } from "@ui/image";
 import { Button } from "@ui/button";
 
-export function TopSeller() {
+interface IProps {
+  ref: React.RefObject<HTMLElement[]>;
+}
+
+export function TopSeller({ ref }: IProps) {
   return (
-    <div className="flex flex-col gap-10">
+    <div
+      className="flex flex-col gap-10 opacity-0"
+      ref={(el) => {
+        if (el) {
+          ref.current[3] = el;
+        }
+      }}
+    >
       <div className="flex items-center justify-between">
         <h3 className="text-3xl font-bold">Top Seller</h3>
         <Button className="explore_more" variant="link">

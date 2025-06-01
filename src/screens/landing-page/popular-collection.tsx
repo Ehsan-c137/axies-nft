@@ -1,9 +1,19 @@
 import PopularCollectionCard from "@/components/common/popular-collection-card";
 import { Button } from "@ui/button";
+interface Iprops {
+  ref: React.RefObject<HTMLElement[]>;
+}
 
-export function PopularCollection() {
+export function PopularCollection({ ref }: Iprops) {
   return (
-    <section className="container mx-auto flex flex-col gap-10 py-10 px-8">
+    <section
+      className="container mx-auto flex flex-col gap-10 py-10 px-8 opacity-0"
+      ref={(el) => {
+        if (el) {
+          ref.current[2] = el;
+        }
+      }}
+    >
       <div className="flex items-center justify-between">
         <h3 className="text-4xl font-bold">Popular Collection</h3>
         <Button variant="link" className="explore_more">
@@ -11,7 +21,7 @@ export function PopularCollection() {
         </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-2">
-        {Array.from({ length: 6 }).map((_, i) => (
+        {Array.from({ length: 3 }).map((_, i) => (
           <PopularCollectionCard key={i} />
         ))}
       </div>

@@ -2,10 +2,20 @@ import Wallet from "@icons/wallet-icon";
 import Window from "@icons/window-icon";
 import Bookmark from "@/components/icons/bookmark-icon";
 import Picture from "@icons/picture-icon";
+interface Iprops {
+  ref: React.RefObject<HTMLElement[]>;
+}
 
-export function HeroOverview() {
+export function HeroOverview({ ref }: Iprops) {
   return (
-    <div className="flex-col md:flex-row md:flex items-center gap-14 py-20">
+    <div
+      className="flex-col md:flex-row md:flex items-center gap-14 py-20 opacity-0"
+      ref={(el) => {
+        if (el) {
+          ref.current[0] = el;
+        }
+      }}
+    >
       {Array.from({ length: 4 }).map((_, index) => {
         const colors = ["#5142FB", "#46A433", "#9835FB", "#DF4949"];
         const icons = [

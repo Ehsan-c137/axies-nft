@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Swiper from "@/components/ui/swiper/swiper";
 import image from "../../../public/assets/Rectangle.png";
-import { LiveAuctionsCard } from "@/components/common/live-auctions-card-";
+import { LiveAuctionsCard } from "@/components/common/live-auctions-card";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import dynamic from "next/dynamic";
 
@@ -43,7 +43,12 @@ const imageArray = [
     slug: "/slug",
   },
 ];
-export function LiveAuctions() {
+
+interface Iprops {
+  ref: React.RefObject<HTMLElement[]>;
+}
+
+export function LiveAuctions({ ref }: Iprops) {
   const isMobile = useMediaQuery("(max-width: 768px)", { defaultValue: true });
   const isTablet = useMediaQuery("(max-width: 1024px)", {
     defaultValue: false,
@@ -54,7 +59,14 @@ export function LiveAuctions() {
   };
 
   return (
-    <section className="flex flex-col gap-10 bg-black p-8 min-h-[725px]">
+    <section
+      className="flex flex-col gap-10 bg-black p-8 min-h-[725px] opacity-0"
+      ref={(el) => {
+        if (el) {
+          ref.current[1] = el;
+        }
+      }}
+    >
       <div className="flex items-center justify-between container mx-auto">
         <h3 className="text-4xl font-bold">Live Auctions</h3>
         <Button className="explore_more" variant="link">

@@ -1,9 +1,21 @@
 import { Button } from "@ui/button";
-import { LiveAuctionsCard } from "@/components/common/live-auctions-card-";
-export function TodayPick() {
+import { LiveAuctionsCard } from "@/components/common/live-auctions-card";
+
+interface IProps {
+  ref: React.RefObject<HTMLElement[]>;
+}
+
+export function TodayPick({ ref }: IProps) {
   return (
     <>
-      <div className="flex flex-col gap-10 py-10">
+      <div
+        className="flex flex-col gap-10 py-10 opacity-0"
+        ref={(el) => {
+          if (el) {
+            ref.current[4] = el;
+          }
+        }}
+      >
         <div className="flex items-center justify-between">
           <h3 className="text-3xl font-bold">Today's Pick</h3>
           <Button variant="link" className="explore_more">
