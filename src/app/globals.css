@@ -156,3 +156,42 @@
     background-position: left;
   }
 }
+
+@theme {
+  --animate-fade-in-translate: fade-in-translate 0.3s ease-out;
+  @keyframes fade-in-translate {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+
+  --animate-fade-out-translate: fade-out-translate 0.3s ease-out;
+  @keyframes fade-out-translate {
+    0% {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  --animate-card-hover: hover-card-translate 0.3s ease-out;
+  @keyframes hover-card-translate {
+    0% {
+      transform: translateY(5px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(-8px);
+    }
+  }
+}
