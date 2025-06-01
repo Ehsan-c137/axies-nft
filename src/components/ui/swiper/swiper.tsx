@@ -6,7 +6,7 @@ import clsx from "clsx";
 import SwiperItem from "./swiper-item";
 import { useStateRef, getRefValue } from "@/lib/hooks";
 import { getTouchEventData } from "@/lib/dom";
-import { LiveAuctionsCard } from "@/components/common/live-auctions-card-";
+import { LiveAuctionsCard } from "@/components/common/live-auctions-card";
 
 interface IIndicatorsProps {
   count: number;
