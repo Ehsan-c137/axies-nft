@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+"use client";
+
 import {
   TodayPick,
   TopSeller,
@@ -7,19 +8,52 @@ import {
   Hero,
   HeroOverview,
 } from "@/screens/landing-page";
+import { useEffect, useRef } from "react";
 
 export default function Page() {
+  const callback = (entries: IntersectionObserverEntry[]) => {
+    entries?.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show-animation");
+      }
+    });
+  };
+
+  const itemRef = useRef<HTMLElement[] | []>([]);
+  useEffect(() => {
+    const targets = itemRef.current;
+    const observer = new IntersectionObserver(callback, {
+      root: null,
+      threshold: 0.3,
+      rootMargin: "30px",
+    });
+
+    if (targets) {
+      targets?.forEach((item) => {
+        observer.observe(item);
+      });
+    }
+
+    return () => {
+      targets?.map((item) => {
+        if (item) {
+          observer.unobserve(item);
+        }
+      });
+    };
+  }, []);
+
   return (
     <>
       <SectionWrapper>
         <Hero />
-        <HeroOverview />
+        <HeroOverview ref={itemRef} />
       </SectionWrapper>
-      <LiveAuctions />
-      <PopularCollection />
+      <LiveAuctions ref={itemRef} />
+      <PopularCollection ref={itemRef} />
       <SectionWrapper>
-        <TopSeller />
-        <TodayPick />
+        <TopSeller ref={itemRef} />
+        <TodayPick ref={itemRef} />
       </SectionWrapper>
     </>
   );
@@ -29,7 +63,7 @@ const SectionWrapper = ({
   children,
   className,
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
 }): React.ReactNode => (
   <section
