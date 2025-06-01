@@ -54,7 +54,7 @@ export function LiveAuctions() {
   };
 
   return (
-    <section className="flex flex-col gap-10 bg-black p-8">
+    <section className="flex flex-col gap-10 bg-black p-8 min-h-[725px]">
       <div className="flex items-center justify-between container mx-auto">
         <h3 className="text-4xl font-bold">Live Auctions</h3>
         <Button className="explore_more" variant="link">
