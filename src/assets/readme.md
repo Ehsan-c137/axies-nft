@@ -5,7 +5,9 @@
 To convert SVG files into React components, run:
 
 ```bash
-pnpm run svgr icons
+pnpm run svgr:build-icons
+or
+pnpm run svgr:build-illustrations
 ```
 
 This command will process SVG files in the component icons & illustrations directory and generate corresponding React components.
