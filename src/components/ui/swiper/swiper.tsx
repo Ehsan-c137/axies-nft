@@ -19,7 +19,7 @@ const SwiperIndicators = ({
   onSelect,
 }: IIndicatorsProps) => {
   return (
-    <div className="flex items-center gap-4 pb-2 pt-4">
+    <ul className="flex items-center gap-4 pb-2 pt-4">
       {Array.from({ length: count })?.map((_, index) => (
         <li
           data-testid="indicator"
@@ -30,7 +30,7 @@ const SwiperIndicators = ({
           onClick={() => onSelect(index)}
         ></li>
       ))}
-    </div>
+    </ul>
   );
 };
 
