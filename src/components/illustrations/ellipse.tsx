@@ -10,7 +10,6 @@ const Ellipse = (props: SVGProps<SVGSVGElement>) => (
   >
     <foreignObject width={24.062} height={24.062} x={-6.92} y={-6.277}>
       <div
-        xmlns="http://www.w3.org/1999/xhtml"
         style={{
           backdropFilter: "blur(3.5px)",
           clipPath: "url(#a)",

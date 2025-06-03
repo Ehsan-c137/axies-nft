@@ -10,7 +10,6 @@ const Star = (props: SVGProps<SVGSVGElement>) => (
   >
     <foreignObject width={25.081} height={25.501} x={-3.881} y={-3.521}>
       <div
-        xmlns="http://www.w3.org/1999/xhtml"
         style={{
           backdropFilter: "blur(2px)",
           clipPath: "url(#a)",
