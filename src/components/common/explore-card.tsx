@@ -7,7 +7,7 @@ import { Button } from "@ui/button";
 
 export function ExploreCard() {
   return (
-    <div className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-[var(--card)] text-[var(--card-foreground)] max-w-[320px] animate-card-hover hover:-translate-y-2 transition ease-in-out duration-[350ms]">
+    <div className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-[var(--card)] text-[var(--card-foreground)] max-w-[320px] hover:-translate-y-2 transition ease-in-out duration-[350ms]">
       <div className="flex justify-center select-none relative group">
         <Image
           className="rounded-4xl select-none shadow-md"
@@ -51,6 +51,19 @@ export function ExploreCard() {
           <RefreshIcon /> view history
         </div>
       </div>
+    </div>
+  );
+}
+
+export function ExploreCardPlaceholder() {
+  return (
+    <div className="flex flex-col justify-between gap-3 h-[485px] w-[320px] rounded-4xl p-4 bg-[var(--card)]">
+      <div className="flex flex-col gap-3">
+        <div className="w-full h-[284px] rounded-4xl bg-[var(--ring)] animate-pulse"></div>
+        <p className="w-full h-6 bg-[var(--ring)] animate-pulse rounded-md"></p>
+        <div className="h-12 w-full animate-pulse bg-[var(--ring)] rounded-md"></div>
+      </div>
+      <div className="h-12 w-full animate-pulse bg-[var(--ring)] rounded-md"></div>
     </div>
   );
 }
