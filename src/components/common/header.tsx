@@ -9,7 +9,6 @@ import { Button } from "@ui/button";
 import SearchIcon from "@icons/search-icon";
 import WalletIcon from "@icons/wallet-icon";
 import BlurShape from "@/components/illustrations/blur-shape";
-// import { ThemeSwitcher } from "./theme-switcher";
 import {
   Command,
   CommandDialog,
@@ -21,6 +20,7 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const ThemeSwitch = dynamic(() => import("./theme-switcher"), {
   ssr: false,
@@ -55,6 +55,7 @@ const NAV_CONFIG: Array<{ name: string; href: string }> = [
 export function Header() {
   const [isCommandBoxOpen, setCommandBoxOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -77,7 +78,7 @@ export function Header() {
         className={clsx(
           "absolute top-4 left-0 translate-y-0 w-full transition z-2",
           {
-            "fixed w-full animate-fade-in-translate": isScrolled,
+            "fixed w-full animate-fade-in-translate px-2": isScrolled,
             "translate-y-0": !isScrolled,
           },
         )}
@@ -126,13 +127,14 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu> */}
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <CommandSearchBox
               open={isCommandBoxOpen}
               setOpen={setCommandBoxOpen}
             />
-            <Button variant="outline" size="lg">
-              <WalletIcon /> Connect Wallet
+            <Button variant="outline" size={isMobile ? "icon" : "lg"}>
+              <WalletIcon />
+              {!isMobile && <>Connect Wallet</>}
             </Button>
 
             <ThemeSwitch />
@@ -158,11 +160,17 @@ const CommandSearchBox = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   return (
     <>
-      <Button onClick={() => setOpen(true)} variant="outline" size="lg">
+      <Button
+        onClick={() => setOpen(true)}
+        variant="outline"
+        size={isMobile ? "icon" : "lg"}
+        aria-label="search"
+      >
         <SearchIcon />
-        Search
+        {!isMobile && <> Search </>}
         <span className="sr-only">Search</span>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
