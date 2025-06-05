@@ -1,4 +1,4 @@
-import ItemDetailView from "@/screens/item-detail/view";
+import ItemDetailView from "@/screens/item-detail/screen";
 
 export default async function Page({
   params,
