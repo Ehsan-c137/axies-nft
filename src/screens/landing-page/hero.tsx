@@ -2,6 +2,8 @@
 
 import { useRef } from "react";
 import { Button } from "@ui/button";
+import { Image } from "@ui/image";
+import Link from "next/link";
 import { HEADER_HEIGHT } from "@/lib/constant/sizes";
 import RocketIcon from "@icons/rocket-icon";
 import Package from "@icons/package-icon";
@@ -35,10 +37,13 @@ export function Hero() {
           Marketplace for Moster Character Collectons Non Fungible Token NFTs
         </p>
         <div className="flex items-center gap-4">
-          <Button variant="outline">
-            <RocketIcon /> Explore
-          </Button>
-          <Button variant="outline">
+          <Link href="/explore">
+            <Button variant="outline" aria-label="explore">
+              <RocketIcon /> Explore
+            </Button>
+          </Link>
+
+          <Button variant="outline" aria-label="create">
             <Package /> Create
           </Button>
         </div>
@@ -141,22 +146,28 @@ function Character() {
 
   return (
     <div
-      className="relative flex items-center justify-center z-1"
+      className="relative flex items-center justify-center z-1 pointer-events-none"
       ref={containerRef}
     >
       <EllipseContainer />
+      <ElispseOutline className="absolute right-0 ellipse-animated" />
       <PlusContainer />
-      <img
+      <Image
         className="drop-shadow-[0px_0px_80px_var(--theme-primary)]"
         width={600}
         src={"/assets/hero/blob-shape.png"}
         alt=""
+        height={0}
+        sizes="100vw"
       />
       <HeroCharacter className="absolute ellipse-animated will-change-transform backface-hidden" />
-      <img
+      <Image
         className="absolute left-0 top-[20%] -z-1 opacity-10 w-40"
         src="/assets/hero/saturn.png"
         alt=""
+        width={100}
+        height={0}
+        sizes="100vw"
       />
       <StarsContainer />
     </div>
@@ -188,9 +199,12 @@ const PlusContainer = () => {
   ];
   return Array.from({ length: 4 }).map((_, index) => {
     return (
-      <img
+      <Image
         src={`/assets/hero/plus${index + 1}.png`}
         alt=""
+        width={40}
+        height={0}
+        sizes="100vw"
         key={index}
         className="absolute z-1 ellipse-animated will-change-transform backface-hidden"
         style={{ ...positions[index] }}

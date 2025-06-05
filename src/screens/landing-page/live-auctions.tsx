@@ -1,9 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import Swiper from "@/components/ui/swiper/swiper";
-import image from "../../../public/assets/Rectangle.png";
-import { LiveAuctionsCard } from "@/components/common/live-auctions-card";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import dynamic from "next/dynamic";
 

@@ -17,7 +17,7 @@ export function TodayPick({ ref }: IProps) {
         }}
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-3xl font-bold">Today's Pick</h3>
+          <h3 className="text-3xl font-bold">Today&apos;s Pick</h3>
           <Button variant="link" className="explore_more">
             EXPLORE MORE
           </Button>
@@ -34,14 +34,9 @@ export function TodayPick({ ref }: IProps) {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
          gap-10"
         >
-          <LiveAuctionsCard />
-          <LiveAuctionsCard />
-          <LiveAuctionsCard />
-          <LiveAuctionsCard />
-          <LiveAuctionsCard />
-          <LiveAuctionsCard />
-          <LiveAuctionsCard />
-          <LiveAuctionsCard />
+          {Array.from({ length: 6 }).map((_, i) => (
+            <LiveAuctionsCard key={i} />
+          ))}
         </div>
         <div className="flex justify-center">
           <Button variant="outline" className="px-4 py-2">
