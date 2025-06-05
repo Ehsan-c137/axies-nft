@@ -55,7 +55,6 @@ const NAV_CONFIG: Array<{ name: string; href: string }> = [
 export function Header() {
   const [isCommandBoxOpen, setCommandBoxOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -132,9 +131,16 @@ export function Header() {
               open={isCommandBoxOpen}
               setOpen={setCommandBoxOpen}
             />
-            <Button variant="outline" size={isMobile ? "icon" : "lg"}>
+            <Button variant="outline" size="lg" className="hidden lg:flex">
               <WalletIcon />
-              {!isMobile && <>Connect Wallet</>}
+              Connect Wallet
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="flex lg:hidden justify-items-center"
+            >
+              <WalletIcon />
             </Button>
 
             <ThemeSwitch />
@@ -160,17 +166,27 @@ const CommandSearchBox = ({
   open: boolean;
   setOpen: (value: boolean) => void;
 }) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
   return (
     <>
       <Button
         onClick={() => setOpen(true)}
         variant="outline"
-        size={isMobile ? "icon" : "lg"}
+        size={"lg"}
+        className="hidden lg:flex"
         aria-label="search"
       >
         <SearchIcon />
-        {!isMobile && <> Search </>}
+        Search
+        <span className="sr-only">Search</span>
+      </Button>
+      <Button
+        onClick={() => setOpen(true)}
+        variant="outline"
+        size={"icon"}
+        aria-label="search"
+        className="flex lg:hidden"
+      >
+        <SearchIcon />
         <span className="sr-only">Search</span>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
