@@ -18,25 +18,31 @@ import {
   useAnimationPerformanceControl,
   DEFAULT_OPTIONS,
 } from "@/hooks/useAnimationPerformanceControl";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import clsx from "clsx";
 
 gsap.registerPlugin(useGSAP);
 
 export function Hero() {
+  // const isMobile = useMediaQuery("(max-width: 768px)", { defaultValue: true });
+
   return (
     <div
       style={{
         height: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
-      className={`flex flex-col xl:flex-row items-center justify-between gap-8`}
+      className={clsx(
+        `flex flex-col xl:flex-row items-center justify-between gap-30 lg:gap-8 pt-30 lg:pt-20`,
+      )}
     >
       <div className="flex flex-col gap-8">
-        <h1 className="max-w-[510px] font-bold text-5xl leading-16">
+        <h1 className="max-w-[510px] font-bold text-3xl lg:text-5xl leading-10 lg:leading-16">
           Discover, and collect extraordinary Monster NFTs
         </h1>
         <p>
           Marketplace for Moster Character Collectons Non Fungible Token NFTs
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 w-full justify-center lg:justify-start">
           <Link href="/explore">
             <Button variant="outline" aria-label="explore">
               <RocketIcon /> Explore
@@ -160,7 +166,7 @@ function Character() {
         height={0}
         sizes="100vw"
       />
-      <HeroCharacter className="absolute ellipse-animated will-change-transform backface-hidden" />
+      <HeroCharacter className="absolute ellipse-animated will-change-transform backface-hidden lg:w-[296px] lg:h-[480px] w-[196px] h-[384px]" />
       <Image
         className="absolute left-0 top-[20%] -z-1 opacity-10 w-40"
         src="/assets/hero/saturn.png"
