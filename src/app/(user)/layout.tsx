@@ -1,4 +1,5 @@
 import { Header } from "@/components/common/header";
+import { HEADER_HEIGHT } from "@/lib/constant/sizes";
 import Footer from "@/components/common/footer";
 
 export default function Layout({
@@ -9,7 +10,13 @@ export default function Layout({
   return (
     <div className="flex min-h-screen flex-col mx-auto overflow-x-hidden">
       <Header />
-      <main>{children}</main>
+      <main
+        style={{
+          minHeight: `calc(100vh - ${HEADER_HEIGHT}px`,
+        }}
+      >
+        {children}
+      </main>
       <Footer />
     </div>
   );
