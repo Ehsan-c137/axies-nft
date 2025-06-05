@@ -24,7 +24,7 @@ export default function ItemDetailView({ id }: { id: string }) {
           <Breadcrumb />
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:justify-between py-20 px-4 lg:px-8 container mx-auto gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:justify-between py-5 lg:py-20 px-4 lg:px-8 container mx-auto gap-10">
         <div className="max-w-[690px] max-h-[690px]">
           <Image
             unoptimized
@@ -107,7 +107,7 @@ export default function ItemDetailView({ id }: { id: string }) {
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center justify-center lg:justify-between flex-1 flex-wrap bg-[var(--card)] text-[var(--card-foreground)] rounded-2xl px-6 py-3 h-[68px] ">
               <p className="font-semibold text-sm">Current Bid</p>
-              <p>4.89 ETH = $12.246</p>
+              <p className="text-sm">4.89 ETH = $12.246</p>
             </div>
             <div className="flex flex-wrap items-center justify-center lg:justify-between flex-1 bg-[var(--card)] text-[var(--card-foreground)] rounded-2xl px-6 py-3 h-[68px]">
               <p className="font-semibold text-sm">Countdown</p>
