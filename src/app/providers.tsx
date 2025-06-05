@@ -1,19 +1,19 @@
-import { ThemeProvider as NextThemesProvider } from "next-themes"
-
+import { ThemeProvider } from "@/context/theme/theme-context";
 interface IProps {
-   children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function Providers({ children }: IProps) {
   return (
     <>
-      <NextThemesProvider attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
         {children}
-      </NextThemesProvider>      
+      </ThemeProvider>
     </>
   );
 }
