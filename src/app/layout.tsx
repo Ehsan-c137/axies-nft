@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppinsFont.variable} ${geistMono.variable} antialiased dark`}
+        className={`${poppinsFont.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>
