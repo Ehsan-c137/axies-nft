@@ -65,8 +65,8 @@ export function LiveAuctions({ ref }: Iprops) {
       }}
     >
       <div className="flex items-center justify-between container mx-auto">
-        <h3 className="text-4xl font-bold">Live Auctions</h3>
-        <Button className="explore_more" variant="link">
+        <h3 className="text-xl lg:text-4xl font-bold">Live Auctions</h3>
+        <Button className="explore_more text-sm lg:text-xl" variant="link">
           EXPLORE MORE
         </Button>
       </div>

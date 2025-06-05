@@ -17,8 +17,8 @@ export function TodayPick({ ref }: IProps) {
         }}
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-3xl font-bold">Today&apos;s Pick</h3>
-          <Button variant="link" className="explore_more">
+          <h3 className="text-xl lg:text-3xl font-bold">Today&apos;s Pick</h3>
+          <Button variant="link" className="explore_more text-sm lg:text-xl">
             EXPLORE MORE
           </Button>
         </div>

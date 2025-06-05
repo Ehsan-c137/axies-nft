@@ -15,8 +15,8 @@ export function PopularCollection({ ref }: Iprops) {
       }}
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-4xl font-bold">Popular Collection</h3>
-        <Button variant="link" className="explore_more">
+        <h3 className="text-xl lg:text-4xl font-bold">Popular Collection</h3>
+        <Button variant="link" className="explore_more text-sm lg:text-xl">
           EXPLORE MORE
         </Button>
       </div>
