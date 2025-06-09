@@ -9,7 +9,6 @@ const baseConfig = {
   ignoreExisting: true,
 };
 
-// Helper function to convert kebab-case to PascalCase
 const toPascalCase = (str) => {
   return str
     .split("-")
@@ -22,10 +21,7 @@ module.exports = {
   filenameCase: "kebab", // Keep this if you want kebab-case filenames on disk
 
   template: ({ componentName, jsx }, { tpl }) => {
-    // componentName is "fire-icon" (due to filenameCase: "kebab")
-    // Convert to PascalCase for the JS variable, e.g., "FireIcon"
     const pascalCaseComponentName = toPascalCase(componentName);
-    // Apply .replace("Svg", "") as in your original template, if needed for the final name
     const finalComponentName = pascalCaseComponentName.replace("Svg", "");
 
     return tpl`
@@ -37,17 +33,11 @@ module.exports = {
 
   indexTemplate: (files) => {
     const exportEntries = files.map((file) => {
-      // componentFilenameBase will be kebab-case, e.g., "fire-icon"
       const componentFilenameBase = path.basename(file.path, ".tsx");
-
-      // Convert kebab-case filename to PascalCase for the JS alias
-      // This must create the same name that is default exported by your 'template'
       const pascalCaseAlias = toPascalCase(componentFilenameBase).replace(
         "Svg",
         "",
       );
-
-      // The 'from' part still uses the kebab-case filename on disk
       return `export { default as ${pascalCaseAlias} } from './${componentFilenameBase}';`;
     });
     return exportEntries.join("\n");
