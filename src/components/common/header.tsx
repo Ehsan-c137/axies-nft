@@ -77,17 +77,16 @@ export function Header() {
         className={clsx(
           "absolute top-4 left-0 translate-y-0 w-full transition z-2",
           {
-            "fixed w-full animate-fade-in-translate px-2 backdrop-blur-xs":
-              isScrolled,
+            "fixed w-full animate-fade-in-translate px-2": isScrolled,
             "translate-y-0": !isScrolled,
           },
         )}
       >
         <div
           className={clsx(
-            "container flex items-center justify-between mx-auto px-8 py-2",
+            "container flex items-center justify-between mx-auto px-8 py-2 backdrop-blur-xs",
             {
-              "border rounded-3xl bg-[rgba(0,0,0,0.4)]  shadow-2xl": isScrolled,
+              "border rounded-3xl bg-[rgba(0,0,0,0.4)] shadow-2xl": isScrolled,
             },
           )}
         >
