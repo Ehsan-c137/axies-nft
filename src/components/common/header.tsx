@@ -77,7 +77,7 @@ export function Header() {
         className={clsx(
           "absolute top-4 left-0 translate-y-0 w-full transition z-2",
           {
-            "fixed w-full animate-fade-in-translate px-2": isScrolled,
+            "fixed w-full animate-fade-in-translate px-2 blur-xs": isScrolled,
             "translate-y-0": !isScrolled,
           },
         )}
