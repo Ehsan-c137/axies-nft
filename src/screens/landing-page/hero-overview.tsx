@@ -9,7 +9,7 @@ interface Iprops {
 export function HeroOverview({ ref }: Iprops) {
   return (
     <div
-      className="flex-col md:flex-row md:flex items-center gap-14 py-30 opacity-0"
+      className="flex flex-col md:flex-row md:flex items-center gap-14 py-30 opacity-0"
       ref={(el) => {
         if (el) {
           ref.current[0] = el;
