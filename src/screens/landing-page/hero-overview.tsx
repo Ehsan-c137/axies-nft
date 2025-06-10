@@ -43,7 +43,7 @@ export function HeroOverview({ ref }: Iprops) {
               {icons[index]}
             </div>
             <p className="font-bold">{title[index]}</p>
-            <p className="text-justify">
+            <p className="text-justify max-w-[300px]">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Voluptatibus sint fuga id accusantium officiis dignissimos ea,
               veritatis ullam quod aperiam?
