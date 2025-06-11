@@ -8,7 +8,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-screen flex-col mx-auto overflow-x-hidden">
+    <div className="flex min-h-screen flex-col mx-auto overflow-x-hidden bg-[var(--background)] text-[var(--foreground)]">
       <Header />
       <main
         style={{
