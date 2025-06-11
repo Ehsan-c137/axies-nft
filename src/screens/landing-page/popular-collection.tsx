@@ -1,4 +1,4 @@
-import PopularCollectionCard from "@/components/common/popular-collection-card";
+import PopularCollectionCard from "@/components/common/cards/popular-collection-card";
 import { Button } from "@ui/button";
 interface Iprops {
   ref: React.RefObject<HTMLElement[]>;
