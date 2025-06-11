@@ -4,13 +4,13 @@ const EyeIcon = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
-    fill="none"
-    stroke="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
     strokeWidth={2}
     className="lucide lucide-eye-icon lucide-eye"
     viewBox="0 0 24 24"
+    fill="currentColor"
+    stroke="currentColor"
     {...props}
   >
     <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
