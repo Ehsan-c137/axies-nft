@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export function LiveAuctionsCard() {
   return (
-    <div className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-[var(--card)] text-[var(--card-foreground)] max-w-[320px] animate-card-hover hover:-translate-y-2 transition ease-in-out duration-[350ms]">
+    <div className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-[var(--card)] text-[var(--card-foreground)] max-w-[320px] animate-card-hover hover:-translate-y-2 transition ease-in-out duration-[350ms] shadow-xl">
       <div className="flex justify-center select-none relative group">
         <Image
           className="rounded-4xl select-none shadow-md"

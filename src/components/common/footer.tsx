@@ -14,7 +14,7 @@ import InstagramIcon from "@icons/socials/instagram-icon";
 
 export default function Footer() {
   return (
-    <footer className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-10 px-4 md:px-6 lg:px-8 py-20 bg-black -shadow-2xl max-w-[1920px] shadow-[-1px_-14px_76px_24px_rgba(0,0,0,0.6)] mt-20">
+    <footer className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-10 px-4 md:px-6 lg:px-8 py-20 bg-[var(--background)] text-[var(--foreground)] -shadow-2xl max-w-[1920px] shadow-[-1px_-14px_76px_24px_rgba(205,205,205,0.6)] dark:shadow-[-1px_-14px_76px_24px_rgba(0,0,0,0.6)]  mt-20">
       <div className="flex flex-col gap-5">
         <div className="h-[40px] w-[126px] relative">
           <Image
