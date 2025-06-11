@@ -1,6 +1,6 @@
 import Wallet from "@icons/wallet-icon";
 import Window from "@icons/window-icon";
-import Bookmark from "@/components/icons/bookmark-icon";
+import Bookmark from "@icons/bookmark";
 import Picture from "@icons/picture-icon";
 interface Iprops {
   ref: React.RefObject<HTMLElement[]>;
