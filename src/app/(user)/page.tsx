@@ -1,4 +1,4 @@
-import LandingScreen from "@/screens/landing-page";
+import LandingScreen from "@/screens/landing-page/screen";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
