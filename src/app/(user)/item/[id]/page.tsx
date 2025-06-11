@@ -1,4 +1,22 @@
+import type { Metadata } from "next";
 import ItemDetailView from "@/screens/item-detail/screen";
+
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const id = params.id;
+//   const item = await fetch(`https://api.example.com/items/${id}`).then(
+//     (res) => res.json(),
+//   );
+
+//   return {
+//     title: item.name,
+//     description: item.description,
+//   };
+// }
 
 export default async function Page({
   params,
