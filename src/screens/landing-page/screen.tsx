@@ -4,7 +4,7 @@ import {
   useAnimationPerformanceControl,
   DEFAULT_OPTIONS,
 } from "@/hooks/useAnimationPerformanceControl";
-import { TodayPick } from "./today-pick";
+import { TodayPick } from "./today-pick/today-pick";
 import { LiveAuctions } from "./live-auctions";
 import { PopularCollection } from "./popular-collection";
 import { TopSeller } from "./top-seller";
