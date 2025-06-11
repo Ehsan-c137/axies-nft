@@ -18,14 +18,11 @@ import {
   useAnimationPerformanceControl,
   DEFAULT_OPTIONS,
 } from "@/hooks/useAnimationPerformanceControl";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 import clsx from "clsx";
 
 gsap.registerPlugin(useGSAP);
 
 export function Hero() {
-  // const isMobile = useMediaQuery("(max-width: 768px)", { defaultValue: true });
-
   return (
     <div
       style={{
@@ -37,7 +34,7 @@ export function Hero() {
     >
       <div className="flex flex-col gap-8">
         <h1 className="max-w-[510px] font-bold text-3xl lg:text-5xl leading-10 lg:leading-16">
-          Discover, and collect extraordinary Monster NFTs
+          Discover and collect extraordinary Monster NFTs
         </h1>
         <p>
           Marketplace for Moster Character Collectons Non Fungible Token NFTs
