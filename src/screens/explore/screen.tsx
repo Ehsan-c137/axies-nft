@@ -3,10 +3,8 @@
 import { HEADER_HEIGHT } from "@/lib/constant/sizes";
 import Breadcrumb from "@/components/common/breadcrumb";
 import Filter from "./filter";
-import {
-  ExploreCard,
-  ExploreCardPlaceholder,
-} from "@/components/common/explore-card";
+import { ExploreCard } from "@/components/common/cards/explore-card";
+import CardPlaceholder from "@/components/common/cards/card-placeholder";
 import useSearchParamState from "@/hooks/useSearchParamState";
 import { Button } from "@ui/button";
 
@@ -31,7 +29,7 @@ export default function ExploreScreen() {
         <Filter handleParamChange={handleParamChange} paramState={paramState} />
         <div className="flex flex-col gap-10 w-full">
           <div className="flex flex-1 flex-wrap gap-10">
-            {isFilterPending && <ExploreCardPlaceholder />}
+            {isFilterPending && <CardPlaceholder />}
             <ExploreCard />
             <ExploreCard />
             <ExploreCard />
