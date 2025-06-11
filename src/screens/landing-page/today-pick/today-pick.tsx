@@ -1,5 +1,6 @@
 import { Button } from "@ui/button";
-import { LiveAuctionsCard } from "@/components/common/live-auctions-card";
+import { LiveAuctionsCard } from "@/components/common/cards/live-auctions-card";
+import Filter from "./filter";
 
 interface IProps {
   ref: React.RefObject<HTMLElement[]>;
@@ -22,16 +23,9 @@ export function TodayPick({ ref }: IProps) {
             EXPLORE MORE
           </Button>
         </div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="outline">Category</Button>
-            <Button variant="outline">Category</Button>
-            <Button variant="outline">Category</Button>
-          </div>
-          <Button variant="outline">SORT</Button>
-        </div>
+        <Filter />
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
+          className="grid grid-cols-1 justify-items-center md:justify-items-start md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4
          gap-10"
         >
           {Array.from({ length: 6 }).map((_, i) => (
