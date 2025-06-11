@@ -19,7 +19,10 @@ const toPascalCase = (str) => {
 module.exports = {
   ...baseConfig,
   filenameCase: "kebab", // Keep this if you want kebab-case filenames on disk
-
+  svgProps: {
+    fill: "currentColor",
+    stroke: "currentColor",
+  },
   template: ({ componentName, jsx }, { tpl }) => {
     const pascalCaseComponentName = toPascalCase(componentName);
     const finalComponentName = pascalCaseComponentName.replace("Svg", "");
@@ -67,6 +70,12 @@ module.exports = {
           overrides: {
             removeViewBox: false,
           },
+        },
+      },
+      {
+        name: "removeAttrs",
+        params: {
+          attrs: ["fill", "stroke"],
         },
       },
     ],
