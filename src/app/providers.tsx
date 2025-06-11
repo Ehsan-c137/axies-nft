@@ -1,9 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import { ThemeProvider } from "@/context/theme/theme-context";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+
 interface IProps {
   children: React.ReactNode;
 }
 
 export default function Providers({ children }: IProps) {
+  const [queryClient] = useState(() => new QueryClient());
   return (
     <>
       <ThemeProvider
@@ -12,7 +18,9 @@ export default function Providers({ children }: IProps) {
         enableSystem
         disableTransitionOnChange
       >
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </ThemeProvider>
     </>
   );
