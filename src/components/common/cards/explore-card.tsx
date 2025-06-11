@@ -1,6 +1,4 @@
 import { Image } from "@/components/ui/image";
-import HeartIcon from "@icons/heart-icon";
-import FireIcon from "@icons/fire-icon";
 import RefreshIcon from "@icons/refresh-icon";
 import ShoppingBagIcon from "@icons/shopping-bag-icon";
 import { Button } from "@ui/button";
@@ -51,19 +49,6 @@ export function ExploreCard() {
           <RefreshIcon /> view history
         </div>
       </div>
-    </div>
-  );
-}
-
-export function ExploreCardPlaceholder() {
-  return (
-    <div className="flex flex-col justify-between gap-3 h-[485px] w-[320px] rounded-4xl p-4 bg-[var(--card)]">
-      <div className="flex flex-col gap-3">
-        <div className="w-full h-[284px] rounded-4xl bg-[var(--ring)] animate-pulse"></div>
-        <p className="w-full h-6 bg-[var(--ring)] animate-pulse rounded-md"></p>
-        <div className="h-12 w-full animate-pulse bg-[var(--ring)] rounded-md"></div>
-      </div>
-      <div className="h-12 w-full animate-pulse bg-[var(--ring)] rounded-md"></div>
     </div>
   );
 }
