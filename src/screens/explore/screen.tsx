@@ -16,15 +16,6 @@ export default function ExploreScreen() {
   } = useSearchParamState();
   return (
     <>
-      <div
-        className="relative w-full h-full bg-[url(/assets/img_bg_page_title_dark.webp)] "
-        style={{ paddingTop: `${HEADER_HEIGHT + 32}px`, paddingBottom: "32px" }}
-      >
-        <div className="container mx-auto w-full flex flex-col gap-4 px-4 md:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold">Explore</h1>
-          <Breadcrumb />
-        </div>
-      </div>
       <div className="flex flex-col md:flex-row gap-20 py-8 container mx-auto px-4 md:px-6 lg:px-8">
         <Filter handleParamChange={handleParamChange} paramState={paramState} />
         <div className="flex flex-col gap-10 w-full">
