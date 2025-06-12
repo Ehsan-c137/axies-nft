@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import clsx from "clsx";
 import { Image } from "@ui/image";
+import { useTheme } from "@/context/theme/theme-context";
 import { HEADER_HEIGHT } from "@/lib/constant/sizes";
 import { Button } from "@ui/button";
 import SearchIcon from "@icons/search-icon";
@@ -20,7 +21,6 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const ThemeSwitch = dynamic(() => import("./theme-switcher"), {
   ssr: false,
@@ -55,7 +55,7 @@ const NAV_CONFIG: Array<{ name: string; href: string }> = [
 export function Header() {
   const [isCommandBoxOpen, setCommandBoxOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const { theme } = useTheme();
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 200) {
@@ -86,7 +86,8 @@ export function Header() {
           className={clsx(
             "container flex items-center justify-between mx-auto px-8 py-2 backdrop-blur-xs",
             {
-              "border rounded-3xl bg-[rgba(0,0,0,0.4)] shadow-2xl": isScrolled,
+              "border rounded-3xl dark:bg-[rgba(0,0,0,0.4)] bg-[rgba(255,255,255,0.4)] shadow-2xl":
+                isScrolled,
             },
           )}
         >
@@ -94,7 +95,11 @@ export function Header() {
             <div className="h-[40px] relative">
               <Link href="/">
                 <Image
-                  src="/assets/logo/logo-dark.png"
+                  src={
+                    theme == "dark"
+                      ? "/assets/logo/logo_dark.webp"
+                      : "/assets/logo/logo_light.webp"
+                  }
                   alt="axies nft logo"
                   width={0}
                   height={0}
