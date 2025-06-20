@@ -1,4 +1,5 @@
 import LandingScreen from "@/screens/landing-page/screen";
+import { PrimaryLayout } from "@/layout/primary-layout";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <LandingScreen />;
+  return (
+    <PrimaryLayout>
+      <LandingScreen />
+    </PrimaryLayout>
+  );
 }
