@@ -35,7 +35,7 @@
     --theme-primary: #4e3fee;
     --theme-bg-light: #fcfcfc;
     --theme-bg-dark: #14141f;
-    --theme-card-light: #fdfdfd;
+    --theme-card-light: #f8f8f8;
     --theme-card-dark: #343444;
     --theme-text-light: #14141f;
     --theme-text-dark: #fcfcfc;
@@ -122,16 +122,14 @@
     --ring: #919191;
   }
 
+  body {
+    background-color: var(--background);
+  }
   * {
-    border-color: var(--border);
+    border-color: var(--ring);
     outline-color: var(--ring);
     outline-width: 50%;
   }
-  /* 
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-  } */
 }
 
 .explore_more {
