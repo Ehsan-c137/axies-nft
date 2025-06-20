@@ -1,9 +1,9 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import clsx from "clsx";
-import { Image } from "@ui/image";
+import { ThemedImage } from "@ui/image";
 import { useTheme } from "@/context/theme/theme-context";
 import { HEADER_HEIGHT } from "@/lib/constant/sizes";
 import { Button } from "@ui/button";
@@ -55,7 +55,6 @@ const NAV_CONFIG: Array<{ name: string; href: string }> = [
 export function Header() {
   const [isCommandBoxOpen, setCommandBoxOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { theme } = useTheme();
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 200) {
@@ -94,18 +93,14 @@ export function Header() {
           <div className="flex items-center gap-8">
             <div className="h-[40px] relative">
               <Link href="/">
-                <Image
-                  src={
-                    theme == "dark"
-                      ? "/assets/logo/logo_dark.webp"
-                      : "/assets/logo/logo_light.webp"
-                  }
+                <ThemedImage
+                  srcLight="/assets/logo/logo_light.webp"
+                  srcDark="/assets/logo/logo_dark.webp"
                   alt="axies nft logo"
                   width={0}
                   height={0}
                   className="w-full h-full top-0 left-0 object-cover"
                   unoptimized
-                  priority={false}
                 />
               </Link>
             </div>
