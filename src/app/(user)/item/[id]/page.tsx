@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ItemDetailView from "@/screens/item-detail/screen";
+import ItemDetailScreen from "@/screens/user/item-detail/item-screen";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -24,5 +24,5 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  return <ItemDetailView id={id} />;
+  return <ItemDetailScreen id={id} />;
 }
