@@ -1,8 +1,8 @@
-import { Image } from "@ui/image";
+import Image from "next/image";
 
 export default function PopularCollectionCard() {
   return (
-    <div className="flex flex-col gap-6 gap-y-6 bg-[var(--card)] text-[var(--card-foreground)] p-4 rounded-2xl max-w-[450px] shadow-2xl">
+    <div className="flex flex-col gap-6 gap-y-6 bg-[var(--card)] text-[var(--card-foreground)] p-4 rounded-2xl max-w-[450px] not-dark:shadow-sm">
       <div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-2 gap-2"
         style={{
