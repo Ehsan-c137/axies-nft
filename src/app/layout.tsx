@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Poppins } from "next/font/google";
+import { Geist_Mono, Urbanist } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 
-const poppinsFont = Poppins({
+const urbanistFont = Urbanist({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppinsFont.variable} ${geistMono.variable} antialiased`}
+        className={`${urbanistFont.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>
