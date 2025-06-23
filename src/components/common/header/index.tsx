@@ -21,8 +21,9 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command";
+import { Profile } from "./header-profile";
 
-const ThemeSwitch = dynamic(() => import("./theme-switcher"), {
+const ThemeSwitch = dynamic(() => import("../theme-switcher"), {
   ssr: false,
   loading: () => (
     <div
@@ -38,17 +39,17 @@ const NAV_CONFIG: Array<{ name: string; href: string }> = [
     href: "/explore",
   },
   {
-    name: "Activity",
-    href: "/activity",
+    name: "item",
+    href: "/item/adsf",
   },
 
   {
-    name: "Community",
-    href: "/community",
+    name: "Blog",
+    href: "/blog",
   },
   {
-    name: "About",
-    href: "/about",
+    name: "profile",
+    href: "/profile/adsf",
   },
 ];
 
@@ -90,7 +91,7 @@ export function Header() {
             },
           )}
         >
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 lg:gap-10">
             <div className="h-[40px] relative">
               <Link href="/">
                 <ThemedImage
@@ -104,27 +105,17 @@ export function Header() {
                 />
               </Link>
             </div>
-            {/* <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link href="/" passHref legacyBehavior>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Home
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            {NAV_CONFIG.map((item) => (
-              <NavigationMenuItem key={item.name}>
-                <NavigationMenuTrigger>{item.name}</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <NavigationMenuLink href={item.href}>
-                    {item.name}
-                  </NavigationMenuLink>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu> */}
+            <nav className="hidden items-center gap-6 lg:gap-8 -translate-x-1/2 left-1/2 absolute md:flex">
+              {NAV_CONFIG.map((nav) => (
+                <Link
+                  key={nav.name}
+                  href={nav.href}
+                  className="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:text-blue-500 transition-colors"
+                >
+                  {nav.name}
+                </Link>
+              ))}
+            </nav>
           </div>
           <div className="flex items-center gap-2">
             <CommandSearchBox
@@ -144,6 +135,7 @@ export function Header() {
             </Button>
 
             <ThemeSwitch />
+            <Profile />
             {!isScrolled && (
               <BlurShape
                 tabIndex={-1}
