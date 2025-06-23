@@ -1,4 +1,4 @@
-import { Image } from "@ui/image";
+import Image from "next/image";
 import { Button } from "@ui/button";
 
 interface IProps {

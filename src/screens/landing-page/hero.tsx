@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { Button } from "@ui/button";
-import { Image } from "@ui/image";
+import Image from "next/image";
 import Link from "next/link";
 import { HEADER_HEIGHT } from "@/lib/constant/sizes";
 import RocketIcon from "@icons/rocket-icon";

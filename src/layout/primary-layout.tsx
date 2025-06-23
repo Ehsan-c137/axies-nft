@@ -1,4 +1,4 @@
-import { Header } from "@/components/common/header";
+import { Header } from "@/components/common/header/index";
 import { Footer } from "@/components/common/footer";
 import { HEADER_HEIGHT } from "@/lib/constant/sizes";
 
