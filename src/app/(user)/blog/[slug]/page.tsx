@@ -1,4 +1,4 @@
-import BlogScreen from "@/screens/blog/screen";
+import BlogDetailScreen from "@/screens/blog/blog-detail/blog-detail-screen";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -29,5 +29,5 @@ type Props = {
 export default async function Page({ params }: Props) {
   const slug = (await params).slug;
 
-  return <BlogScreen slug={slug} />;
+  return <BlogDetailScreen slug={slug} />;
 }
