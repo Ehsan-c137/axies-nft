@@ -17,7 +17,7 @@ type Props = {
 
 export function PageLayout({ children }: Props) {
   const pathname = usePathname().split("/").filter(Boolean);
-  const header = pathname[0];
+  const header = pathname[pathname.length - 1];
 
   return (
     <>
@@ -26,7 +26,7 @@ export function PageLayout({ children }: Props) {
         style={{ paddingTop: `${HEADER_HEIGHT + 32}px`, paddingBottom: "32px" }}
       >
         <div className="container mx-auto w-full flex flex-col gap-4 px-4 md:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold">{header}</h1>
+          <h1 className="text-3xl font-bold">{header.replace("-", " ")}</h1>
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem key={pathname.length + 1}>
@@ -38,7 +38,12 @@ export function PageLayout({ children }: Props) {
                   return (
                     <>
                       <BreadcrumbSeparator key={index} />
-                      <BreadcrumbItem key={item + index}>
+                      <BreadcrumbItem
+                        key={item + index}
+                        style={{
+                          opacity: item === header ? 1 : 0.5,
+                        }}
+                      >
                         <BreadcrumbPage>{newItem}</BreadcrumbPage>
                       </BreadcrumbItem>
                     </>
