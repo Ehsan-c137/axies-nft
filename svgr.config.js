@@ -18,7 +18,7 @@ const toPascalCase = (str) => {
 
 module.exports = {
   ...baseConfig,
-  filenameCase: "kebab", // Keep this if you want kebab-case filenames on disk
+  filenameCase: "kebab",
   svgProps: {
     fill: "currentColor",
     stroke: "currentColor",
