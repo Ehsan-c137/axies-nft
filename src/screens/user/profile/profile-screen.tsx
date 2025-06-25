@@ -16,7 +16,7 @@ export function ProfileScreen({ username }: Props) {
 
   return (
     <div className="container mx-auto mt-8 px-8">
-      <div className="flex flex-wrap justify-between items-center rounded-t-3xl p-4 md:p-9 bg-[url(/assets/bg-profile.webp)] bg-no-repeat bg-cover md:max-h-[274px]">
+      <div className="flex flex-wrap justify-between items-center rounded-t-3xl p-4 md:p-9 bg-[url(/assets/bg-profile.webp)] bg-opacity-60 bg-no-repeat bg-cover md:max-h-[274px]">
         <div className="flex flex-wrap md:flex-nowrap md:-translate-y-[26px] gap-8 items-center">
           <div className="relative md:h-[270px] min-w-[200px] min-h-[200px] w-full h-full">
             <Avatar className="w-full h-full absolute rounded-3xl md:translate-y-6">
