@@ -36,7 +36,7 @@ export function PageLayout({ children }: Props) {
                 const newItem = item.replace("-", " ");
                 if (item == header) {
                   return (
-                    <>
+                    <div className="contents" key={index}>
                       <BreadcrumbSeparator key={index} />
                       <BreadcrumbItem
                         key={item + index}
@@ -46,18 +46,18 @@ export function PageLayout({ children }: Props) {
                       >
                         <BreadcrumbPage>{newItem}</BreadcrumbPage>
                       </BreadcrumbItem>
-                    </>
+                    </div>
                   );
                 }
                 return (
-                  <>
-                    <BreadcrumbSeparator key={index} />
-                    <BreadcrumbItem key={item + index}>
+                  <div className="contents" key={index}>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
                       <BreadcrumbLink href={`/${item}`}>
                         {newItem}
                       </BreadcrumbLink>
                     </BreadcrumbItem>
-                  </>
+                  </div>
                 );
               })}
             </BreadcrumbList>
