@@ -20,7 +20,7 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4",
         contained:
-          "not-dark:shadow-sm not-dark:hover:text-white bg-opacity-75 hover:bg-[var(--card-foreground)] bg-[var(--primary)] hover:text-[var(--primary)] rounded-full",
+          "not-dark:shadow-sm not-dark:hover:text-white bg-opacity-75 hover:bg-[var(--card-foreground)] bg-[var(--card)] hover:text-[var(--primary)] rounded-full",
       },
       size: {
         default: "h-10 px-6 has-[>svg]:px-4 py-2",
