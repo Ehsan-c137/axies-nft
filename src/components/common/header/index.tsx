@@ -84,7 +84,7 @@ export function Header() {
       >
         <div
           className={clsx(
-            "container flex items-center justify-between mx-auto px-8 py-2 backdrop-blur-xs",
+            "container flex items-center justify-between mx-auto px-4 md:px-8 py-2 backdrop-blur-xs",
             {
               "border rounded-3xl dark:bg-[rgba(0,0,0,0.4)] bg-[rgba(255,255,255,0.4)] shadow-2xl":
                 isScrolled,
