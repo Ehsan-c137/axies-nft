@@ -77,7 +77,7 @@ export function Header() {
         className={clsx(
           "absolute top-4 left-0 translate-y-0 w-full transition z-2",
           {
-            "fixed w-full animate-fade-in-translate px-2": isScrolled,
+            "fixed w-full animate-fade-in-translate px-1": isScrolled,
             "translate-y-0": !isScrolled,
           },
         )}
@@ -126,14 +126,6 @@ export function Header() {
               <WalletIcon />
               Connect Wallet
             </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="flex lg:hidden justify-items-center"
-            >
-              <WalletIcon />
-            </Button>
-
             <ThemeSwitch />
             <Profile />
             {!isScrolled && (
