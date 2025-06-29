@@ -7,7 +7,7 @@ interface Iprops {
 export function PopularCollection({ ref }: Iprops) {
   return (
     <section
-      className="container mx-auto flex flex-col gap-10 py-10 px-8 opacity-0"
+      className="container mx-auto flex flex-col gap-10 py-10 md:px-8 opacity-0"
       ref={(el) => {
         if (el) {
           ref.current[2] = el;

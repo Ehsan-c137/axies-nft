@@ -57,7 +57,7 @@ export function LiveAuctions({ ref }: Iprops) {
 
   return (
     <section
-      className="flex flex-col gap-10 bg-[var(--background)] p-8 min-h-[725px] opacity-0"
+      className="flex flex-col gap-10 bg-[var(--background)] md:p-8 min-h-[725px] opacity-0"
       ref={(el) => {
         if (el) {
           ref.current[1] = el;

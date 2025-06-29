@@ -29,7 +29,7 @@ export function Hero() {
         height: `calc(100vh - ${HEADER_HEIGHT}px)`,
       }}
       className={clsx(
-        `flex flex-col xl:flex-row items-center justify-between gap-30 lg:gap-8 pt-30 lg:pt-20`,
+        `flex flex-col xl:flex-row items-center justify-between gap-30 lg:gap-8 lg:pt-20`,
       )}
     >
       <div className="flex flex-col gap-8">

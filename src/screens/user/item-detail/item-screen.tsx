@@ -16,7 +16,7 @@ export default function ItemDetailView({ id }: { id: string }) {
   const itemName = "Item Detail";
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:justify-between py-5 lg:py-20 px-4 lg:px-8 container mx-auto gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:justify-between container mx-auto gap-5">
         <div className="max-w-[690px] max-h-[690px]">
           <Image
             unoptimized

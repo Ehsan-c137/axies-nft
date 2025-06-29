@@ -15,7 +15,7 @@ export function ProfileScreen({ username }: Props) {
   console.log(username);
 
   return (
-    <div className="container mx-auto mt-8 px-8">
+    <div className="container mx-auto">
       <div className="flex flex-wrap justify-between items-center rounded-t-3xl p-4 md:p-9 bg-[url(/assets/bg-profile.webp)] bg-opacity-60 bg-no-repeat bg-cover md:max-h-[274px]">
         <div className="flex flex-wrap md:flex-nowrap md:-translate-y-[26px] gap-8 items-center">
           <div className="relative md:h-[270px] min-w-[200px] min-h-[200px] w-full h-full">
@@ -31,6 +31,7 @@ export function ProfileScreen({ username }: Props) {
             <h2 className="text-lg md:text-4xl text-white">
               Mehdi Khanmohammadi
             </h2>
+            <p>@{username}</p>
             <p className="max-w-lg text-xs leading-6 text-white">
               Exprience next generation of bots with us.
             </p>
