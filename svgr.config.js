@@ -20,7 +20,6 @@ module.exports = {
   ...baseConfig,
   filenameCase: "kebab",
   svgProps: {
-    fill: "currentColor",
     stroke: "currentColor",
   },
   template: ({ componentName, jsx }, { tpl }) => {
@@ -69,14 +68,12 @@ module.exports = {
         params: {
           overrides: {
             removeViewBox: false,
+            removeUnknownsAndDefaults: false,
+            removeUselessStrokeAndFill: false,
+            mergePath: false,
           },
         },
-      },
-      {
-        name: "removeAttrs",
-        params: {
-          attrs: ["fill", "stroke"],
-        },
+        cleanupIDs: false,
       },
     ],
   },
