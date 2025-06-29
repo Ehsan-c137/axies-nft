@@ -6,13 +6,15 @@ import { Avatar, AvatarImage, AvatarFallback } from "@ui/avatar";
 import { Tabs } from "./tabs";
 import { toast } from "sonner";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { useRouter } from "next/navigation";
 
 type Props = {
   username: string;
 };
 
 export function ProfileScreen({ username }: Props) {
-  console.log(username);
+  const router = useRouter();
+  const isMe = username === "me";
 
   return (
     <div className="container mx-auto">
@@ -39,7 +41,16 @@ export function ProfileScreen({ username }: Props) {
           </div>
         </div>
         <div className="h-full flex pt-8">
-          <Button variant="contained">Follow</Button>
+          {isMe ? (
+            <Button
+              variant="contained"
+              onClick={() => router.push(`/profile/edit-profile`)}
+            >
+              Edit Profile
+            </Button>
+          ) : (
+            <Button variant="contained">Follow</Button>
+          )}
         </div>
       </div>
       <Tabs />
