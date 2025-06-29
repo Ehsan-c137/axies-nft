@@ -22,7 +22,7 @@ export function PageLayout({ children }: Props) {
   return (
     <>
       <div
-        className="relative w-full h-full dark:bg-[url(/assets/img_bg_page_title_dark.webp)] bg-[url(/assets/img_bg_page_title_light.webp)]"
+        className="relative w-full h-full dark:bg-[url(/assets/img_bg_page_title_dark.webp)] bg-[url(/assets/img_bg_page_title_light.webp)] hidden md:flex mb-10"
         style={{ paddingTop: `${HEADER_HEIGHT + 32}px`, paddingBottom: "32px" }}
       >
         <div className="container mx-auto w-full flex flex-col gap-4 px-4 md:px-6 lg:px-8">
