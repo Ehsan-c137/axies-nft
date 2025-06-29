@@ -4,12 +4,13 @@ const FileIcon = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
+    fill="none"
+    stroke="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
+    strokeWidth={1}
     className="lucide lucide-files-icon lucide-files"
     viewBox="0 0 24 24"
-    fill="currentColor"
-    stroke="currentColor"
     {...props}
   >
     <path d="M20 7h-3a2 2 0 0 1-2-2V2" />

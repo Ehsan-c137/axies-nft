@@ -4,18 +4,20 @@ const PictureIcon = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
+    fill="none"
     viewBox="0 0 25 26"
-    fill="currentColor"
     stroke="currentColor"
     {...props}
   >
     <path
+      stroke="#fff"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
       d="M19.65 3.25H5.297c-1.133 0-2.051.97-2.051 2.167v15.166c0 1.197.918 2.167 2.05 2.167H19.65c1.132 0 2.05-.97 2.05-2.167V5.417c0-1.197-.918-2.167-2.05-2.167"
     />
     <path
+      stroke="#fff"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}

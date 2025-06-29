@@ -4,12 +4,13 @@ const SendIcon = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"
+    fill="none"
     viewBox="0 0 20 20"
-    fill="currentColor"
     stroke="currentColor"
     {...props}
   >
     <g
+      stroke="#fff"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
@@ -19,7 +20,7 @@ const SendIcon = (props: SVGProps<SVGSVGElement>) => (
     </g>
     <defs>
       <clipPath id="a">
-        <path d="M0 0h20v20H0z" />
+        <path fill="currentColor" d="M0 0h20v20H0z" />
       </clipPath>
     </defs>
   </svg>
