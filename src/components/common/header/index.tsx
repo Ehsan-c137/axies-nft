@@ -110,7 +110,7 @@ export function Header() {
                 <Link
                   key={nav.name}
                   href={nav.href}
-                  className="text-lg font-semibold text-gray-800 dark:text-gray-200 hover:text-blue-500 transition-colors"
+                  className="text-lg font-semibold text-gray-800 dark:text-gray-200 link_hover"
                 >
                   {nav.name}
                 </Link>
