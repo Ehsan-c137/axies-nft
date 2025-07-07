@@ -9,7 +9,7 @@ interface Iprops {
 export function HeroOverview({ ref }: Iprops) {
   return (
     <div
-      className="flex flex-col md:flex-row md:flex items-center gap-14 py-30 opacity-0"
+      className="flex flex-col md:flex-row md:flex items-center gap-14 py-30 opacity-0 justify-between"
       ref={(el) => {
         if (el) {
           ref.current[0] = el;
@@ -43,7 +43,7 @@ export function HeroOverview({ ref }: Iprops) {
               {icons[index]}
             </div>
             <p className="font-bold">{title[index]}</p>
-            <p className="text-justify max-w-[300px]">
+            <p className="text-justify max-w-[300px] text-wrap">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Voluptatibus sint fuga id accusantium officiis dignissimos ea,
               veritatis ullam quod aperiam?
