@@ -7,7 +7,7 @@ import {
 import { Checkbox } from "@ui/checkbox";
 import { Label } from "@ui/label";
 
-const FILTER_CONFIG = [
+export const FILTER_CONFIG = [
   {
     key: "category",
     value: ["art", "music", "virtual world", "sports", "utility"],
@@ -32,7 +32,7 @@ export default function Filter({
   paramState,
 }: IFilterProps) {
   return (
-    <div className="flex flex-col gap-5 items-center w-[200px]">
+    <div className="hidden md:flex flex-col gap-5 items-center w-[200px]">
       <Accordion type="multiple" className="w-full">
         {FILTER_CONFIG.map((config) => {
           return (
