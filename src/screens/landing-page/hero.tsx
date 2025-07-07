@@ -19,14 +19,21 @@ import {
   DEFAULT_OPTIONS,
 } from "@/hooks/useAnimationPerformanceControl";
 import clsx from "clsx";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 gsap.registerPlugin(useGSAP);
 
 export function Hero() {
+  const isDesktop = useMediaQuery("(min-width: 768px)", {
+    initializeWithValue: false,
+  });
+
   return (
     <div
       style={{
-        height: `calc(100vh - ${HEADER_HEIGHT}px)`,
+        height: isDesktop
+          ? `calc(100vh - ${HEADER_HEIGHT}px)`
+          : `calc(100vh - ${200}px)`,
       }}
       className={clsx(
         `flex flex-col xl:flex-row items-center justify-between gap-30 lg:gap-8 lg:pt-20`,
@@ -45,10 +52,11 @@ export function Hero() {
               <RocketIcon /> Explore
             </Button>
           </Link>
-
-          <Button variant="outline" aria-label="create">
-            <Package /> Create
-          </Button>
+          <Link href="/item-creation">
+            <Button variant="outline" aria-label="create">
+              <Package /> Create
+            </Button>
+          </Link>
         </div>
       </div>
       <Character />
