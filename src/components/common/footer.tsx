@@ -33,37 +33,67 @@ export function Footer() {
       <div className="grid grid-cols-1 gap-4">
         <p>My Account</p>
         <div className="grid grid-cols-1 gap-2">
-          <Link href={"/"}>Authors</Link>
-          <Link href="/">Collection</Link>
-          <Link href="/">Authors Profile</Link>
-          <Link href="/">Authors</Link>
+          <Link href={"/"} className="link_hover">
+            Authors
+          </Link>
+          <Link href="/" className="link_hover">
+            Collection
+          </Link>
+          <Link href="/" className="link_hover">
+            Authors Profile
+          </Link>
+          <Link href="/" className="link_hover">
+            Authors
+          </Link>
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4">
         <p>My Account</p>
         <div className="grid grid-cols-1 gap-2">
-          <Link href={"/"}>Authors</Link>
-          <Link href="/">Collection</Link>
-          <Link href="/">Authors Profile</Link>
-          <Link href="/">Authors</Link>
+          <Link href={"/"} className="link_hover">
+            Authors
+          </Link>
+          <Link href="/" className="link_hover">
+            Collection
+          </Link>
+          <Link href="/" className="link_hover">
+            Authors Profile
+          </Link>
+          <Link href="/" className="link_hover">
+            Authors
+          </Link>
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4">
         <p>My Account</p>
         <div className="grid grid-cols-1 gap-2">
-          <Link href={"/"}>Authors</Link>
-          <Link href="/">Collection</Link>
-          <Link href="/">Authors Profile</Link>
-          <Link href="/">Authors</Link>
+          <Link href={"/"} className="link_hover">
+            Authors
+          </Link>
+          <Link href="/" className="link_hover">
+            Collection
+          </Link>
+          <Link href="/" className="link_hover">
+            Authors Profile
+          </Link>
+          <Link href="/" className="link_hover">
+            Authors
+          </Link>
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4">
         <p>Subscribe us</p>
         <div className="grid grid-cols-1 gap-2">
           <Link href={"/"}>Authors</Link>
-          <Link href="/">Collection</Link>
-          <Link href="/">Authors Profile</Link>
-          <Link href="/">Authors</Link>
+          <Link href="/" className="link_hover">
+            Collection
+          </Link>
+          <Link href="/" className="link_hover">
+            Authors Profile
+          </Link>
+          <Link href="/" className="link_hover">
+            Authors
+          </Link>
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4">
