@@ -10,7 +10,7 @@ export const Tabs = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div>
+    <div className="flex flex-col gap-1">
       <div className="border-b">
         {TABS.map((tab, index) => (
           <Button
@@ -24,9 +24,11 @@ export const Tabs = () => {
           </Button>
         ))}
       </div>
-      <BidHistory isActive={activeTab === 0} />
-      <Info isActive={activeTab === 1} />
-      <Provenance isActive={activeTab === 2} />
+      <div className="h-[220px] overflow-y-auto">
+        <BidHistory isActive={activeTab === 0} />
+        <Info isActive={activeTab === 1} />
+        <Provenance isActive={activeTab === 2} />
+      </div>
     </div>
   );
 };
