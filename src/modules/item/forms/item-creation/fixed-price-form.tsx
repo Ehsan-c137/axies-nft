@@ -7,12 +7,16 @@ import {
 } from "@ui/form";
 import { Textarea } from "@ui/textarea";
 import { Input } from "@ui/input";
+import { z } from "zod";
+import { useFormContext } from "react-hook-form";
 
 export function FixedPriceForm() {
+  const { control } = useFormContext();
   return (
     <>
       <FormField
         name="price"
+        control={control}
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-xl">Price</FormLabel>
@@ -30,6 +34,7 @@ export function FixedPriceForm() {
       />
       <FormField
         name="title"
+        control={control}
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-xl">Title</FormLabel>
@@ -42,6 +47,7 @@ export function FixedPriceForm() {
       />
       <FormField
         name="description"
+        control={control}
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-xl">Description</FormLabel>
@@ -54,6 +60,7 @@ export function FixedPriceForm() {
       />
       <FormField
         name="royalties"
+        control={control}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Royalties in %</FormLabel>
