@@ -3,7 +3,7 @@
 import PaginationList from "@/components/common/pagination-list";
 import { BlogCard } from "./blog-card";
 import CardPlaceholder from "@/components/common/cards/card-placeholder";
-import { useBlogPosts } from "@/services/blog/blog.service";
+import { useBlogPosts } from "@/services/blog/blog-service";
 
 export default function BlogScreen() {
   const {
