@@ -1,14 +1,26 @@
-import { BlogCard } from "./blog-card";
+"use client";
 
-type Props = {
-  slug: string;
-};
+import PaginationList from "@/components/common/pagination-list";
+import { BlogCard } from "./blog-card";
+import CardPlaceholder from "@/components/common/cards/card-placeholder";
+import { useBlogPosts } from "@/services/blog/blog.service";
 
 export default function BlogScreen() {
+  const {
+    data: blogPosts,
+    isPending,
+    error,
+    isPlaceholderData,
+  } = useBlogPosts();
+
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 container mx-auto">
-      <BlogCard />
-      <BlogCard />
-    </section>
+    <PaginationList
+      error={error}
+      isPending={isPending}
+      paginatedData={blogPosts}
+      DataCard={BlogCard}
+      PlaceholderCard={CardPlaceholder}
+      isPlaceholderData={isPlaceholderData}
+    />
   );
 }
