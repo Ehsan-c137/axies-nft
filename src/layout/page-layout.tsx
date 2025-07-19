@@ -64,7 +64,7 @@ export function PageLayout({ children }: Props) {
           </Breadcrumb>
         </div>
       </div>
-      {children}
+      <section className="px-6">{children}</section>
     </>
   );
 }
