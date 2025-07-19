@@ -1,7 +1,6 @@
 import { Header } from "@/components/common/header/index";
 import { Footer } from "@/components/common/footer";
 import { HEADER_HEIGHT } from "@/lib/constant/sizes";
-import clsx from "clsx";
 
 export function PrimaryLayout({ children }: { children: React.ReactNode }) {
   return (
