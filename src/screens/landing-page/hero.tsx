@@ -33,7 +33,7 @@ export function Hero() {
       style={{
         height: isDesktop
           ? `calc(100vh - ${HEADER_HEIGHT}px)`
-          : `calc(100vh - ${200}px)`,
+          : `calc(100vh - ${160}px)`,
       }}
       className={clsx(
         `flex flex-col xl:flex-row items-center justify-between gap-30 lg:gap-8 lg:pt-20`,
