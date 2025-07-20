@@ -4,7 +4,6 @@ interface IProps {
   title: string;
   creator: string;
   price: number;
-  timeLeft: string;
   imageUrl?: string;
 }
 
@@ -12,7 +11,7 @@ export default function Preview({
   title,
   creator,
   price,
-  timeLeft,
+
   imageUrl,
 }: IProps) {
   return (
