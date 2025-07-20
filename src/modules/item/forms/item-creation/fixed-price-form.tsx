@@ -7,7 +7,6 @@ import {
 } from "@ui/form";
 import { Textarea } from "@ui/textarea";
 import { Input } from "@ui/input";
-import { z } from "zod";
 import { useFormContext } from "react-hook-form";
 
 export function FixedPriceForm() {
@@ -24,8 +23,14 @@ export function FixedPriceForm() {
               <Input
                 placeholder="Enter price for one item ( ETH )"
                 type="number"
+                min={0}
+                step={0.01}
                 {...field}
-                onChange={(e) => field.onChange(Number(e.target.value))}
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value === "" ? "" : Number(e.target.value),
+                  )
+                }
               />
             </FormControl>
             <FormMessage />
@@ -69,7 +74,11 @@ export function FixedPriceForm() {
                 placeholder="e.g. 10%"
                 type="number"
                 {...field}
-                onChange={(e) => field.onChange(Number(e.target.value))}
+                onChange={(e) =>
+                  field.onChange(
+                    e.target.value === "" ? "" : Number(e.target.value),
+                  )
+                }
               />
             </FormControl>
             <FormMessage />
