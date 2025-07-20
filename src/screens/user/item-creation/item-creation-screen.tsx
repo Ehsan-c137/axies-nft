@@ -10,19 +10,21 @@ import MethodsView from "./methods/methods-view";
 
 const formSchema = z.object({
   creator: z.string().min(3, "Creator is required"),
-  price: z.number().min(0, "Price must be a positive number"),
+  price: z
+    .number({ message: "please enter a valid price" })
+    .min(0, "Price must be a positive number"),
   title: z.string().min(3, "Title is required"),
   description: z.string().min(3, "Description is required"),
   image: z
     .any()
     .refine((file) => !!file, "Image is required.")
     .refine(
-      (file) => file?.size <= 200 * 1024 * 1024,
-      "Max image size is 200MB.",
+      (file) => file?.size <= 10 * 1024 * 1024,
+      "Max image size is 10MB.",
     ),
   imageUrl: z.string().url("Image URL must be a valid URL").optional(),
   royalties: z
-    .number()
+    .number({ message: "please enter a valid number" })
     .min(0, "Royalties must be a positive number")
     .max(100, "Royalties cannot exceed 100%"),
 });
@@ -56,7 +58,6 @@ export default function ItemCreationScreen() {
         title={watch("title")}
         creator={watch("creator")}
         price={watch("price")}
-        timeLeft={"5 : 23 : 22 : 08"}
         imageUrl={watch("imageUrl")}
       />
       <div className="flex flex-col gap-5 w-full">
