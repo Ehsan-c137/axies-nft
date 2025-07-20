@@ -50,7 +50,7 @@ export default function LandingScreen() {
   }, [isAnimationEnabled]);
 
   return (
-    <>
+    <div className="px-6">
       <SectionWrapper>
         <Hero />
         <HeroOverview ref={itemRef} />
@@ -61,7 +61,7 @@ export default function LandingScreen() {
         <TopSeller ref={itemRef} />
         <TodayPick ref={itemRef} />
       </SectionWrapper>
-    </>
+    </div>
   );
 }
 
