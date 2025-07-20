@@ -1,5 +1,5 @@
-import BlogsScreen from "@/screens/blog/blogs-screen";
+import { redirect } from "next/navigation";
 
-export default function Blog() {
-  return <BlogsScreen />;
+export default function BlogRootPage() {
+  redirect("/blog/1");
 }
