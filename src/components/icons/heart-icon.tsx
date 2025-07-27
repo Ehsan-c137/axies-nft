@@ -5,23 +5,15 @@ const HeartIcon = (props: SVGProps<SVGSVGElement>) => (
     width="1em"
     height="1em"
     fill="none"
-    viewBox="0 0 11 11"
     stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={0.5}
+    className="lucide lucide-heart-icon lucide-heart"
+    viewBox="0 0 24 24"
     {...props}
   >
-    <g clipPath="url(#a)">
-      <path
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M9.552 2.113a2.52 2.52 0 0 0-3.566 0l-.486.486-.486-.486a2.521 2.521 0 0 0-3.566 3.566l.486.486L5.5 9.73l3.566-3.565.486-.486a2.52 2.52 0 0 0 0-3.566"
-      />
-    </g>
-    <defs>
-      <clipPath id="a">
-        <path fill="#fff" d="M0 0h11v11H0z" />
-      </clipPath>
-    </defs>
+    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
   </svg>
 );
 export default HeartIcon;

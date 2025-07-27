@@ -14,5 +14,6 @@ export { default as SendIcon } from "./send-icon";
 export { default as ShareIcon } from "./share-icon";
 export { default as ShoppingBagIcon } from "./shopping-bag-icon";
 export { default as SunIcon } from "./sun-icon";
+export { default as UserIcon } from "./user-icon";
 export { default as WalletIcon } from "./wallet-icon";
 export { default as WindowIcon } from "./window-icon";

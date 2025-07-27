@@ -5,14 +5,16 @@ const RocketIcon = (props: SVGProps<SVGSVGElement>) => (
     width="1em"
     height="1em"
     fill="none"
-    viewBox="0 0 16 16"
     stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={1}
+    className="lucide lucide-rocket-icon lucide-rocket"
+    viewBox="0 0 24 24"
     {...props}
   >
-    <path
-      fill="#fff"
-      d="M15.785.597a.5.5 0 0 0-.381-.381C14.397 0 13.61 0 12.825 0 9.6 0 7.665 1.725 6.221 4H2.964a1.5 1.5 0 0 0-1.34.828L.079 7.915A.75.75 0 0 0 .75 9h3.243l-.702.702a1 1 0 0 0 0 1.414l1.59 1.591a1 1 0 0 0 1.416 0L7 12.005v3.245a.75.75 0 0 0 1.085.671l3.085-1.543a1.5 1.5 0 0 0 .828-1.34V9.774C14.268 8.328 16 6.387 16 3.178c.004-.787.004-1.575-.214-2.581M12.001 5.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5"
-    />
+    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2" />
+    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
   </svg>
 );
 export default RocketIcon;
