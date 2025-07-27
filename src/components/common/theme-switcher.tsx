@@ -2,11 +2,9 @@ import { Button } from "@ui/button";
 import SunIcon from "@icons/sun-icon";
 import MoonIcon from "@icons/moon-icon";
 import { useTheme } from "@/context/theme/theme-context";
-import clsx from "clsx";
 
 export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
-  console.log(theme);
   return (
     <Button
       variant="outline"
