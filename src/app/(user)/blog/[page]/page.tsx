@@ -3,34 +3,35 @@ import { Metadata } from "next";
 import { getBlogPosts } from "@/services/blog/blog-service";
 
 interface IProps {
-  params: { page: string };
+  params: Promise<{ page: string }>;
 }
 
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
-  const page = params.page ? ` - Page ${params.page}` : "";
+  const title = (await params).page ? ` - Page ${(await params).page}` : "";
   return {
-    title: `Blogs${page}`,
-    description: `Discover the latest articles on our blog, page ${params.page}.`,
+    title: `Blogs${title}`,
+    description: `Discover the latest articles on our blog, page ${(await params).page}.`,
   };
 }
 
 export async function generateStaticParams() {
   try {
     const blogs = await getBlogPosts();
-    const totalPages = blogs.meta.lastPage || 1;
-    const paths = Array.from({ length: totalPages }, (_, i) => ({
+    const totalPages = blogs?.meta.lastPage || 1;
+    const page = Array.from({ length: totalPages }, (_, i) => ({
       page: (i + 1).toString(),
     }));
 
-    return paths;
+    return page;
   } catch (error) {
     console.error("Error fetching blog posts:", error);
-    return [{ page: "1" }];
+    throw new Error("Failed to generate static params for blogs");
   }
 }
 
 export default async function BlogsPage({ params }: IProps) {
-  const pageNumber = parseInt(params.page, 10) || 1;
+  const pageParam = (await params).page;
+  const pageNumber = parseInt(pageParam, 10) || 1;
   const blogs = await getBlogPosts(pageNumber);
 
   return <BlogsScreen blogs={blogs} currentPage={pageNumber} />;
