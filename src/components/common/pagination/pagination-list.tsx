@@ -1,19 +1,10 @@
 "use client";
 import React, { Suspense } from "react";
 import PaginationControl from "./pagination-control";
+import { TPaginatedData } from "@/types/service";
 
 interface IProps {
-  paginatedData?: {
-    data: { id: number; [key: string]: any }[];
-    meta: {
-      total: number;
-      currentPage: number;
-      lastPage: number;
-      perPage: number;
-      prev: number | null;
-      next: number | null;
-    };
-  };
+  paginatedData: TPaginatedData;
   DataCard: React.JSXElementConstructor<any>;
   PlaceholderCard: React.JSXElementConstructor<any>;
   isPlaceholderData?: boolean;
