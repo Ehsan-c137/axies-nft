@@ -22,7 +22,8 @@
       "@/*": ["./src/*"],
       "@ui/*": ["./src/components/ui/*"],
       "@icons/*": ["./src/components/icons/*"],
-      "@illustrations/*": ["./src/components/illustrations/*"]
+      "@illustrations/*": ["./src/components/illustrations/*"],
+      "@common/*": ["./src/components/common/*"]
     }
   },
   "include": [
