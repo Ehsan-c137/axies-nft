@@ -1,5 +1,5 @@
 export type TPaginatedData = {
-  data: [];
+  data: { id: number; [key: string]: any }[];
   meta: {
     total: number;
     currentPage: number;
