@@ -30,7 +30,9 @@ interface IFilterProps {
 export default function Filter({
   handleParamChange,
   paramState,
-}: IFilterProps) {
+}: IFilterProps & {
+  isPending?: boolean;
+}) {
   return (
     <div className="hidden md:flex flex-col gap-5 items-center w-[200px]">
       <Accordion type="multiple" className="w-full">

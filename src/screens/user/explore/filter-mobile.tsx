@@ -15,6 +15,7 @@ import { Label } from "@radix-ui/react-label";
 interface IFilterProps {
   handleParamChange: (key: string, value: string, checked: boolean) => void;
   paramState: Record<string, string[]>;
+  isDataPending?: boolean;
 }
 
 export default function FilterMobile({
