@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 import type { RuleSetRule } from "webpack";
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [new URL("https://placehold.co/**")],
+  },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule: RuleSetRule) => {
       if (rule && typeof rule === "object" && rule.test) {
