@@ -36,7 +36,6 @@ export default function PaginationControl({
 
   const paginationRange = useMemo(() => {
     const siblingCount = 1;
-    // totalPageNumbers: siblingCount + firstPage + lastPage + currentPage + 2*DOTS
     const totalPageNumbers = siblingCount + 5;
 
     if (totalPageNumbers >= lastPage) {
