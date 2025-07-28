@@ -17,6 +17,9 @@ const SwiperIndicators = ({
   activeIndex,
   onSelect,
 }: IIndicatorsProps) => {
+  if (count <= 1) {
+    return null;
+  }
   return (
     <ul className="flex items-center gap-4 pb-2 pt-4">
       {Array.from({ length: count })?.map((_, index) => (
