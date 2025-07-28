@@ -28,7 +28,6 @@ const parseSearchParamsToRecord = (
  */
 export default function useAllSearchParamsState() {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -45,18 +44,20 @@ export default function useAllSearchParamsState() {
    * @param {string} paramName - The name of the parameter to update (e.g., "category", "priceRange").
    * @param {string} value - The value to add or remove for the specified parameter (e.g., "electronics", "0-100").
    * @param {boolean} checked - If true, the value is added/ensured for the parameter. If false, the value is removed.
+   * @param {boolean} replace - If true, the value is replaced for the parameter. default false.
    */
   const handleParamChange = (
     paramName: string,
     value: string,
     checked: boolean,
+    replace: boolean = false,
   ) => {
     const newOptimisticParamsState = { ...optimisticParams };
 
     const currentValuesForParam = optimisticParams[paramName] || [];
-    let newValuesForParam: string[];
+    let newValuesForParam: string[] = [];
 
-    if (checked) {
+    if (checked && !replace) {
       if (!currentValuesForParam.includes(value)) {
         newValuesForParam = [...currentValuesForParam, value];
       } else {
@@ -66,6 +67,10 @@ export default function useAllSearchParamsState() {
       newValuesForParam = currentValuesForParam.filter(
         (item) => item !== value,
       );
+    }
+
+    if (replace) {
+      newValuesForParam = [value];
     }
 
     if (newValuesForParam.length > 0) {
@@ -86,7 +91,9 @@ export default function useAllSearchParamsState() {
     const newQueryString = newUrlSearchParamsInstance.toString();
     startTransition(() => {
       setOptimisticParams(newOptimisticParamsState);
-      router.push(`${pathname}${newQueryString ? `?${newQueryString}` : ""}`);
+      router.push(`${newQueryString ? `?${newQueryString}` : ""}`, {
+        scroll: false,
+      });
     });
   };
 
