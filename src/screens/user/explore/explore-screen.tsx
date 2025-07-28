@@ -5,8 +5,9 @@ import FilterMobile from "./filter-mobile";
 import { ExploreCard } from "@/components/common/cards/explore-card";
 import CardPlaceholder from "@/components/common/cards/card-placeholder";
 import useSearchParamState from "@/hooks/useSearchParamState";
-import { Button } from "@ui/button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useGetItems } from "@/services/item/item-service";
+import PaginationList from "@/components/common/pagination/pagination-list";
 
 export default function ExploreScreen() {
   const {
@@ -19,6 +20,23 @@ export default function ExploreScreen() {
     initializeWithValue: false,
   });
 
+  const {
+    data,
+    isPending: isDataPending,
+    isPlaceholderData,
+    error,
+    isError,
+  } = useGetItems({
+    page: Number(paramState.page) || 1,
+    limit: Number(paramState.limit) || 12,
+    category: paramState.category,
+    chain: paramState.chains,
+    collection: paramState.collections,
+  });
+
+  console.log("explore", {
+    data,
+  });
   return (
     <>
       <div className="flex flex-col md:flex-row gap-10 container mx-auto">
@@ -26,25 +44,27 @@ export default function ExploreScreen() {
           <FilterDesktop
             handleParamChange={handleParamChange}
             paramState={paramState}
+            isPending={isDataPending}
           />
         )}
         {!isDesktop && (
           <FilterMobile
+            isDataPending={isDataPending}
             handleParamChange={handleParamChange}
             paramState={paramState}
           />
         )}
 
-        <div className="flex flex-col  gap-10 w-full">
-          <div className="flex flex-1 flex-wrap gap-4 justify-center justify-items-center md:justify-items-start md:justify-start">
-            {isFilterPending && <CardPlaceholder />}
-            <ExploreCard />
-            <ExploreCard />
-            <ExploreCard />
-          </div>
-          <div className="w-full text-center">
-            <Button variant="outline">Load more</Button>
-          </div>
+        <div className="flex flex-1 flex-wrap gap-4 justify-center justify-items-center md:justify-items-start md:justify-start">
+          <PaginationList
+            paginatedData={data}
+            DataCard={ExploreCard}
+            PlaceholderCard={CardPlaceholder}
+            isPending={isFilterPending || isDataPending}
+            isPlaceholderData={isPlaceholderData}
+            error={error}
+            isError={isError}
+          />
         </div>
       </div>
     </>
