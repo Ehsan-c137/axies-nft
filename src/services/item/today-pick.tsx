@@ -7,6 +7,7 @@ interface IFilter {
   limit: number;
   category?: string[];
   collection?: string[];
+  sort?: string;
 }
 
 const TODAY_PICK_QUERY = {
@@ -18,12 +19,13 @@ const TODAY_PICK_QUERY = {
 };
 
 const getTodayPick = async (args: IFilter) => {
-  const { category, collection } = args;
+  const { category, collection, sort } = args;
   const params = new URLSearchParams();
   params.append("page", String(args.page));
   params.append("limit", String(args.limit));
   if (category?.length) params.append("category", category.join(","));
   if (collection?.length) params.append("collection", collection.join(","));
+  if (sort) params.append("sort", sort);
 
   try {
     const response = await fetch(
