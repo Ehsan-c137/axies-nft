@@ -3,7 +3,7 @@
 import { Button } from "@ui/button";
 import { LiveAuctionsCard } from "@common/cards/live-auctions-card";
 import { PaginationLoadMore } from "@common/pagination/pagination-load-more";
-import Filter from "./filter";
+import Filter from "./today-pick-filter";
 import { useGetTodayPick } from "@/services/item/today-pick";
 import useSearchParamState from "@/hooks/useSearchParamState";
 import { useEffect, useState } from "react";
@@ -18,6 +18,7 @@ const PARAM_KEYS = {
   limit: "today_pick_limit",
   category: "today_pick_category",
   collections: "today_pick_collections",
+  sort: "today_pick_sort",
 };
 
 export function TodayPick({ ref }: IProps) {
@@ -32,6 +33,7 @@ export function TodayPick({ ref }: IProps) {
       limit: Number(paramState[PARAM_KEYS.limit]) || 8,
       category: paramState[PARAM_KEYS.category],
       collection: paramState[PARAM_KEYS.collections],
+      sort: paramState[PARAM_KEYS.sort]?.[0],
     });
 
   const currentPage = data?.meta?.currentPage;
