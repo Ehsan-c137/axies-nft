@@ -1,64 +1,37 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import styles from "./Swiper.module.css";
+import styles from "./swiper.module.css";
 import clsx from "clsx";
 import { useStateRef, getRefValue } from "@/lib/hooks";
 import { getTouchEventData } from "@/lib/dom";
-import { LiveAuctionsCard } from "@/components/common/cards/live-auctions-card";
-
-interface IIndicatorsProps {
-  count: number;
-  activeIndex: number;
-  onSelect: (index: number) => void;
-}
-const SwiperIndicators = ({
-  count,
-  activeIndex,
-  onSelect,
-}: IIndicatorsProps) => {
-  if (count <= 1) {
-    return null;
-  }
-  return (
-    <ul className="flex items-center gap-4 pb-2 pt-4">
-      {Array.from({ length: count })?.map((_, index) => (
-        <li
-          data-testid="indicator"
-          key={index}
-          className={clsx(styles.swiper_indicator, {
-            [styles.swiper_indicator_active]: index === activeIndex,
-          })}
-          onClick={() => onSelect(index)}
-        ></li>
-      ))}
-    </ul>
-  );
-};
-
-const MIN_SWIPE_Required = 50;
+import { SwiperIndicators } from "./swiper-indicators";
+import CardPlaceholder from "@/components/common/cards/card-placeholder";
 
 interface IProps {
-  images: {
-    src: string;
-    name: string;
-    slug: string;
-    id: number;
-  }[];
+  ItemCard: React.JSXElementConstructor<any>;
+  datas: [];
   config: {
     itemPerPage: number;
   };
   isLoading: boolean;
 }
 
-const Swiper = ({ images, isLoading, config }: IProps) => {
+const Swiper = ({ isLoading, config, ItemCard, datas }: IProps) => {
   const { itemPerPage } = config;
+  const MIN_SWIPE_Required = 50;
+
+  if (isLoading) {
+    return Array.from({ length: itemPerPage }).map((_, i) => (
+      <CardPlaceholder key={i} />
+    ));
+  }
+
   const containerRef = useRef<HTMLUListElement>(null);
   const containerWidthRef = useRef(0);
   const minOffsetXRef = useRef(0);
   const currentOffsetXRef = useRef(0);
   const startXRef = useRef(0);
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [offsetX, setOffsetX, offsetXRef] = useStateRef(0);
   const [isSwiping, setIsSwiping] = useState(false);
@@ -104,24 +77,24 @@ const Swiper = ({ images, isLoading, config }: IProps) => {
 
   const onTouchEnd = () => {
     const currentOffsetX = getRefValue(currentOffsetXRef);
-    const containerWidth = getRefValue(containerWidthRef) / itemPerPage;
+    const pageWidth = getRefValue(containerWidthRef);
     let newOffsetX = getRefValue(offsetXRef);
 
     const diff = currentOffsetX - newOffsetX;
 
     if (Math.abs(diff) > MIN_SWIPE_Required) {
       if (diff > 0) {
-        newOffsetX = Math.floor(newOffsetX / containerWidth) * containerWidth;
+        newOffsetX = Math.floor(newOffsetX / pageWidth) * pageWidth;
       } else {
-        newOffsetX = Math.ceil(newOffsetX / containerWidth) * containerWidth;
+        newOffsetX = Math.ceil(newOffsetX / pageWidth) * pageWidth;
       }
     } else {
-      newOffsetX = Math.round(newOffsetX / containerWidth) * containerWidth;
+      newOffsetX = Math.round(newOffsetX / pageWidth) * pageWidth;
     }
 
     setIsSwiping(false);
     setOffsetX(newOffsetX);
-    setCurrentIndex(Math.abs(newOffsetX / containerWidth));
+    setCurrentIndex(Math.abs(Math.round(newOffsetX / pageWidth)));
 
     window.removeEventListener("touchmove", onTouchMove);
     window.removeEventListener("touchend", onTouchEnd);
@@ -141,7 +114,7 @@ const Swiper = ({ images, isLoading, config }: IProps) => {
     <div className={styles.swiper_container}>
       <ul
         ref={containerRef}
-        aria-label="swiper-container"
+        aria-label="swiper-list"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         onMouseDown={onTouchStart}
@@ -154,7 +127,7 @@ const Swiper = ({ images, isLoading, config }: IProps) => {
           is_swiping: isSwiping,
         })}
       >
-        {images?.map((image, index) => {
+        {datas?.map((data: Object, index: number) => {
           return (
             <li
               key={index}
@@ -164,13 +137,13 @@ const Swiper = ({ images, isLoading, config }: IProps) => {
                 userSelect: "none",
               }}
             >
-              <LiveAuctionsCard key={image.id} />
+              <ItemCard {...data} />
             </li>
           );
         })}
       </ul>
       <SwiperIndicators
-        count={Math.ceil(images.length / itemPerPage)}
+        count={Math.ceil(datas.length / itemPerPage)}
         activeIndex={currentIndex}
         onSelect={indicatorOnClick}
       />
