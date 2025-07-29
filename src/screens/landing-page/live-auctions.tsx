@@ -3,43 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import dynamic from "next/dynamic";
+import { LiveAuctionsCard } from "@/components/common/cards/live-auctions-card";
+import { useGetTodayPick } from "@/services/item/today-pick";
+import { useGetItems } from "@/services/item/item-service";
 
 const DynamicSwiper = dynamic(() => import("@/components/ui/swiper/swiper"), {
   ssr: false,
 });
-
-const imageArray = [
-  {
-    id: 1,
-    src: "https://image.hm.com/assets/hm/48/e6/48e69ece4a2eb78b913df2402b9f8cdc630310e2.jpg",
-    name: "1",
-    slug: "/slug",
-  },
-  {
-    id: 3,
-    src: "https://image.hm.com/assets/hm/48/e6/48e69ece4a2eb78b913df2402b9f8cdc630310e2.jpg",
-    name: "1",
-    slug: "/slug",
-  },
-  {
-    id: 2,
-    src: "https://image.hm.com/assets/hm/48/e6/48e69ece4a2eb78b913df2402b9f8cdc630310e2.jpg",
-    name: "1",
-    slug: "/slug",
-  },
-  {
-    id: 4,
-    src: "https://image.hm.com/assets/hm/48/e6/48e69ece4a2eb78b913df2402b9f8cdc630310e2.jpg",
-    name: "1",
-    slug: "/slug",
-  },
-  {
-    id: 5,
-    src: "https://image.hm.com/assets/hm/48/e6/48e69ece4a2eb78b913df2402b9f8cdc630310e2.jpg",
-    name: "1",
-    slug: "/slug",
-  },
-];
 
 interface Iprops {
   ref: React.RefObject<HTMLElement[]>;
@@ -54,6 +24,8 @@ export function LiveAuctions({ ref }: Iprops) {
   const swiper_config = {
     itemPerPage: isMobile ? 1 : isTablet ? 2 : 5,
   };
+
+  const { data, isPending } = useGetItems();
 
   return (
     <section
@@ -71,8 +43,9 @@ export function LiveAuctions({ ref }: Iprops) {
         </Button>
       </div>
       <DynamicSwiper
-        images={imageArray}
-        isLoading={false}
+        datas={data?.slice(0, 15)}
+        ItemCard={LiveAuctionsCard}
+        isLoading={isPending}
         config={swiper_config}
       />
     </section>
