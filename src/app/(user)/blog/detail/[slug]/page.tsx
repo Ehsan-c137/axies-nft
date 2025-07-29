@@ -1,4 +1,4 @@
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { getBlogDetail, getAllblogPosts } from "@/services/blog/blog-service";
 import BlogDetailScreen from "@/screens/blog/blog-detail/blog-detail-screen";
 
