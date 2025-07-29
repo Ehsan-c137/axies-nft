@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import { gsap } from "gsap";
+import clsx from "clsx";
 import { cn } from "@/lib/utils";
 import { Spinner } from "./spinner";
 
@@ -14,7 +16,7 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "h-10 border rounded-full border-[1px] bg-background shadow-xs hover:bg-[var(--theme-primary)] hover:text-[#ffff] hover:border-[var(--theme-primary)] dark:bg-input/30 dark:border-input dark:hover:bg-input/50 ",
+          "relative h-10 overflow-hidden rounded-full border bg-background shadow-xs dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
@@ -51,16 +53,103 @@ function Button({
     loading?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const flairRef = React.useRef<HTMLSpanElement>(null);
+
+  React.useLayoutEffect(() => {
+    if (variant !== "outline" || !buttonRef.current) {
+      return;
+    }
+
+    const button = buttonRef.current;
+    const flair = flairRef.current;
+
+    if (!flair) return;
+
+    gsap.set(flair, {
+      scale: 0,
+      xPercent: -50,
+      yPercent: -50,
+      position: "absolute",
+      top: 0,
+      left: 0,
+    });
+
+    const xSet = gsap.quickSetter(flair, "x", "px");
+    const ySet = gsap.quickSetter(flair, "y", "px");
+
+    const getRelativeXY = (e: MouseEvent) => {
+      const rect = button.getBoundingClientRect();
+      return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+    };
+
+    const handleMouseEnter = (e: MouseEvent) => {
+      const { x, y } = getRelativeXY(e);
+      xSet(x * 2);
+      ySet(y * 2);
+      gsap.to(flair, { scale: 2, duration: 0.4, ease: "power2.out" });
+    };
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      const { x, y } = getRelativeXY(e);
+      const { width, height } = button.getBoundingClientRect();
+      const xPercent = (x / width) * 100;
+      const yPercent = (y / height) * 100;
+
+      gsap.killTweensOf(flair);
+      gsap.to(flair, {
+        x: xPercent > 90 ? x + 20 : xPercent < 10 ? x - 20 : x,
+        y: yPercent > 90 ? y + 20 : yPercent < 10 ? y - 20 : y,
+        scale: 0,
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const { x, y } = getRelativeXY(e);
+      gsap.to(flair, { x, y, duration: 0.4, ease: "power2" });
+    };
+
+    button.addEventListener("mouseenter", handleMouseEnter);
+    button.addEventListener("mouseleave", handleMouseLeave);
+    button.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      button.removeEventListener("mouseenter", handleMouseEnter);
+      button.removeEventListener("mouseleave", handleMouseLeave);
+      button.removeEventListener("mousemove", handleMouseMove);
+      gsap.killTweensOf(flair);
+    };
+  }, [variant]);
 
   return (
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
-      disabled={loading}
+      ref={buttonRef}
+      disabled={loading || props.disabled}
     >
-      {loading && <Spinner size={"small"} />}
-      {children}
+      {variant == "outline" ? (
+        <>
+          <span
+            ref={flairRef}
+            className="button__flair bottom-0 left-0 right-0 top-0 scale-0 pointer-events-none absolute h-12 rounded-full bg-[var(--theme-primary)] before:aspect-square before:left-0 before:top-0 before:-transform-x-1/2 before:-translate-y-1/2 before:w-[200%]"
+          />
+          <span className="relative flex items-center justify-center gap-1">
+            {children}
+          </span>
+        </>
+      ) : (
+        <>
+          {children}
+          {loading && <Spinner size={"small"} />}
+        </>
+      )}
     </Comp>
   );
 }
