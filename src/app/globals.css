@@ -135,6 +135,10 @@
   }
 }
 
+button {
+  cursor: pointer;
+}
+
 .explore_more {
   @apply relative p-0 font-bold text-[14px] leading-[20px] tracking-[0.1em] bg-gradient-to-r from-[#E250E5] via-[#4B50E6] to-[#E250E5] bg-clip-text bg-[length:200%_200%] 
                                                                 animate-[rainbow_2s_ease-in-out_infinite] duration-200 ease-in-out transition-[color] hover:!text-[rgba(0,0,0,0)]
@@ -202,7 +206,7 @@
   color: var(--primary-foreground);
   position: relative;
   text-decoration: none;
-  width: min-content;
+  width: max-content;
 }
 
 .link_hover::before {
