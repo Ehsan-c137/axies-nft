@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { Spinner } from "@/components/ui/spinner";
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
+import CardPlaceholder from "../cards/card-placeholder";
 
 interface IProps {
   isPending: boolean;
@@ -54,6 +55,12 @@ export function PaginationLoadMore({
       heightRef.current = newHeight;
     }
   }, [data]);
+
+  if (isPending || data.length === 0) {
+    return Array.from({ length: 8 }).map((_, index) => {
+      return <CardPlaceholder key={index} />;
+    });
+  }
 
   return (
     <div className="flex flex-col gap-8">
