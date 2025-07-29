@@ -12,8 +12,8 @@
   list-style-type: none;
 }
 .swiper_list {
-  transition: transform 0.3s ease-out;
-  min-width: 100%;
+  transition: transform 0.4s ease-out;
+  width: 100%;
   display: flex;
   flex-direction: row;
   list-style: none;
@@ -47,6 +47,7 @@
   height: 8px;
   transform: rotate(45deg);
   background-color: #e0e0e0;
+  cursor: pointer;
 }
 .swiper_indicator_active {
   background-color: #dd8560 !important;
