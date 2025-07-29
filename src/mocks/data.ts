@@ -63,9 +63,7 @@ export const allProducts = Array.from({ length: 100 }, (_, i) => ({
     image: "https://placehold.co/60x60/EEE/31343C",
     username: `user${Math.floor(Math.random() * 150) + 1}`,
   },
-  countdown: new Date(
-    Date.now() + Math.floor(Math.random() * 1000000000),
-  ).toISOString(),
+  countdown: Math.floor(new Date().getTime() / 1000 + 60 * 60 * 24 * 7),
   chain: CHAINS[Math.floor(Math.random() * CHAINS.length)],
   collection: COLLECTION[Math.floor(Math.random() * COLLECTION.length)],
   category: CATEGORY[Math.floor(Math.random() * CATEGORY.length)],
