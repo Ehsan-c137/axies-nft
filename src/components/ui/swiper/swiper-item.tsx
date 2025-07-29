@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
-import styles from "./Swiper.module.css";
+import styles from "./swiper.module.css";
 
 type imageProp = {
   src: string;
