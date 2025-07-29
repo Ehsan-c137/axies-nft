@@ -3,7 +3,13 @@ import type { RuleSetRule } from "webpack";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [new URL("https://placehold.co/**")],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+        pathname: "/**",
+      },
+    ],
   },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule: RuleSetRule) => {
