@@ -20,6 +20,7 @@ import {
 } from "@/hooks/useAnimationPerformanceControl";
 import clsx from "clsx";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import BoxIcon from "@/components/icons/box-icon";
 
 gsap.registerPlugin(useGSAP);
 
@@ -53,8 +54,12 @@ export function Hero() {
             </Button>
           </Link>
           <Link href="/item-creation">
-            <Button variant="outline" aria-label="create">
-              <Package /> Create
+            <Button
+              variant="outline"
+              aria-label="create"
+              className="flex items-center gap-2"
+            >
+              <BoxIcon /> Create
             </Button>
           </Link>
         </div>
