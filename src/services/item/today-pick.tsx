@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "../config";
-import type { UseQueryOptions } from "@tanstack/react-query";
 
 interface IFilter {
   page: number;
