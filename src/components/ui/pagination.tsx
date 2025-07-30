@@ -8,7 +8,6 @@ import {
 
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { TypeOf } from "zod";
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
