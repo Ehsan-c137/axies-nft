@@ -30,13 +30,13 @@ export function LoginForm() {
     },
   });
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: TLoginForm) => {
     console.log(e);
   };
 
   return (
     <>
-      <Form
+      <form
         className="flex flex-col gap-1 justify-center items-center w-full"
         onSubmit={form.handleSubmit(onSubmit)}
       >
@@ -51,7 +51,7 @@ export function LoginForm() {
         >
           Login
         </Button>
-      </Form>
+      </form>
       <div className="flex justify-between items-center w-full">
         <Label htmlFor="remember" className="cursor-pointer">
           Remember Me <Checkbox name="remember" id="remember" />
