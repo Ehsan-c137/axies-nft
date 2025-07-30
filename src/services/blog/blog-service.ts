@@ -1,12 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import { BASE_URL } from "../config";
 
 export const BLOG_QUERY = {
   allBlogs: () => ["blog-posts"],
-  blogDetail: (id: number) => ({
+  blogDetail: (
+    id: number,
+    options: Omit<UseQueryOptions, "queryKey" | "queryFn">,
+  ) => ({
     queryKey: [...BLOG_QUERY.allBlogs(), id],
     queryFn: () => getBlogDetail(id),
     staleTime: 5 * 1000,
+    ...options,
   }),
 };
 
@@ -37,15 +41,21 @@ export async function getBlogDetail(id: number | string) {
   return response.json();
 }
 
-export function useBlogPosts(page = 1, ...args: any) {
+export function useBlogPosts<TItem, TData = TItem>(
+  page = 1,
+  options?: Omit<
+    UseQueryOptions<TItem, Error, TData>,
+    "queryKey" | "queryFn" | "placeholderData"
+  >,
+) {
   return useQuery({
     queryKey: [...BLOG_QUERY.allBlogs(), page],
     queryFn: () => getBlogPosts(page),
     placeholderData: (previousData) => previousData,
-    ...args,
+    ...options,
   });
 }
 
-export function useBlogDetail(id: number, ...args: any) {
-  return useQuery(BLOG_QUERY.blogDetail(id));
+export function useBlogDetail(id: number, options: UseQueryOptions) {
+  return useQuery(BLOG_QUERY.blogDetail(id, options));
 }
