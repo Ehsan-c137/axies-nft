@@ -1,12 +1,9 @@
-import { Button } from "@ui/button";
 import { FILTER_CONFIG } from "./filter-desktop";
 import {
   Select,
   SelectTrigger,
   SelectContent,
   SelectGroup,
-  SelectLabel,
-  SelectItem,
   SelectValue,
 } from "@ui/select";
 import { Checkbox } from "@ui/checkbox";
