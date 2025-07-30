@@ -1,4 +1,4 @@
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useOptimistic, useTransition, useMemo } from "react";
 
 const parseSearchParamsToRecord = (
