@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { HEADER_HEIGHT } from "@/lib/constant/sizes";
 import RocketIcon from "@icons/rocket-icon";
-import Package from "@icons/package-icon";
 import Elispse from "@illustrations/ellipse";
 import ElispseOutline from "@illustrations/ellipse-outline";
 import Star from "@/components/illustrations/star";
