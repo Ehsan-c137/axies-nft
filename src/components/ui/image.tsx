@@ -12,29 +12,20 @@ type Props = Omit<ImageProps, "src" | "priority" | "loading"> & {
 
 export function ThemedImage(props: Props) {
   const [isMounted, setIsMounted] = useState(false);
-  const { srcLight, srcDark, ...rest } = props;
+  const { srcLight, srcDark, alt, ...rest } = props;
   const { resolvedTheme } = useTheme();
-  let src;
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  switch (resolvedTheme) {
-    case "light":
-      src = srcLight;
-      break;
-    case "dark":
-      src = srcDark;
-      break;
-    default:
-      src = srcDark;
-      break;
-  }
+  const src = resolvedTheme === "light" ? srcLight : srcDark;
 
   if (!isMounted) {
-    return <span className="sr-only h-10">{rest?.alt}</span>;
+    return <span className="animate-pulse h-10">{alt}</span>;
   }
 
-  return <Image src={src} loading="lazy" priority={false} {...rest} />;
+  return (
+    <Image src={src} alt={alt} loading="lazy" priority={false} {...rest} />
+  );
 }
