@@ -1,23 +1,23 @@
 import { Button } from "@ui/button";
 import clsx from "clsx";
 import { Spinner } from "@/components/ui/spinner";
-import { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import CardPlaceholder from "../cards/card-placeholder";
 
-interface IProps {
+interface IProps<T extends { id: React.Key }> {
   isPending: boolean;
   handleLoadMore: () => void;
   isPlaceholderData: boolean;
   lastPage: number;
   currentPage: number;
-  error: any;
+  error: Error | null;
   isError: boolean;
-  data: { id: number; [key: string]: any }[];
-  DataCard: React.JSXElementConstructor<any>;
+  data: T[];
+  DataCard: React.ComponentType<T>;
 }
 
-export function PaginationLoadMore({
+export function PaginationLoadMore<T extends { id: React.Key }>({
   isPending,
   handleLoadMore,
   data,
@@ -27,7 +27,7 @@ export function PaginationLoadMore({
   currentPage,
   error,
   isError,
-}: IProps) {
+}: IProps<T>) {
   const gridRef = useRef<HTMLDivElement>(null);
   const heightRef = useRef<number | null>(null);
 
@@ -77,7 +77,7 @@ export function PaginationLoadMore({
           return <DataCard key={item.id} {...item} />;
         })}
       </div>
-      {isError && <div className="w-full text-center">{error.message}</div>}
+      {isError && <div className="w-full text-center">{error?.message}</div>}
       {currentPage < lastPage && (
         <div className="w-full flex justify-center">
           <Button
