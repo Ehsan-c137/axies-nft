@@ -1,5 +1,6 @@
+import { TBlogDetail } from "@/types/service/index";
 interface IProps {
-  blog: any;
+  blog: TBlogDetail;
 }
 
 export default function BlogDetailScreen({ blog }: IProps) {
