@@ -2,7 +2,6 @@
 
 import { ThemedImage } from "@ui/image";
 import Link from "next/link";
-import SendIcon from "@icons/send-icon";
 import SendHorizontalIcon from "@icons/send-horizontal-icon";
 import TwitterIcon from "@icons/socials/twitter-icon";
 import TelegramIcon from "@icons/socials/telegram-icon";
@@ -95,12 +94,12 @@ export function Footer() {
         </form>
         <ul className="flex items-center flex-wrap gap-4">
           {[
-            <TwitterIcon />,
-            <TelegramIcon />,
-            <DiscordIcon />,
-            <YoutubeIcon />,
-            <FacebookIcon />,
-            <InstagramIcon />,
+            <TwitterIcon key="twitter" />,
+            <TelegramIcon key="telegram" />,
+            <DiscordIcon key="discord" />,
+            <YoutubeIcon key="youtube" />,
+            <FacebookIcon key="facebook" />,
+            <InstagramIcon key="instagram" />,
           ].map((item, index) => {
             const color = [
               "#1da1f2",
@@ -112,7 +111,7 @@ export function Footer() {
             ];
             return (
               <SocialWrapper
-                key={index}
+                key={color[index]}
                 path={"/"}
                 onHoverBackground={color[index]}
               >
