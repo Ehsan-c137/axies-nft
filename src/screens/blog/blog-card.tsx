@@ -4,26 +4,17 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/avatar";
 import { Button } from "@ui/button";
-
-interface IProps {
-  slug: string;
-  title: string;
-  authorName: string;
-  date: string;
-  thumbnail: string;
-  authorImage: string;
-  description: string;
-}
+import { TBlogDetail } from "@/types/service/index";
 
 export function BlogCard({
   title,
   authorName,
-  date,
+  createdAt,
   thumbnail,
   description,
   slug,
   authorImage,
-}: IProps) {
+}: TBlogDetail) {
   const router = useRouter();
   return (
     <div className="p-4 grid gap-4 max-w-[450px] bg-[var(--card)] text-[var(--card-foreground)] rounded-2xl not-dark:shadow-sm">
@@ -47,7 +38,9 @@ export function BlogCard({
           </Avatar>
           <div className="flex flex-1 items-center justify-between w-full">
             <h3 className="text-sm font-bold">{title}</h3>
-            <p className="text-sm text-muted-foreground">{date}</p>
+            <p className="text-sm text-muted-foreground">
+              {createdAt.getTime()}
+            </p>
           </div>
         </div>
       </div>
