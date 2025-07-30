@@ -2,9 +2,8 @@
 import React, { Suspense } from "react";
 import PaginationControl from "./pagination-control";
 import { TPaginatedData } from "@/types/service/index";
-import { TItem } from "@/services/item/item-service";
 
-interface IProps<T extends TItem> {
+interface IProps<T extends React.JSX.IntrinsicAttributes> {
   DataCard: React.ComponentType<T>;
   PlaceholderCard: React.ComponentType;
   paginatedData: TPaginatedData<T>;
@@ -14,7 +13,7 @@ interface IProps<T extends TItem> {
   url?: string;
 }
 
-export default function PaginationList<T extends TItem>({
+export default function PaginationList<T>({
   paginatedData,
   DataCard,
   PlaceholderCard,
@@ -22,7 +21,7 @@ export default function PaginationList<T extends TItem>({
   isPending,
   error,
   url,
-}: IProps<T>) {
+}: IProps<T & React.JSX.IntrinsicAttributes>) {
   if (isPending && !isPlaceholderData) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 container mx-auto">
