@@ -1,14 +1,12 @@
-// @ts-nocheck
-
 export const script = (
-  attribute,
-  storageKey,
-  defaultTheme,
-  forcedTheme,
-  themes,
-  value,
-  enableSystem: unknown,
-  enableColorScheme: unknown,
+  attribute: string | string[],
+  storageKey: string,
+  defaultTheme: string,
+  forcedTheme: string | undefined,
+  themes: string[],
+  value: Record<string, string> | undefined,
+  enableSystem: boolean,
+  enableColorScheme: boolean,
 ) => {
   const el = document.documentElement;
   const systemThemes = ["light", "dark"];
@@ -52,7 +50,7 @@ export const script = (
       const theme = isSystem ? getSystemTheme() : themeName;
       updateDOM(theme);
     } catch (e) {
-      //
+      console.error(e);
     }
   }
 };
