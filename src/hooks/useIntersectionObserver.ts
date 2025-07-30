@@ -97,7 +97,7 @@ export function useIntersectionObserver({
     entry: undefined,
   }));
 
-  const callbackRef = useRef<UseIntersectionObserverOptions["onChange"]>();
+  const callbackRef = useRef<UseIntersectionObserverOptions["onChange"]>(null);
 
   callbackRef.current = onChange;
 
