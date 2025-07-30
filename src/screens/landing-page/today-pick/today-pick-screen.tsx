@@ -38,6 +38,7 @@ export function TodayPick({ ref }: IProps) {
 
   const currentPage = data?.meta?.currentPage;
   const lastPage = data?.meta?.lastPage;
+  const dataArr = data?.data;
 
   const handleLoadMore = () => {
     handleParamChange(PARAM_KEYS.page, String(currentPage + 1), true, true);
@@ -48,16 +49,14 @@ export function TodayPick({ ref }: IProps) {
   };
 
   useEffect(() => {
-    if (data?.data && !isPlaceholderData) {
-      if (data.meta.currentPage === 1) {
-        setShowedData(data.data);
+    if (dataArr && !isPlaceholderData) {
+      if (currentPage === 1) {
+        setShowedData(dataArr);
       } else {
-        setShowedData((prevData) => [...prevData, ...data.data]);
+        setShowedData((prevData) => [...prevData, ...dataArr]);
       }
     }
-  }, [lastPage, currentPage]);
-
-  console.log({ showedData, data, paramState });
+  }, [lastPage, currentPage, dataArr, isPlaceholderData]);
 
   return (
     <>
