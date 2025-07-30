@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
+import { allUsers } from "@/mocks/data";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } },
-) {
-  const { id } = params;
-  const user = await getUserById(id);
+export async function GET(request: Request, params: Promise<{ id: string }>) {
+  const id = (await params)?.id;
+  const user = allUsers.find((user) => user.id === parseInt(id, 10));
   if (!user) {
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
+    throw new Error("User not found");
   }
   return NextResponse.json(user);
 }
