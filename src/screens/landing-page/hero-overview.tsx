@@ -19,10 +19,10 @@ export function HeroOverview({ ref }: Iprops) {
       {Array.from({ length: 4 }).map((_, index) => {
         const colors = ["#5142FB", "#46A433", "#9835FB", "#DF4949"];
         const icons = [
-          <Wallet width={20} height={20} />,
-          <Window width={20} height={20} />,
-          <Picture width={20} height={20} />,
-          <Bookmark width={20} height={20} />,
+          <Wallet key="wallet" width={20} height={20} />,
+          <Window key="window" width={20} height={20} />,
+          <Picture key="picture" width={20} height={20} />,
+          <Bookmark key="bookmark" width={20} height={20} />,
         ];
         const title = [
           "Set Up Your Wallet",
