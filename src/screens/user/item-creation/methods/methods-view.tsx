@@ -9,6 +9,12 @@ import { Button } from "@ui/button";
 import { Form } from "@ui/form";
 import { UseFormReturn } from "react-hook-form";
 
+type ItemCreationFormValues = {
+  price?: string;
+  startingBid?: string;
+  endDate?: Date;
+};
+
 const TABS = [
   {
     id: "Fixed-Price",
@@ -27,7 +33,11 @@ const TABS = [
   },
 ];
 
-export default function MethodsView({ form }: { form: UseFormReturn<any> }) {
+export default function MethodsView({
+  form,
+}: {
+  form: UseFormReturn<ItemCreationFormValues>;
+}) {
   const [activeTabId, setActiveTabId] = useState(TABS[0].id);
   const ActiveTabComponent = TABS.find(
     (tab) => tab.id === activeTabId,
