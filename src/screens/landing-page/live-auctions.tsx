@@ -2,21 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import dynamic from "next/dynamic";
 import { LiveAuctionsCard } from "@/components/common/cards/live-auctions-card";
-import { useGetTodayPick } from "@/services/item/today-pick";
 import { useGetItems } from "@/services/item/item-service";
-
-const DynamicSwiper = dynamic(() => import("@/components/ui/swiper/swiper"), {
-  ssr: false,
-});
+import Swiper from "@ui/swiper/swiper";
 
 interface Iprops {
   ref: React.RefObject<HTMLElement[]>;
 }
 
 export function LiveAuctions({ ref }: Iprops) {
-  const isMobile = useMediaQuery("(max-width: 768px)", { defaultValue: true });
+  const isMobile = useMediaQuery("(max-width: 768px)", { defaultValue: false });
   const isTablet = useMediaQuery("(max-width: 1024px)", {
     defaultValue: false,
   });
@@ -42,8 +37,8 @@ export function LiveAuctions({ ref }: Iprops) {
           EXPLORE MORE
         </Button>
       </div>
-      <DynamicSwiper
-        datas={data?.slice(0, 15)}
+      <Swiper
+        datas={data?.slice(0, 15) || []}
         ItemCard={LiveAuctionsCard}
         isLoading={isPending}
         config={swiper_config}
