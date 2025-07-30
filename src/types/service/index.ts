@@ -1,11 +1,15 @@
-export type TPaginatedData = {
-  data: { id: number; [key: string]: any }[];
-  meta: {
-    total: number;
-    currentPage: number;
-    lastPage: number;
-    perPage: number;
-    prev: number | null;
-    next: number | null;
-  };
-};
+import { blogPosts } from "@/mocks/data";
+
+export interface TPaginatedMeta {
+  currentPage: number;
+  lastPage: number;
+  total?: number;
+  perPage?: number;
+}
+
+export interface TPaginatedData<T> {
+  data: T[];
+  meta: TPaginatedMeta;
+}
+
+export type TBlogDetail = (typeof blogPosts)[0];
