@@ -8,12 +8,7 @@ import { OpenForBidsTab } from "./open-for-bids";
 import { Button } from "@ui/button";
 import { Form } from "@ui/form";
 import { UseFormReturn } from "react-hook-form";
-
-type ItemCreationFormValues = {
-  price?: string;
-  startingBid?: string;
-  endDate?: Date;
-};
+import { TForm } from "../item-creation-screen";
 
 const TABS = [
   {
@@ -33,11 +28,7 @@ const TABS = [
   },
 ];
 
-export default function MethodsView({
-  form,
-}: {
-  form: UseFormReturn<ItemCreationFormValues>;
-}) {
+export default function MethodsView({ form }: { form: UseFormReturn<TForm> }) {
   const [activeTabId, setActiveTabId] = useState(TABS[0].id);
   const ActiveTabComponent = TABS.find(
     (tab) => tab.id === activeTabId,
