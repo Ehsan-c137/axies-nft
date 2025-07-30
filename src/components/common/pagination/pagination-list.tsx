@@ -1,29 +1,28 @@
 "use client";
 import React, { Suspense } from "react";
 import PaginationControl from "./pagination-control";
-import { TPaginatedData } from "@/types/service";
+import { TPaginatedData } from "@/types/service/index";
+import { TItem } from "@/services/item/item-service";
 
-interface IProps {
-  paginatedData: TPaginatedData;
-  DataCard: React.JSXElementConstructor<any>;
-  PlaceholderCard: React.JSXElementConstructor<any>;
+interface IProps<T extends TItem> {
+  DataCard: React.ComponentType<T>;
+  PlaceholderCard: React.ComponentType;
+  paginatedData: TPaginatedData<T>;
   isPlaceholderData?: boolean;
   isPending?: boolean;
-  isError?: boolean;
-  error: any;
+  error: Error | null;
   url?: string;
 }
 
-export default function PaginationList({
+export default function PaginationList<T extends TItem>({
   paginatedData,
   DataCard,
   PlaceholderCard,
   isPlaceholderData,
   isPending,
-  isError,
   error,
   url,
-}: IProps) {
+}: IProps<T>) {
   if (isPending && !isPlaceholderData) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 container mx-auto">
@@ -34,14 +33,14 @@ export default function PaginationList({
     );
   }
 
-  if (isError) {
+  if (error?.message) {
     return <div className="w-full text-center">Error: {error.message}</div>;
   }
 
   if (paginatedData?.data?.length === 0) {
     return (
       <div className="w-full text-center">
-        Ooopes! could't not find anything
+        <p>Ooopes! could&apos;t not find anything</p>
       </div>
     );
   }
@@ -54,9 +53,9 @@ export default function PaginationList({
           opacity: isPlaceholderData ? 0.5 : 1,
         }}
       >
-        {paginatedData?.data?.map((item) => {
+        {paginatedData?.data?.map((item, index) => {
           return (
-            <Suspense key={item.id} fallback={<PlaceholderCard />}>
+            <Suspense key={index} fallback={<PlaceholderCard />}>
               <DataCard {...item} />
             </Suspense>
           );
