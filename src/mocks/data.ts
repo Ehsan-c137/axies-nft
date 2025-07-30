@@ -35,6 +35,7 @@ export const blogPosts = Array.from({ length: 60 }, (_, i) => ({
   updatedAt: new Date(),
   thumbnail: "https://placehold.co/600x400/EEE/31343C",
   slug: `blog-post-${i + 1}`,
+  description: "This is the description of Blog Post",
 }));
 
 export const allProducts = Array.from({ length: 100 }, (_, i) => ({
