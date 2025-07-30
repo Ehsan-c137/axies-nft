@@ -20,7 +20,7 @@ export function ExploreCard({
           <Image
             className="select-none absolute w-full h-full object-cover"
             alt={`${name} image`}
-            src={image}
+            src={image!}
             width={284}
             height={274}
             unoptimized
@@ -39,7 +39,7 @@ export function ExploreCard({
         <div className="flex items-center gap-2">
           <Image
             src={createdBy?.image ?? "/avatar_1.png"}
-            alt={""}
+            alt={createdBy?.name}
             width={44}
             height={44}
             unoptimized
