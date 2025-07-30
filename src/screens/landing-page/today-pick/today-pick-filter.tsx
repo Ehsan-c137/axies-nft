@@ -1,11 +1,8 @@
-import { Button } from "@ui/button";
 import {
   Select,
   SelectTrigger,
   SelectContent,
   SelectGroup,
-  SelectLabel,
-  SelectItem,
   SelectValue,
 } from "@ui/select";
 import { Checkbox } from "@ui/checkbox";
