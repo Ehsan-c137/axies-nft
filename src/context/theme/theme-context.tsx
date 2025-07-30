@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use client";
 
 import * as React from "react";
@@ -8,13 +9,14 @@ const colorSchemes = ["light", "dark"];
 const MEDIA = "(prefers-color-scheme: dark)";
 const isServer = typeof window === "undefined";
 const ThemeContext = React.createContext<UseThemeProps | undefined>(undefined);
-const defaultContext: UseThemeProps = { setTheme: (_) => {}, themes: [] };
+const defaultContext: UseThemeProps = { setTheme: () => {}, themes: [] };
 
 const saveToLS = (storageKey: string, value: string) => {
   // Save to storage
   try {
     localStorage.setItem(storageKey, value);
   } catch (e) {
+    console.error("does not support local storage", e);
     // Unsupported
   }
 };
@@ -90,16 +92,28 @@ const Theme = ({
         const colorScheme = colorSchemes.includes(resolved)
           ? resolved
           : fallback;
-        // @ts-ignore
+
+        // @ts-expect-error forcing
         d.style.colorScheme = colorScheme;
       }
 
       enable?.();
     },
-    [nonce],
+
+    [
+      nonce,
+      value,
+      disableTransitionOnChange,
+      attribute,
+      attrs,
+      enableColorScheme,
+      defaultTheme,
+      enableSystem,
+      themes,
+    ],
   );
 
-  // @ts-ignore
+  // @ts-expect-error
   const setTheme = React.useCallback((value) => {
     if (typeof value === "function") {
       setThemeState((prevTheme) => {
