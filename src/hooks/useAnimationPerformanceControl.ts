@@ -39,8 +39,9 @@ const checkShouldAnimationsBeEnabled = (
     return false;
   }
 
-  const coreCount = navigator.hardwareConcurrency;
-  const deviceMemoryGB = navigator.deviceMemory; // Reported in GB
+  const coreCount = navigator?.hardwareConcurrency;
+  const deviceMemoryGB = (navigator as Navigator & { deviceMemory?: number })
+    ?.deviceMemory;
 
   let shouldBeDisabled = false;
 
