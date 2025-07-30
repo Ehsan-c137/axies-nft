@@ -3,11 +3,17 @@ type TProps = React.ComponentPropsWithoutRef<"div">;
 export function HeroCharacter(props: TProps) {
   return (
     <div className={"relative "} {...props}>
-      <img
-        src="/assets/hero/hero-character.png"
-        alt="Hero Character"
-        className="w-full h-full object-cover"
-      />
+      <picture className="w-full h-full object-cover">
+        <source srcSet="/assets/hero/hero-character.png" type="image/png" />
+
+        <img
+          src="/assets/hero/hero-character.png"
+          className="w-full h-full object-cover"
+          alt="Hero Character"
+          width={800}
+          height={500}
+        />
+      </picture>
     </div>
   );
 }
