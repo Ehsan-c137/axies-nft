@@ -8,24 +8,29 @@ import { getTouchEventData } from "@/lib/dom";
 import { SwiperIndicators } from "./swiper-indicators";
 import CardPlaceholder from "@/components/common/cards/card-placeholder";
 
-interface IProps {
-  ItemCard: React.JSXElementConstructor<any>;
-  datas: [];
+interface IProps<TData extends object> {
+  ItemCard: React.FC<TData>;
+  datas: TData[];
   config: {
     itemPerPage: number;
   };
   isLoading: boolean;
 }
 
-const Swiper = ({ isLoading, config, ItemCard, datas }: IProps) => {
+const Swiper = <TData extends object>({
+  isLoading,
+  config,
+  ItemCard,
+  datas,
+}: IProps<TData>) => {
   const { itemPerPage } = config;
   const MIN_SWIPE_Required = 50;
 
-  if (isLoading) {
+  const LoadingContent = () => {
     return Array.from({ length: itemPerPage }).map((_, i) => (
       <CardPlaceholder key={i} />
     ));
-  }
+  };
 
   const containerRef = useRef<HTMLUListElement>(null);
   const containerWidthRef = useRef(0);
@@ -127,7 +132,8 @@ const Swiper = ({ isLoading, config, ItemCard, datas }: IProps) => {
           is_swiping: isSwiping,
         })}
       >
-        {datas?.map((data: Object, index: number) => {
+        {isLoading && <LoadingContent />}
+        {datas?.map((data, index) => {
           return (
             <li
               key={index}
