@@ -13,7 +13,11 @@ interface IProps {
   isLiked: boolean;
 }
 
-export default function ({ count, itemId, isLiked: initialIsLiked }: IProps) {
+export default function LikeBox({
+  count,
+  itemId,
+  isLiked: initialIsLiked,
+}: IProps) {
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [like, setLike] = useState(count);
 
