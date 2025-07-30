@@ -1,6 +1,7 @@
 import BlogsScreen from "@/screens/blog/blogs-screen";
 import { Metadata } from "next";
 import { getBlogPosts } from "@/services/blog/blog-service";
+import { TBlogDetail, TPaginatedData } from "@/types/service/index";
 
 interface IProps {
   params: Promise<{ page: string }>;
@@ -34,5 +35,10 @@ export default async function BlogsPage({ params }: IProps) {
   const pageNumber = parseInt(pageParam, 10) || 1;
   const blogs = await getBlogPosts(pageNumber);
 
-  return <BlogsScreen blogs={blogs} currentPage={pageNumber} />;
+  return (
+    <BlogsScreen
+      blogs={blogs as TPaginatedData<TBlogDetail>}
+      currentPage={pageNumber}
+    />
+  );
 }
