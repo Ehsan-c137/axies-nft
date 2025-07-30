@@ -4,7 +4,6 @@ import { Button } from "@ui/button";
 import { Label } from "@ui/label";
 import { Checkbox } from "@ui/checkbox";
 import { Input } from "@ui/input";
-import { Form } from "@/components/ui/form";
 import GoogleIcon from "@icons/socials/google-icon";
 import FacebookIcon from "@icons/socials/facebook-icon";
 import Link from "next/link";
