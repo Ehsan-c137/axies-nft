@@ -1,6 +1,3 @@
-import { Label } from "@ui/label";
-import { Input } from "@ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { FixedPriceForm } from "@/modules/item/forms/item-creation/fixed-price-form";
 
 export function FixedPriceTab() {

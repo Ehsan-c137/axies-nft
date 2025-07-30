@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Button } from "@ui/button";
 import { Tabs } from "./tabs";
 import EyeIcon from "@icons/eye-icon";
-import HeartIcon from "@icons/heart-icon";
 import EllipsisIcon from "@icons/ellipsis-icon";
 import { useGetItemDetail, TItem } from "@/services/item/item-service";
 import ItemScreenPlaceholder from "./item-screen-placeholder";
