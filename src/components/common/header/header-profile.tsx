@@ -2,13 +2,18 @@ import { Popover, PopoverContent, PopoverTrigger } from "@ui/popover";
 import { Divider } from "@ui/divider";
 import { Button } from "@ui/button";
 import Link from "next/link";
-import { useUserProfile } from "@/services/profile/profile-service";
+import { useUserProfile } from "@/services/users/user-service";
 import UserIcon from "@icons/user-icon";
 import { toast } from "sonner";
 import { useLogoutMutation } from "@/services/auth/auth-service";
 
 export function Profile() {
-  const { data: userProfileData, isPending, error, isError } = useUserProfile();
+  const {
+    data: userProfileData,
+    isPending,
+    error,
+    isError,
+  } = useUserProfile(2);
 
   const {
     mutate: logoutUser,
@@ -36,7 +41,8 @@ export function Profile() {
       <PopoverContent className="w-[264px] bg-[var(--popover)] text-[var(--popover-foreground)]">
         {isPending && <Placeholder />}
         {isError && <ErrorPlaceholder message={error?.message} />}
-        {!isPending && (
+
+        {!isPending && !isError && (
           <div className="flex flex-col gap-2">
             <h4 className="font-bold">{userProfileData?.name}</h4>
             <div className="flex items-center justify-between">
@@ -66,7 +72,7 @@ export function Profile() {
 
 const Placeholder = () => {
   return (
-    <div className="grid gap-2 w-[264px]">
+    <div className="grid gap-2 w-full">
       <div className="w-full h-10 bg-[rgba(0,0,0,0.3)] rounded-sm animate-pulse"></div>
       <div className="w-full h-10 bg-[rgba(0,0,0,0.3)] rounded-sm animate-pulse"></div>
       <div className="w-full h-10 bg-[rgba(0,0,0,0.3)] rounded-sm animate-pulse"></div>
@@ -77,9 +83,10 @@ const Placeholder = () => {
 };
 
 const ErrorPlaceholder = ({ message }: { message: string }) => {
+  console.error(message);
   return (
-    <div className="flex items-center justify-center w-80">
-      <div className="text-red-500">{message}</div>
+    <div className="flex items-center justify-center w-full">
+      <div className="text-red-500">Something went wrong</div>
     </div>
   );
 };
