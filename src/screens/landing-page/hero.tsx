@@ -21,8 +21,6 @@ import clsx from "clsx";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import BoxIcon from "@/components/icons/box-icon";
 
-gsap.registerPlugin(useGSAP);
-
 export function Hero() {
   const isDesktop = useMediaQuery("(min-width: 768px)", {
     initializeWithValue: false,
