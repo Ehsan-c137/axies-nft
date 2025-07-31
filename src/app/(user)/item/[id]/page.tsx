@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+
 import ItemDetailScreen from "@/screens/user/item-detail/item-screen";
 import {
   getAllItems,
   getItemDetail,
   TItem,
 } from "@/services/item/item-service";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -14,9 +16,8 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const item = await getItemDetail(id);
-  34;
   if (!item) {
-    throw new Error("item not found");
+    notFound();
   }
 
   return {
@@ -45,6 +46,10 @@ export default async function Page({
   const { id } = await params;
 
   const item = await getItemDetail(id);
+
+  if (!item) {
+    notFound();
+  }
 
   return <ItemDetailScreen id={id} initialData={item} />;
 }
