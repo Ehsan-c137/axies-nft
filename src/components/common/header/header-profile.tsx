@@ -19,7 +19,7 @@ export function Profile() {
     mutate: logoutUser,
     isPending: isLogoutPending,
     error: logoutError,
-  } = useLogoutMutation();
+  } = useLogoutMutation(1);
 
   const handleLogout = async () => {
     try {
