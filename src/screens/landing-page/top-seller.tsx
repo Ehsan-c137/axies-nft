@@ -21,7 +21,7 @@ export function TopSeller({ ref }: IProps) {
           EXPLORE MORE
         </Button>
       </div>
-      <div className="flex flex-wrap gap-10">
+      <div className="flex flex-wrap gap-4 md:gap-10">
         <TopSellerItem />
         <TopSellerItem />
         <TopSellerItem />
@@ -39,7 +39,7 @@ const TopSellerItem = function () {
   return (
     <div className="flex items-center gap-5">
       <div
-        className="border-[1px] rounded-[36px] hover:rounded-[50px] w-[96px] h-[96px] relative overflow-hidden transition"
+        className="border-[1px] rounded-[24px] md:rounded-[36px] hover:rounded-[50px] w-[64px] h-[64px] md:w-[96px] md:h-[96px] relative overflow-hidden transition"
         style={{
           transition: "all 300ms ease",
         }}

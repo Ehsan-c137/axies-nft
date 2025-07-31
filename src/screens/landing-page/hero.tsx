@@ -25,13 +25,18 @@ export function Hero() {
   const isDesktop = useMediaQuery("(min-width: 768px)", {
     initializeWithValue: false,
   });
+  const isLowHeight = useMediaQuery("(max-height: 670px)", {
+    initializeWithValue: false,
+  });
 
   return (
     <div
       style={{
         height: isDesktop
           ? `calc(100vh - ${HEADER_HEIGHT}px)`
-          : `calc(100vh - ${160}px)`,
+          : !isLowHeight
+            ? `calc(100vh - 160px)`
+            : `100vh`,
       }}
       className={clsx(
         `flex flex-col xl:flex-row items-center justify-between gap-30 lg:gap-8 lg:pt-20`,
