@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@ui/avatar";
 import { Button } from "@ui/button";
 import { TBlogDetail } from "@/types/service/index";
-
+import { format } from "date-fns";
 export function BlogCard({
   title,
   authorName,
@@ -39,7 +39,7 @@ export function BlogCard({
           <div className="flex flex-1 items-center justify-between w-full">
             <h3 className="text-sm font-bold">{title}</h3>
             <p className="text-sm text-muted-foreground">
-              {createdAt.getTime()}
+              {format(createdAt, "dd.MM.yyyy")}
             </p>
           </div>
         </div>
