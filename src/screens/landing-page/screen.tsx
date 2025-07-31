@@ -50,7 +50,7 @@ export default function LandingScreen() {
   }, [isAnimationEnabled]);
 
   return (
-    <div className="px-6">
+    <div className="md:px-6">
       <SectionWrapper>
         <Hero />
         <HeroOverview ref={itemRef} />
