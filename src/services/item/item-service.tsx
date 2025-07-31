@@ -19,18 +19,10 @@ export type TItem = (typeof allProducts)[0];
 export const ITEM_QUERY = {
   items: () => ["items"],
   itemWithFilter: (filters: ItemFilters) => [...ITEM_QUERY.items(), filters],
-  itemDetail: (
-    id: string,
-    options: Omit<UseQueryOptions, "queryKey" | "queryFn">,
-  ) => ({
-    queryKey: [...ITEM_QUERY.items(), id],
-    queryFn: () => getItemDetail(id),
-    staleTime: 5 * 1000,
-    ...options,
-  }),
+  itemDetail: (id: string) => [...ITEM_QUERY.items(), id] as const,
 };
 
-export const getItemDetail = async (id: string) => {
+export const getItemDetail = async (id: string): Promise<TItem> => {
   const response = await fetch(`${BASE_URL}/items/${id}`);
   return response.json();
 };
@@ -54,12 +46,15 @@ export const getAllItems = async (args: ItemFilters = {}) => {
   return response.json();
 };
 
-export function useGetItemDetail(
+export function useGetItemDetail<TData = TItem>(
   id: string,
-  options: Omit<UseQueryOptions, "queryKey" | "queryFn"> = {},
+  options?: Omit<UseQueryOptions<TItem, Error, TData>, "queryKey" | "queryFn">,
 ) {
-  return useQuery({
-    ...ITEM_QUERY.itemDetail(id, options),
+  return useQuery<TItem, Error, TData>({
+    queryKey: ITEM_QUERY.itemDetail(id),
+    queryFn: () => getItemDetail(id),
+    staleTime: 5 * 1000,
+    ...options,
   });
 }
 
