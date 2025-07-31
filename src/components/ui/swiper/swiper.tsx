@@ -27,9 +27,13 @@ const Swiper = <TData extends object>({
   const MIN_SWIPE_Required = 50;
 
   const LoadingContent = () => {
-    return Array.from({ length: itemPerPage }).map((_, i) => (
-      <CardPlaceholder key={i} />
-    ));
+    return (
+      <div className="w-full jusitfy-between">
+        {Array.from({ length: itemPerPage }).map((_, i) => (
+          <CardPlaceholder key={i} />
+        ))}
+      </div>
+    );
   };
 
   const containerRef = useRef<HTMLUListElement>(null);
