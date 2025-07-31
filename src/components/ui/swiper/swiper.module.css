@@ -32,7 +32,7 @@
   gap: 8px;
   width: 100%;
   flex-shrink: 0;
-  padding: 16px;
+  padding: 12px;
   cursor: pointer;
 }
 
@@ -46,6 +46,7 @@
   width: 8px;
   height: 8px;
   transform: rotate(45deg);
+  transition: background-color 0.4s ease-out;
   background-color: #e0e0e0;
   cursor: pointer;
 }

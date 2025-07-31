@@ -9,7 +9,7 @@ export default function ThemeSwitcher() {
     <Button
       variant="outline"
       aria-label="toggle-theme"
-      className="w-10 h-10 relative flex justify-center overflow-x-hidden"
+      className="w-10 h-10 px-0 relative flex justify-center overflow-x-hidden"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       <SunIcon

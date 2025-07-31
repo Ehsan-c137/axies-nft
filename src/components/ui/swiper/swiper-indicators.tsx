@@ -15,7 +15,7 @@ export const SwiperIndicators = ({
     return null;
   }
   return (
-    <ul className="flex items-center gap-4 pb-2 pt-4">
+    <ul className="flex items-center gap-2 md:gap-4 pb-2 pt-4">
       {Array.from({ length: count })?.map((_, index) => (
         <li
           data-testid="indicator"

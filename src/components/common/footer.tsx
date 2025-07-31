@@ -92,7 +92,7 @@ export function Footer() {
             <SendHorizontalIcon />
           </button>
         </form>
-        <ul className="flex items-center flex-wrap gap-4">
+        <ul className="flex items-center justify-between flex-wrap gap-4">
           {[
             <TwitterIcon key="twitter" />,
             <TelegramIcon key="telegram" />,
