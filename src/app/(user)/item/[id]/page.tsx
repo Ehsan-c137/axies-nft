@@ -14,7 +14,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const item = await getItemDetail(id);
-
+  34;
   if (!item) {
     throw new Error("item not found");
   }
@@ -26,11 +26,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const items: TItem[] = await getAllItems();
-
-  return items.map((item) => ({
-    id: String(item.id),
-  }));
+  try {
+    const items: TItem[] = await getAllItems();
+    return items.map((item) => ({
+      id: String(item.id),
+    }));
+  } catch (error) {
+    console.error("Error generating static param:", error);
+    return [];
+  }
 }
 
 export default async function Page({
@@ -41,10 +45,6 @@ export default async function Page({
   const { id } = await params;
 
   const item = await getItemDetail(id);
-
-  if (!item) {
-    throw new Error("Item not found");
-  }
 
   return <ItemDetailScreen id={id} initialData={item} />;
 }
