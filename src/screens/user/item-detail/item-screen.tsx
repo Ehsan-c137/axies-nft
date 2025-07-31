@@ -16,7 +16,7 @@ import CurrentBidCard from "@/modules/item/currentbid-card";
 import StatusBox from "@/modules/item/status-box";
 import LikeBox from "@/modules/item/like-box";
 
-export default function ItemDetailView({
+export default function ItemDetailScreen({
   id,
   initialData,
 }: {
@@ -41,7 +41,7 @@ export default function ItemDetailView({
     return <UnexpectedError error={error} />;
   }
 
-  if (!itemDetail) {
+  if (!itemDetail || itemDetail?.status == 404) {
     return <NotFound />;
   }
 
