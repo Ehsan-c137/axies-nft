@@ -8,11 +8,20 @@ interface IProps {
 }
 
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
-  const title = (await params).page ? ` - Page ${(await params).page}` : "";
-  return {
-    title: `Blogs${title}`,
-    description: `Discover the latest articles on our blog, page ${(await params).page}.`,
-  };
+  const { page } = await params;
+  try {
+    const title = page ? ` - Page ${page}` : "";
+    return {
+      title: `Blogs${title}`,
+      description: `Discover the latest articles on our blog, page ${(await params).page}.`,
+    };
+  } catch (error) {
+    console.log("error generating metadata ", error);
+    return {
+      title: "Blogs",
+      description: "Discover the latest articles on our blog.",
+    };
+  }
 }
 
 export async function generateStaticParams() {
