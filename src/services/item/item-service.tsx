@@ -14,7 +14,9 @@ interface ItemFilters {
   collection?: string[];
 }
 
-export type TItem = (typeof allProducts)[0];
+export type TItem = (typeof allProducts)[0] & {
+  status: number;
+};
 
 export const ITEM_QUERY = {
   items: () => ["items"],
@@ -23,8 +25,13 @@ export const ITEM_QUERY = {
 };
 
 export const getItemDetail = async (id: string): Promise<TItem> => {
-  const response = await fetch(`${BASE_URL}/items/${id}`);
-  return response.json();
+  try {
+    const response = await fetch(`${BASE_URL}/items/${id}`);
+    return response.json();
+  } catch (error) {
+    console.error("failed to fetch item deatil", error);
+    throw new Error("Failed to fetch item detail");
+  }
 };
 
 export const getAllItems = async (args: ItemFilters = {}) => {
@@ -42,8 +49,16 @@ export const getAllItems = async (args: ItemFilters = {}) => {
     return response.json();
   }
 
-  const response = await fetch(`${BASE_URL}/items`);
-  return response.json();
+  try {
+    const response = await fetch(`${BASE_URL}/items`);
+    if (!response.ok) {
+      throw new Error("Http error! failed to get items");
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching items:", error);
+    throw new Error("Failed to fetch items");
+  }
 };
 
 export function useGetItemDetail<TData = TItem>(
