@@ -56,7 +56,7 @@ export const ShootingStars: React.FC<ShootingStarsProps> = ({
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    let timeoutId;
+    let timeoutId: NodeJS.Timeout;
     const createStar = () => {
       const { x, y, angle } = getRandomStartPoint();
       const newStar: ShootingStar = {
