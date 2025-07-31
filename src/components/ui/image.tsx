@@ -22,7 +22,11 @@ export function ThemedImage(props: Props) {
   const src = resolvedTheme === "light" ? srcLight : srcDark;
 
   if (!isMounted) {
-    return <span className="animate-pulse h-10">{alt}</span>;
+    return (
+      <div className="animate-pulse h-14 bg-[var-(--border)]">
+        <span className="sr-only">{alt}</span>
+      </div>
+    );
   }
 
   return (
