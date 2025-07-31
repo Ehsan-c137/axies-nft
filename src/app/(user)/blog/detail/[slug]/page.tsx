@@ -10,7 +10,12 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const { slug } = await params;
 
   const blog = await getBlogDetail(slug);
-  console.log(blog);
+
+  if (!blog) {
+    return {
+      title: "Blog post not found",
+    };
+  }
 
   return {
     title: blog.title,
@@ -18,10 +23,15 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const blogPosts = await getAllblogPosts();
-  return blogPosts.map((post: { slug: string }) => ({
-    slug: post.slug,
-  }));
+  try {
+    const blogPosts = await getAllblogPosts();
+    return blogPosts.map((post: { slug: string }) => ({
+      slug: post.slug,
+    }));
+  } catch (erorr) {
+    console.error("Error generating static params:", erorr);
+    return [];
+  }
 }
 
 export default async function Page({ params }: IProps) {
