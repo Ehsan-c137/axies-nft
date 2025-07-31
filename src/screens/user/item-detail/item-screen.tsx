@@ -21,7 +21,7 @@ export default function ItemDetailView({
   initialData,
 }: {
   id: string;
-  initialData?: TItem;
+  initialData: TItem;
 }) {
   const {
     data: itemDetail,
@@ -52,7 +52,7 @@ export default function ItemDetailView({
           <Image
             unoptimized
             src={itemDetail?.image}
-            alt={`${itemDetail?.name} image`}
+            alt={`${itemDetail.name} image`}
             width="0"
             height="0"
             sizes="100vw"
@@ -60,14 +60,14 @@ export default function ItemDetailView({
           />
         </div>
         <div className="flex flex-col gap-6 max-w-[620px]">
-          <h2 className="font-bold lg:text-4xl text-2xl">{itemDetail?.name}</h2>
+          <h2 className="font-bold lg:text-4xl text-2xl">{itemDetail.name}</h2>
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <StatusBox icon={<EyeIcon />} count={itemDetail?.seen} />
+              <StatusBox icon={<EyeIcon />} count={itemDetail.seen} />
               <LikeBox
-                count={itemDetail?.likes}
+                count={itemDetail.likes}
                 itemId={id}
-                isLiked={itemDetail?.isFavorite}
+                isLiked={itemDetail.isFavorite}
               />
             </div>
             <div className="flex items-center gap-2">
