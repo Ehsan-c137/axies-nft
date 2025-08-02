@@ -6,8 +6,26 @@ import { useUserProfile } from "@/services/users/user-service";
 import UserIcon from "@icons/user-icon";
 import { toast } from "sonner";
 import { useLogoutMutation } from "@/services/auth/auth-service";
+import { useAuth } from "@/context/auth/auth-provider";
+import { usePathname } from "next/navigation";
 
 export function Profile() {
+  return (
+    <Popover>
+      <PopoverTrigger
+        asChild
+        className="w-10 h-10 p-2 rounded-full flex items-center justify-center border cursor-pointer"
+      >
+        <UserIcon />
+      </PopoverTrigger>
+      <PopOverContentContainer />
+    </Popover>
+  );
+}
+
+const PopOverContentContainer = () => {
+  const { isAuthenticated, isLoading } = useAuth();
+  const currentPath = usePathname();
   const {
     data: userProfileData,
     isPending,
@@ -30,45 +48,56 @@ export function Profile() {
     }
   };
 
-  return (
-    <Popover>
-      <PopoverTrigger
-        asChild
-        className="w-10 h-10 p-2 rounded-full flex items-center justify-center border cursor-pointer"
-      >
-        <UserIcon />
-      </PopoverTrigger>
+  if (isLoading || isPending) {
+    return (
       <PopoverContent className="w-[264px] bg-[var(--popover)] text-[var(--popover-foreground)]">
-        {isPending && <Placeholder />}
-        {isError && <ErrorPlaceholder message={error?.message} />}
-
-        {!isPending && !isError && (
-          <div className="flex flex-col gap-2">
-            <h4 className="font-bold">{userProfileData?.name}</h4>
-            <div className="flex items-center justify-between">
-              <p>Balance</p>
-              <p>{userProfileData?.balance}</p>
-            </div>
-            <Divider />
-            <Link href={`/profile/${userProfileData?.username}`}>
-              My Profile
-            </Link>
-            <Link href={"/wallet"}>Wallet</Link>
-            <Button
-              disabled={isLogoutPending}
-              loading={isLogoutPending}
-              variant="link"
-              onClick={handleLogout}
-              className="text-left px-0 py-0 h-auto justify-start"
-            >
-              Logout
-            </Button>
-          </div>
-        )}
+        <Placeholder />
       </PopoverContent>
-    </Popover>
+    );
+  }
+
+  if (isError) {
+    return (
+      <PopoverContent className="w-[264px] bg-[var(--popover)] text-[var(--popover-foreground)]">
+        <ErrorPlaceholder message={error?.message} />
+      </PopoverContent>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <PopoverContent className="w-[264px] bg-[var(--popover)] text-[var(--popover-foreground)]">
+        <Link href={`/login?callbackUrl=${currentPath}`}>Login</Link>
+      </PopoverContent>
+    );
+  }
+
+  return (
+    <PopoverContent className="w-[264px] bg-[var(--popover)] text-[var(--popover-foreground)]">
+      {!isPending && !isError && !isLoading && (
+        <div className="flex flex-col gap-2">
+          <h4 className="font-bold">{userProfileData?.name}</h4>
+          <div className="flex items-center justify-between">
+            <p>Balance</p>
+            <p>{userProfileData?.balance}</p>
+          </div>
+          <Divider />
+          <Link href={`/profile/${userProfileData?.username}`}>My Profile</Link>
+          <Link href={"/wallet"}>Wallet</Link>
+          <Button
+            disabled={isLogoutPending}
+            loading={isLogoutPending}
+            variant="link"
+            onClick={handleLogout}
+            className="text-left px-0 py-0 h-auto justify-start"
+          >
+            Logout
+          </Button>
+        </div>
+      )}
+    </PopoverContent>
   );
-}
+};
 
 const Placeholder = () => {
   return (
