@@ -3,14 +3,27 @@ const CHAINS = ["ethereium", "polygon", "klaytn"];
 const COLLECTION = ["abstraction", "patternlicious", "cartoonism"];
 
 export const profileData = {
-  name: "Ehsan M",
+  id: 1,
+  name: "Mock User",
   userename: "ehsanmc",
   balance: "24.04 ETH",
   profileLink: "/profile/asf",
   walletLink: "/wallet",
-  logoutLink: "/logout",
+  email: "test@test.com",
+  role: "admin",
   image: "https://placehold.co/600x400/EEE/31343C",
 };
+
+export const MOCK_USER = {
+  id: "mock-user-id-123",
+  email: "test@example.com",
+  name: "Mock User",
+  role: "admin",
+};
+
+// Payload example: { "userId": "mock-user-id-123", "email": "test@example.com", "exp": <future_timestamp> }
+export const MOCK_JWT =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJtb2NrLXVzZXItaWQtMTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwibmFtZSI6Ik1vY2sgVXNlciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjoxODAwMDAwMDAwfQ.Somesecr3tM0ckS1gnatur3";
 
 export const allUsers = Array.from({ length: 150 }, (_, i) => ({
   id: i + 1,
