@@ -16,20 +16,29 @@ type AuthContextType = {
   isAuthenticated: boolean;
   user: IUser | null;
   isLoading: boolean;
+  logout: () => Promise<void>;
+  login: (credentials: ILoginCredentials) => Promise<boolean>;
+  signup: (email: string, password: string) => Promise<void>;
+};
+
+type AuthProviderValue = {
+  isAuthenticated: boolean;
+  user: IUser | null;
+  isLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error("use Auth must be whitin an Auth provider");
   }
   return context;
 }
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [auth, setAuth] = useState<AuthContextType>({
+  const [auth, setAuth] = useState<AuthProviderValue>({
     isAuthenticated: false,
     user: null,
     isLoading: true,
@@ -185,14 +194,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const values = {
-    isAuthenticated: false,
-    user: null,
-    isLoading: false,
+    ...auth,
     setAuth,
     login,
     logout,
     signup,
-  };
+  } as AuthContextType;
 
-  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>; //
 };
