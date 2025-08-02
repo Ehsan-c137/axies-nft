@@ -8,14 +8,13 @@ import {
   useState,
 } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ILoginCredentials } from "@/types/service/auth";
+import { ILoginCredentials, IUser } from "@/types/service/auth";
 
-const JWT_KEY = "jwt";
 const USER_KEY = "user";
 
 type AuthContextType = {
   isAuthenticated: boolean;
-  user: string | null;
+  user: IUser | null;
   isLoading: boolean;
 };
 
@@ -40,113 +39,106 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const searcParams = useSearchParams();
   const callbackUrl = searcParams.get("callbackUrl") || "/";
 
-  const loadAuthState = useCallback(() => {
-    try {
-      setAuth((prevState) => {
-        return {
-          ...prevState,
-          isLoading: true,
-        };
-      });
-
-      const storedJwt = localStorage.getItem(JWT_KEY);
-      const storedUser = localStorage.getItem(USER_KEY);
-      if (storedJwt && storedUser) {
-        try {
-          const parsedUser = JSON.parse(storedUser);
-          setAuth((prev) => {
-            return {
-              ...prev,
-              isAuthenticated: true,
-              user: parsedUser,
-              isLoading: false,
-            };
-          });
-        } catch (error) {
-          console.error("Error parsing user data:", error);
-          localStorage.removeItem(JWT_KEY);
+  useEffect(() => {
+    const checkUserSession = async () => {
+      const cachedUser = localStorage.getItem(USER_KEY);
+      if (cachedUser) {
+        setAuth((prev) => ({
+          ...prev,
+          isAuthenticated: true,
+          user: JSON.parse(cachedUser),
+        }));
+      }
+      try {
+        const response = await fetch("/api/auth/me");
+        if (response.ok) {
+          const user = await response.json();
+          setAuth((prev) => ({
+            ...prev,
+            isAuthenticated: true,
+            user: user,
+          }));
+          localStorage.setItem(USER_KEY, JSON.stringify(user));
+        } else {
+          setAuth((prev) => ({
+            ...prev,
+            isAuthenticated: false,
+            user: null,
+          }));
           localStorage.removeItem(USER_KEY);
         }
-      }
-    } catch (error) {
-      console.error("Error loading auth state:", error);
-      setAuth((prev) => {
-        return {
-          ...prev,
+      } catch (error) {
+        console.error("Error checking user session:", error);
+        setAuth({
           isAuthenticated: false,
           user: null,
           isLoading: false,
-        };
-      });
-    } finally {
-      setAuth((prevState) => {
-        return {
-          ...prevState,
-          isLoading: false,
-        };
-      });
-    }
+        });
+        localStorage.removeItem(USER_KEY);
+      }
+    };
+
+    checkUserSession();
   }, []);
 
-  useEffect(() => {
-    loadAuthState();
-  }, [loadAuthState]);
-
-  const login = async (credentials: ILoginCredentials) => {
-    setAuth((prev) => {
-      return {
-        ...prev,
-        isLoading: true,
-      };
-    });
+  const login = async (credentials: ILoginCredentials): Promise<boolean> => {
+    setAuth((prev) => ({ ...prev, isLoading: true }));
 
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(credentials),
       });
 
       if (response.ok) {
-        const { token, user } = await response.json();
+        const { user } = await response.json();
         setAuth({
           isAuthenticated: true,
           user: user,
           isLoading: false,
         });
-        localStorage.setItem(JWT_KEY, token);
         localStorage.setItem(USER_KEY, JSON.stringify(user));
 
         router.push(callbackUrl);
         return true;
+      } else {
+        setAuth((prev) => {
+          return {
+            ...prev,
+            isAuthenticated: false,
+            isLoading: false,
+            user: null,
+          };
+        });
+        return false;
       }
     } catch (error) {
       console.error("Error logging in:", error);
+      return false;
     }
   };
 
-  const logout = () => {
-    setAuth((prev) => {
-      return {
-        ...prev,
-        isLoading: true,
-      };
-    });
+  const logout = async () => {
+    setAuth((prev) => ({
+      ...prev,
+      isLoading: true,
+    }));
 
     try {
-      localStorage.removeItem(JWT_KEY);
-      localStorage.removeItem(USER_KEY);
-      setAuth((prev) => {
-        return {
+      const respone = await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+      if (respone.ok) {
+        setAuth((prev) => ({
           ...prev,
           isAuthenticated: false,
           user: null,
           isLoading: false,
-        };
-      });
-      router.refresh();
+        }));
+        localStorage.removeItem(USER_KEY);
+        // redirects are gonna handle with middleware
+        router.refresh();
+      }
     } catch (error) {
       console.error("Error logging out:", error);
     } finally {
@@ -163,7 +155,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setAuth((prev) => {
       return {
         ...prev,
-        isAuthenticated: false,
+        isLoading: true,
       };
     });
 
@@ -171,16 +163,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         body: JSON.stringify({ email, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
       if (response.ok) {
-        const { token, user } = await response.json();
-        localStorage.setItem(JWT_KEY, token);
+        const { user } = await response.json();
         localStorage.setItem(USER_KEY, user);
+        setAuth({
+          isAuthenticated: true,
+          user: user,
+          isLoading: false,
+        });
+        router.push(callbackUrl);
       }
     } catch (error) {
+      console.error("Error signing up:", error);
       setAuth({
         isAuthenticated: false,
         user: null,
