@@ -36,11 +36,13 @@ export function LoginForm() {
   return (
     <>
       <form
-        className="flex flex-col gap-1 justify-center items-center w-full"
+        className="flex flex-col gap-8 justify-center items-center w-full"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <Input placeholder="Your Email Address" type="email" name="email" />
-        <Input placeholder="password" name="password" type="password" />
+        <div className="flex flex-col gap-4 w-full">
+          <Input placeholder="Your Email Address" type="email" name="email" />
+          <Input placeholder="password" name="password" type="password" />
+        </div>
         <Button
           type="submit"
           variant="outline"
