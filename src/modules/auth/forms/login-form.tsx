@@ -4,12 +4,12 @@ import { Button } from "@ui/button";
 import { Label } from "@ui/label";
 import { Checkbox } from "@ui/checkbox";
 import { Input } from "@ui/input";
-import GoogleIcon from "@icons/socials/google-icon";
 import FacebookIcon from "@icons/socials/facebook-icon";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { GoogleAuthButton } from "../components/google-auth-button";
 
 const loginSchema = z.object({
   email: z.string().min(5).max(100),
@@ -64,9 +64,7 @@ export function LoginForm() {
           <span className="border w-full" />
         </div>
         <div className="flex gap-4 items-center">
-          <Button variant="outline" className="flex-1">
-            <GoogleIcon /> Google
-          </Button>
+          <GoogleAuthButton />
           <Button variant="outline" className="flex-1">
             <FacebookIcon /> Facebook
           </Button>
