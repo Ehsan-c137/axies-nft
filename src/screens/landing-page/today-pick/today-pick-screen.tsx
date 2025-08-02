@@ -8,10 +8,7 @@ import { useGetTodayPick } from "@/services/item/today-pick";
 import useSearchParamState from "@/hooks/useSearchParamState";
 import { useEffect, useState } from "react";
 import { TItem } from "@/services/item/item-service";
-
-interface IProps {
-  ref: React.RefObject<HTMLElement[]>;
-}
+import { useRef } from "react";
 
 const PARAM_KEYS = {
   page: "today_pick_page",
@@ -21,8 +18,10 @@ const PARAM_KEYS = {
   sort: "today_pick_sort",
 };
 
-export function TodayPick({ ref }: IProps) {
+export function TodayPick() {
   const [showedData, setShowedData] = useState<TItem[]>([]);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { handleParamChange, optimisticParams: paramState } =
     useSearchParamState();
@@ -58,35 +57,56 @@ export function TodayPick({ ref }: IProps) {
     }
   }, [lastPage, currentPage, dataArr, isPlaceholderData]);
 
-  return (
-    <>
-      <div
-        className="flex flex-col gap-10 py-10 opacity-0"
-        ref={(el) => {
-          if (el) {
-            ref.current[4] = el;
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          if (containerRef.current) {
+            observer.unobserve(containerRef.current);
           }
-        }}
-      >
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl lg:text-3xl font-bold">Today&apos;s Pick</h3>
-          <Button variant="link" className="explore_more text-sm lg:text-xl">
-            EXPLORE MORE
-          </Button>
-        </div>
-        <Filter paramState={paramState} handleParamChange={handleParamChange} />
-        <PaginationLoadMore
-          data={showedData}
-          DataCard={LiveAuctionsCard}
-          isPending={isPending}
-          handleLoadMore={handleLoadMore}
-          isPlaceholderData={isPlaceholderData}
-          lastPage={data?.meta?.lastPage || 1}
-          currentPage={data?.meta?.currentPage || 1}
-          error={error}
-          isError={isError}
-        />
+        }
+      },
+      {
+        threshold: 0.1,
+      },
+    );
+
+    const currentRef = containerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      className={`flex flex-col gap-10 py-10 transition-opacity duration-1000 ${isInView ? "opacity-100" : "opacity-0"}`}
+    >
+      <div className="flex items-center justify-between">
+        <h3 className="text-xl lg:text-3xl font-bold">Today&apos;s Pick</h3>
+        <Button variant="link" className="explore_more text-sm lg:text-xl">
+          EXPLORE MORE
+        </Button>
       </div>
-    </>
+      <Filter paramState={paramState} handleParamChange={handleParamChange} />
+      <PaginationLoadMore
+        data={showedData}
+        DataCard={LiveAuctionsCard}
+        isPending={isPending}
+        handleLoadMore={handleLoadMore}
+        isPlaceholderData={isPlaceholderData}
+        lastPage={data?.meta?.lastPage || 1}
+        currentPage={data?.meta?.currentPage || 1}
+        error={error}
+        isError={isError}
+      />
+    </div>
   );
 }
