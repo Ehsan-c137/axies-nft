@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ThemeProvider } from "@/context/theme/theme-context";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { AuthProvider } from "@/context/auth/auth-provider";
 import { Toaster } from "@ui/sonner";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -30,10 +31,12 @@ export default function Providers({ children }: IProps) {
         defaultTheme="dark"
         disableTransitionOnChange
       >
-        <QueryClientProvider client={queryClient}>
-          <Toaster />
-          {children}
-        </QueryClientProvider>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <Toaster />
+            {children}
+          </QueryClientProvider>
+        </AuthProvider>
       </ThemeProvider>
     </>
   );
