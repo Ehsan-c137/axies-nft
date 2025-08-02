@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
+import { COOKIE_KEY } from "@/services/config";
 
 export async function POST() {
   const cookieStore = await cookies();
   try {
-    cookieStore.delete("session");
+    cookieStore.delete(COOKIE_KEY);
     return new Response(JSON.stringify({ message: "Logout successful" }), {
       status: 200,
     });
