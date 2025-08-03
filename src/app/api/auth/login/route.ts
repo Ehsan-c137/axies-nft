@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
     if (
       credentials.email === MOCK_USER.email &&
-      credentials.password === "password123"
+      credentials.password === "p@ssword123"
     ) {
       cookieStore.set({
         name: COOKIE_KEY,
