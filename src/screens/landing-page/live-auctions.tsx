@@ -12,12 +12,12 @@ interface Iprops {
 
 export function LiveAuctions({ ref }: Iprops) {
   const isMobile = useMediaQuery("(max-width: 768px)", { defaultValue: false });
-  const isTablet = useMediaQuery("(max-width: 1024px)", {
+  const isTablet = useMediaQuery("(max-width: 1140px)", {
     defaultValue: false,
   });
 
   const swiper_config = {
-    itemPerPage: isMobile ? 1 : isTablet ? 2 : 5,
+    itemPerPage: isMobile ? 1 : isTablet ? 3 : 5,
   };
 
   const { data, isPending } = useGetItems();
