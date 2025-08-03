@@ -50,7 +50,7 @@ const PopOverContentContainer = () => {
 
   if (isLoading || isPending) {
     return (
-      <PopoverContent className="w-[264px] bg-[var(--popover)] text-[var(--popover-foreground)]">
+      <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
         <Placeholder />
       </PopoverContent>
     );
@@ -58,7 +58,7 @@ const PopOverContentContainer = () => {
 
   if (isError) {
     return (
-      <PopoverContent className="w-[264px] bg-[var(--popover)] text-[var(--popover-foreground)]">
+      <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
         <ErrorPlaceholder message={error?.message} />
       </PopoverContent>
     );
@@ -66,14 +66,14 @@ const PopOverContentContainer = () => {
 
   if (!isAuthenticated) {
     return (
-      <PopoverContent className="w-[264px] bg-[var(--popover)] text-[var(--popover-foreground)]">
+      <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
         <Link href={`/login?callbackUrl=${currentPath}`}>Login</Link>
       </PopoverContent>
     );
   }
 
   return (
-    <PopoverContent className="w-[264px] bg-[var(--popover)] text-[var(--popover-foreground)]">
+    <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
       {!isPending && !isError && !isLoading && (
         <div className="flex flex-col gap-2">
           <h4 className="font-bold">{userProfileData?.name}</h4>
