@@ -67,14 +67,14 @@ function Button({
 
     if (!flair) return;
 
-    gsap.set(flair, {
-      scale: 0,
-      xPercent: -50,
-      yPercent: -50,
-      position: "absolute",
-      top: 0,
-      left: 0,
-    });
+    // gsap.set(flair, {
+    //   scale: 0,
+    //   xPercent: -50,
+    //   yPercent: -50,
+    //   position: "absolute",
+    //   top: 0,
+    //   left: 0,
+    // });
 
     const xSet = gsap.quickSetter(flair, "x", "px");
     const ySet = gsap.quickSetter(flair, "y", "px");
@@ -89,9 +89,9 @@ function Button({
 
     const handleMouseEnter = (e: MouseEvent) => {
       const { x, y } = getRelativeXY(e);
-      xSet(x * 2);
-      ySet(y * 2);
-      gsap.to(flair, { scale: 2, duration: 0.4, ease: "power2.out" });
+      xSet(x);
+      ySet(y);
+      gsap.to(flair, { scale: 1, duration: 0.4, ease: "power2.out" });
     };
 
     const handleMouseLeave = (e: MouseEvent) => {
@@ -112,7 +112,7 @@ function Button({
 
     const handleMouseMove = (e: MouseEvent) => {
       const { x, y } = getRelativeXY(e);
-      gsap.to(flair, { x, y, duration: 0.4, ease: "power2" });
+      gsap.to(flair, { x, y, scale: 1.8, duration: 0.4, ease: "power2" });
     };
 
     button.addEventListener("mouseenter", handleMouseEnter);
