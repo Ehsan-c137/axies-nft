@@ -11,11 +11,11 @@ export const ME_QUERY = {
   }),
 };
 
-export const fetchMeProfile = async (): Promise<UserM> => {
+export const fetchMeProfile = async (): Promise<UserM | null> => {
   try {
     const response = await fetch(`${BASE_URL}/auth/me`);
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      return null;
     }
     return response.json();
   } catch (error) {
@@ -24,6 +24,6 @@ export const fetchMeProfile = async (): Promise<UserM> => {
   }
 };
 
-export function useMeProfile() {
+export function useGetMeProfile() {
   return useQuery(ME_QUERY.meProfile());
 }
