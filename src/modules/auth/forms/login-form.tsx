@@ -2,14 +2,24 @@
 
 import { Button } from "@ui/button";
 import { Label } from "@ui/label";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormMessage,
+  FormLabel,
+  FormControl,
+  FormDescription,
+} from "@ui/form";
 import { Checkbox } from "@ui/checkbox";
 import { Input } from "@ui/input";
-import FacebookIcon from "@icons/socials/facebook-icon";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { GoogleAuthButton } from "../components/google-auth-button";
+import FacebookIcon from "@icons/socials/facebook-icon";
+import { useLoginMutation } from "@/services/auth/auth-service";
 
 const loginSchema = z.object({
   email: z.string().min(5).max(100),
@@ -19,6 +29,7 @@ const loginSchema = z.object({
 type TLoginForm = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
+  const { mutate } = useLoginMutation();
   const form = useForm<TLoginForm>({
     resolver: zodResolver(loginSchema),
     mode: "all",
@@ -29,30 +40,56 @@ export function LoginForm() {
     },
   });
 
-  const onSubmit = (e: TLoginForm) => {
-    console.log(e);
+  const onSubmit = async (credentials: TLoginForm) => {
+    mutate(credentials);
   };
 
   return (
     <>
-      <form
-        className="flex flex-col gap-8 justify-center items-center w-full"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <div className="flex flex-col gap-4 w-full">
-          <Input placeholder="Your Email Address" type="email" name="email" />
-          <Input placeholder="password" name="password" type="password" />
-        </div>
-        <Button
-          type="submit"
-          variant="outline"
-          className="w-full"
-          disabled={form.formState.isSubmitting}
-          loading={form.formState.isSubmitting}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full flex flex-col gap-4"
         >
-          Login
-        </Button>
-      </form>
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+                <FormDescription>email is test@example.com</FormDescription>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+                <FormDescription>password is p@ssword123</FormDescription>
+              </FormItem>
+            )}
+          />
+          <Button
+            type="submit"
+            variant="outline"
+            className="w-full"
+            disabled={form.formState.isSubmitting}
+            loading={form.formState.isSubmitting}
+          >
+            Login
+          </Button>
+        </form>
+      </Form>
       <div className="flex justify-between items-center w-full">
         <Label htmlFor="remember" className="cursor-pointer">
           Remember Me <Checkbox name="remember" id="remember" />
