@@ -5,7 +5,7 @@ import { LoginForm } from "@/modules/auth/forms/login-form";
 
 export function LoginScreen() {
   return (
-    <div className="flex items-center justify-center gap-4 min-w-3xs max-w-sm container mx-auto h-screen">
+    <div className="flex items-center justify-center gap-4 min-w-3xs max-w-sm container mx-auto px-4 h-screen">
       <div className="flex flex-col gap-8 items-center justify-center justify-items-center h-full w-full">
         <Link href="/">
           <ThemedImage
