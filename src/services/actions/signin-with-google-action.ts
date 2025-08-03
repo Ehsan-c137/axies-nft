@@ -1,10 +1,10 @@
 "use server";
 
-import { signIn } from "@/auth";
+// import { signIn } from "@/auth";
 
 export async function SigninWithGoogle() {
   try {
-    signIn("google");
+    console.log("google");
   } catch (error) {
     console.log(error);
   }
