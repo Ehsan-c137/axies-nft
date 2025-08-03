@@ -19,6 +19,8 @@ export const MOCK_USER = {
   email: "test@example.com",
   name: "Mock User",
   role: "admin",
+  balance: "24.04 ETH",
+  username: "mock-user",
 };
 
 // Payload example: { "userId": "mock-user-id-123", "email": "test@example.com", "exp": <future_timestamp> }
