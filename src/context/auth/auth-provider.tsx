@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ILoginCredentials, IUser } from "@/types/service/auth";
 
@@ -17,15 +11,14 @@ type AuthContextType = {
   user: IUser | null;
   isLoading: boolean;
   logout: () => Promise<void>;
-  login: (credentials: ILoginCredentials) => Promise<boolean>;
-  signup: (email: string, password: string) => Promise<void>;
+  login: (credentials: ILoginCredentials) => Promise<IUser | null>;
+  signup: (credentials: ILoginCredentials) => Promise<IUser | null>;
 };
 
-type AuthProviderValue = {
-  isAuthenticated: boolean;
-  user: IUser | null;
-  isLoading: boolean;
-};
+type AuthProviderValue = Pick<
+  AuthContextType,
+  "isAuthenticated" | "isLoading" | "user"
+>;
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -84,13 +77,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           isLoading: false,
         });
         localStorage.removeItem(USER_KEY);
+      } finally {
+        setAuth((prev) => ({
+          ...prev,
+          isLoading: false,
+        }));
       }
     };
 
     checkUserSession();
   }, []);
 
-  const login = async (credentials: ILoginCredentials): Promise<boolean> => {
+  const login = async (
+    credentials: ILoginCredentials,
+  ): Promise<IUser | null> => {
     setAuth((prev) => ({ ...prev, isLoading: true }));
 
     try {
@@ -109,7 +109,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         localStorage.setItem(USER_KEY, JSON.stringify(user));
 
         router.push(callbackUrl);
-        return true;
+        return user;
       } else {
         setAuth((prev) => {
           return {
@@ -119,11 +119,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             user: null,
           };
         });
-        return false;
+        return null;
       }
     } catch (error) {
       console.error("Error logging in:", error);
-      return false;
+      return null;
     }
   };
 
@@ -160,7 +160,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const signup = async (email: string, password: string) => {
+  const signup = async (
+    credentials: ILoginCredentials,
+  ): Promise<IUser | null> => {
     setAuth((prev) => {
       return {
         ...prev,
@@ -171,7 +173,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const response = await fetch("/api/auth/signup", {
         method: "POST",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(credentials),
       });
       if (response.ok) {
         const { user } = await response.json();
@@ -182,7 +184,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           isLoading: false,
         });
         router.push(callbackUrl);
+        return user;
       }
+      return null;
     } catch (error) {
       console.error("Error signing up:", error);
       setAuth({
@@ -190,6 +194,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         user: null,
         isLoading: false,
       });
+      return null;
     }
   };
 
