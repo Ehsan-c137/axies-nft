@@ -2,7 +2,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@ui/popover";
 import { Divider } from "@ui/divider";
 import { Button } from "@ui/button";
 import Link from "next/link";
-import { useUserProfile } from "@/services/users/user-service";
+import { useGetMeProfile } from "@/services/users/me";
 import UserIcon from "@icons/user-icon";
 import { toast } from "sonner";
 import { useLogoutMutation } from "@/services/auth/auth-service";
@@ -16,7 +16,7 @@ export function Profile() {
         asChild
         className="w-10 h-10 p-2 rounded-full flex items-center justify-center border cursor-pointer"
       >
-        <UserIcon />
+        <UserIcon width={40} />
       </PopoverTrigger>
       <PopOverContentContainer />
     </Popover>
@@ -26,18 +26,13 @@ export function Profile() {
 const PopOverContentContainer = () => {
   const { isAuthenticated, isLoading } = useAuth();
   const currentPath = usePathname();
-  const {
-    data: userProfileData,
-    isPending,
-    error,
-    isError,
-  } = useUserProfile(2);
+  const { data, isPending, isError, error } = useGetMeProfile();
 
   const {
     mutate: logoutUser,
     isPending: isLogoutPending,
     error: logoutError,
-  } = useLogoutMutation(1);
+  } = useLogoutMutation();
 
   const handleLogout = async () => {
     try {
@@ -56,14 +51,6 @@ const PopOverContentContainer = () => {
     );
   }
 
-  if (isError) {
-    return (
-      <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
-        <ErrorPlaceholder message={error?.message} />
-      </PopoverContent>
-    );
-  }
-
   if (!isAuthenticated) {
     return (
       <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
@@ -72,18 +59,25 @@ const PopOverContentContainer = () => {
     );
   }
 
+  if (isError) {
+    return (
+      <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
+        <ErrorPlaceholder message={error?.message} />
+      </PopoverContent>
+    );
+  }
+
   return (
     <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
       {!isPending && !isError && !isLoading && (
         <div className="flex flex-col gap-2">
-          <h4 className="font-bold">{userProfileData?.name}</h4>
+          <h4 className="font-bold">{data?.name}</h4>
           <div className="flex items-center justify-between">
             <p>Balance</p>
-            <p>{userProfileData?.balance}</p>
+            <p>{data?.balance}</p>
           </div>
           <Divider />
-          <Link href={`/profile/${userProfileData?.username}`}>My Profile</Link>
-          <Link href={"/wallet"}>Wallet</Link>
+          <Link href={`/profile/${data?.username}`}>My Profile</Link>
           <Button
             disabled={isLogoutPending}
             loading={isLogoutPending}
