@@ -96,13 +96,19 @@ export function LoginForm() {
         </Label>
         <Link href="/forget-password">Forget Password?</Link>
       </div>
-      <div className="flex flex-col gap-4 items-center mt-8 w-full">
+      <div
+        className="flex flex-col gap-4 items-center mt-8 w-full opacity-50 cursor-not-allowed"
+        arid-disabled="true"
+      >
         <div className="flex items-center gap-4 w-full">
           <span className="border w-full" />
           <p className="w-full text-nowrap">Login with socials</p>
           <span className="border w-full" />
         </div>
-        <div className="flex gap-4 items-center">
+        <div
+          className="flex gap-4 items-center opacity-50"
+          aria-disabled="true"
+        >
           <GoogleAuthButton />
           <Button variant="outline" className="flex-1">
             <FacebookIcon /> Facebook
