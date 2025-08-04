@@ -5,14 +5,14 @@ export const ProfileScreenPlaceholder = () => {
     <div className="container mx-auto">
       <div className="flex flex-wrap justify-between items-center rounded-t-3xl p-4 md:p-9 bg-neutral-200 dark:bg-neutral-800/60 md:max-h-[338px]">
         <div className="flex flex-wrap md:flex-nowrap md:-translate-y-[26px] gap-8 items-center">
-          <div className="relative md:h-[270px] min-w-[200px] min-h-[200px] w-full h-full">
+          <div className="relative md:h-[270px] max-w-[326px] md:min-w-[200px] min-h-[200px] w-full h-full">
             <Skeleton className="w-full h-full absolute rounded-3xl md:translate-y-6" />
           </div>
 
           <div className="flex flex-col items-start gap-4 ">
             <Skeleton className="h-10 w-48" />
             <Skeleton className="h-6 w-32" />
-            <Skeleton className="h-4 w-96 max-w-lg" />
+            <Skeleton className="h-4 w-xs md:w-96 md:max-w-lg" />
             <Skeleton className="h-12 w-52" />
           </div>
         </div>
