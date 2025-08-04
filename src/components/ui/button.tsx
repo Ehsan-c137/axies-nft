@@ -67,15 +67,6 @@ function Button({
 
     if (!flair) return;
 
-    // gsap.set(flair, {
-    //   scale: 0,
-    //   xPercent: -50,
-    //   yPercent: -50,
-    //   position: "absolute",
-    //   top: 0,
-    //   left: 0,
-    // });
-
     const xSet = gsap.quickSetter(flair, "x", "px");
     const ySet = gsap.quickSetter(flair, "y", "px");
 
