@@ -6,12 +6,20 @@ export const profileData = {
   id: 1,
   name: "Mock User",
   userename: "ehsanmc",
-  balance: "24.04 ETH",
-  profileLink: "/profile/asf",
-  walletLink: "/wallet",
-  email: "test@test.com",
-  role: "admin",
   image: "https://placehold.co/600x400/EEE/31343C",
+  backgroundImage: "https://placehold.co/1920x1080/EEE/31343C",
+  username: `mock-user`,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  walletAddress: "0x1234567890abcdef",
+  balance: "24.04 ETH",
+  posts: Array.from({ length: 10 }).map((_, i) => ({
+    id: i + 1,
+    category: CATEGORY[Math.floor(Math.random() * CATEGORY.length)],
+    title: `Post ${i + 1}`,
+    content: `This is the content of Post ${i + 1}`,
+  })),
+  email: "test@example.com",
 };
 
 export const MOCK_USER = {
@@ -47,17 +55,27 @@ export const userDetail = {
 export const MOCK_JWT =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJtb2NrLXVzZXItaWQtMTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwibmFtZSI6Ik1vY2sgVXNlciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjoxODAwMDAwMDAwfQ.Somesecr3tM0ckS1gnatur3";
 
-export const allUsers = Array.from({ length: 150 }, (_, i) => ({
-  id: i + 1,
-  name: `User ${i + 1}`,
-  email: `user${i + 1}@example.com`,
-  image: "https://placehold.co/600x400/EEE/31343C",
-  backgroundImage: "https://placehold.co/1920x1080/EEE/31343C",
-  username: `user${i + 1}`,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  walletAddress: "0x1234567890abcdef",
-}));
+export const allUsers = [
+  ...Array.from({ length: 150 }, (_, i) => ({
+    id: i + 1,
+    name: `User ${i + 1}`,
+    email: `user${i + 1}@example.com`,
+    image: "https://placehold.co/600x400/EEE/31343C",
+    backgroundImage: "https://placehold.co/1920x1080/EEE/31343C",
+    username: `user${i + 1}`,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    walletAddress: "0x1234567890abcdef",
+    balance: "24.04 ETH",
+    posts: Array.from({ length: 10 }).map((_, i) => ({
+      id: i + 1,
+      category: CATEGORY[Math.floor(Math.random() * CATEGORY.length)],
+      title: `Post ${i + 1}`,
+      content: `This is the content of Post ${i + 1}`,
+    })),
+  })),
+  profileData,
+];
 
 export const blogPosts = Array.from({ length: 60 }, (_, i) => ({
   id: i + 1,
