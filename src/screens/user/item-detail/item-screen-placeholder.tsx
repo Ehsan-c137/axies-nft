@@ -1,6 +1,4 @@
-const Skeleton = ({ className }: { className?: string }) => (
-  <div className={`animate-pulse rounded-md bg-[var(--border)] ${className}`} />
-);
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ItemScreenPlaceholder() {
   return (
