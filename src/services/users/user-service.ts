@@ -1,22 +1,21 @@
 import { BASE_URL } from "../config";
 import { useQuery } from "@tanstack/react-query";
-import { UserM } from "./user-model";
+import { TUserFull } from "./user-model";
 
 export const PROFILE_QUERY = {
   user: () => ["userProfile"],
-  userProfile: (id: number) => ({
-    queryKey: [...PROFILE_QUERY.user(), id],
-    queryFn: () => fetchUserProfile(id),
+  userProfile: (username: string) => ({
+    queryKey: [...PROFILE_QUERY.user(), username],
+    queryFn: () => fetchUserProfile(username),
     staleTime: 5 * 1000,
   }),
 };
 
-export const fetchUserProfile = async (id: number): Promise<UserM> => {
+export const fetchUserProfile = async (
+  username: string,
+): Promise<TUserFull> => {
   try {
-    const response = await fetch(`${BASE_URL}/users/${id}`);
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
+    const response = await fetch(`${BASE_URL}/users/${username}`);
     return response.json();
   } catch (error) {
     console.error("Error fetching user profile:", error);
@@ -24,7 +23,6 @@ export const fetchUserProfile = async (id: number): Promise<UserM> => {
   }
 };
 
-export function useUserProfile(id: number | string) {
-  const numericId = typeof id === "string" ? Number(id) : id;
-  return useQuery(PROFILE_QUERY.userProfile(numericId));
+export function useUserProfile(username: string) {
+  return useQuery(PROFILE_QUERY.userProfile(username));
 }
