@@ -23,6 +23,26 @@ export const MOCK_USER = {
   username: "mock-user",
 };
 
+export const userDetail = {
+  id: "mock-user-id-123",
+  email: "test@example.com",
+  name: "Mock User",
+  role: "admin",
+  balance: "24.04 ETH",
+  username: "mock-user",
+  image: "https://placehold.co/600x400/EEE/31343C",
+  backgroundImage: "https://placehold.co/1920x1080/EEE/31343C",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  walletAddress: "0x1234567890abcdef",
+  posts: Array.from({ length: 10 }).map((_, i) => ({
+    id: i + 1,
+    category: CATEGORY[Math.floor(Math.random() * CATEGORY.length)],
+    title: `Post ${i + 1}`,
+    content: `This is the content of Post ${i + 1}`,
+  })),
+};
+
 // Payload example: { "userId": "mock-user-id-123", "email": "test@example.com", "exp": <future_timestamp> }
 export const MOCK_JWT =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJtb2NrLXVzZXItaWQtMTIzIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwibmFtZSI6Ik1vY2sgVXNlciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjoxODAwMDAwMDAwfQ.Somesecr3tM0ckS1gnatur3";
