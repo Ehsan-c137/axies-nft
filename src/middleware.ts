@@ -11,5 +11,9 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/wallet/:path*", "/item-creation/:path*"],
+  matcher: [
+    "/wallet/:path*",
+    "/item-creation/:path*",
+    "/profile/edit-profile/:path*",
+  ],
 };
