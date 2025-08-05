@@ -1,5 +1,15 @@
 import { PageLayout } from "@/layout/page-layout";
 import { PrimaryLayout } from "@/layout/primary-layout";
+import * as Sentry from "@sentry/nextjs";
+import type { Metadata } from "next";
+
+export function generateMetadata(): Metadata {
+  return {
+    other: {
+      ...Sentry.getTraceData(),
+    },
+  };
+}
 
 export default function Layout({
   children,

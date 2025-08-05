@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import type { RuleSetRule } from "webpack";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
   images: {
@@ -38,4 +39,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: "emc-je",
+  project: "axies-nextjs",
+  silent: !process.env.CI,
+  disableLogger: true,
+});
