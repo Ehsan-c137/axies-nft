@@ -1,5 +1,3 @@
-import { PrimaryLayout } from "@/layout/primary-layout";
-import { PageLayout } from "@/layout/page-layout";
 import NotFoundContainer from "@/components/common/errors/404";
 
 export const metadata = {
@@ -7,11 +5,5 @@ export const metadata = {
 };
 
 export default function NotFound() {
-  return (
-    <PrimaryLayout>
-      <PageLayout>
-        <NotFoundContainer />
-      </PageLayout>
-    </PrimaryLayout>
-  );
+  return <NotFoundContainer />;
 }
