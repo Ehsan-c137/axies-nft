@@ -9,6 +9,7 @@ import {
   PaginationPrevious,
 } from "@ui/pagination";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 interface IProps {
   currentPage: number;
@@ -73,7 +74,7 @@ export default function PaginationControl({
   }
 
   return (
-    <>
+    <Suspense>
       {lastPage > 1 && (
         <div className="w-full text-center">
           <Pagination>
@@ -129,6 +130,6 @@ export default function PaginationControl({
           </Pagination>
         </div>
       )}
-    </>
+    </Suspense>
   );
 }
