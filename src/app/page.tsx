@@ -1,4 +1,4 @@
-import LandingScreen from "@/screens/landing-page/screen";
+import LandingScreen from "@/screens/landing-page/landing-screen";
 import { PrimaryLayout } from "@/layout/primary-layout";
 import type { Metadata } from "next";
 

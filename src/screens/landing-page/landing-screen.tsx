@@ -59,7 +59,7 @@ export default function LandingScreen() {
       <PopularCollection ref={itemRef} />
       <SectionWrapper>
         <TopSeller ref={itemRef} />
-        <TodayPick ref={itemRef} />
+        <TodayPick />
       </SectionWrapper>
     </div>
   );
