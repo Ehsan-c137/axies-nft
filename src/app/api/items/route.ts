@@ -8,10 +8,8 @@ export async function GET(request: NextRequest) {
 
   if (page || limit) {
     const url = new URL(request.url);
-    const pageNum = parseInt(url.searchParams.get("page")!);
-    const limitNum = parseInt(url.searchParams.get("limit")!);
-
-    console.log(pageNum, limitNum);
+    const pageNum = parseInt(url.searchParams.get("page") || "1", 10);
+    const limitNum = parseInt(url.searchParams.get("limit") || "10", 10);
 
     if (isNaN(pageNum) || isNaN(limitNum) || pageNum < 1 || limitNum < 1) {
       return NextResponse.json(
