@@ -1,4 +1,4 @@
-import NotFoundContainer from "@/components/common/errors/404";
+import NotFoundContainer from "@/components/common/errors/not-found-component";
 
 export const metadata = {
   title: "404 Page Not Found!",

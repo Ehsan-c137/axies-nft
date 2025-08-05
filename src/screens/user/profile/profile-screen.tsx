@@ -11,7 +11,7 @@ import { useAuth } from "@/context/auth/auth-provider";
 import { useUserProfile } from "@/services/users/user-service";
 import UnexpectedError from "@/components/common/errors/unexpected";
 import { ProfileScreenPlaceholder } from "./profile-screen-placeholder";
-import NotFoundContainer from "@/components/common/errors/404";
+import NotFoundContainer from "@/components/common/errors/not-found-component";
 
 type Props = {
   username: string;

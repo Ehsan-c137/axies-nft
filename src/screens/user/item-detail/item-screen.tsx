@@ -8,7 +8,7 @@ import EllipsisIcon from "@icons/ellipsis-icon";
 import { useGetItemDetail, TItem } from "@/services/item/item-service";
 import ItemScreenPlaceholder from "./item-screen-placeholder";
 import ShareCurrentUrlButton from "@/components/common/share-current-url-button";
-import NotFound from "@/components/common/errors/404";
+import NotFound from "@/components/common/errors/not-found-component";
 import UnexpectedError from "@/components/common/errors/unexpected";
 import CountdownCard from "@/modules/item/countdown-card";
 import UserInfoCard from "@/modules/item/user-info-card";
