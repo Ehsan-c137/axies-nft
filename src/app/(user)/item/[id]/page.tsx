@@ -28,7 +28,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export async function generateStaticParams() {
   try {
-    const items: TItem[] = await getAllItems();
+    const items = (await getAllItems()) as TItem[];
+
     return items.map((item) => ({
       id: String(item.id),
     }));
