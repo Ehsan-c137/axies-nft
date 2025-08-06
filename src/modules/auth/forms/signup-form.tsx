@@ -22,17 +22,17 @@ import FacebookIcon from "@icons/socials/facebook-icon";
 import { useLoginMutation } from "@/services/auth/auth-service";
 import { toast } from "sonner";
 
-const loginSchema = z.object({
+const signupSchema = z.object({
   email: z.string().min(5).max(100),
   password: z.string().min(8).max(100),
 });
 
-type TLoginForm = z.infer<typeof loginSchema>;
+type TSignupForm = z.infer<typeof signupSchema>;
 
-export function LoginForm() {
+export function SignupForm() {
   const { mutate, isPending } = useLoginMutation();
-  const form = useForm<TLoginForm>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<TSignupForm>({
+    resolver: zodResolver(signupSchema),
     mode: "all",
     reValidateMode: "onChange",
     defaultValues: {
@@ -41,15 +41,10 @@ export function LoginForm() {
     },
   });
 
-  const onSubmit = async (credentials: TLoginForm) => {
+  const onSubmit = async (credentials: TSignupForm) => {
     mutate(credentials, {
       onError: (error) => {
-        toast.error(error.message || "Failed to log in. Please try again.");
-      },
-      onSuccess: (user) => {
-        if (user?.name) {
-          toast.success(`Welcome back! ${user?.name}`);
-        }
+        toast.error(error.message || "Failed to signup. Please try again.");
       },
     });
   };
