@@ -8,7 +8,6 @@ import useSearchParamState from "@/hooks/useSearchParamState";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { TItem, useGetItems } from "@/services/item/item-service";
 import PaginationList from "@/components/common/pagination/pagination-list";
-import { Suspense } from "react";
 
 export default function ExploreScreen() {
   const {
