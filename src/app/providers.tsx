@@ -21,7 +21,9 @@ export default function Providers({ children }: IProps) {
           queries: {
             refetchOnWindowFocus: false,
             retry: (failureCount, error) => {
-              const status = (error as any)?.response?.status;
+              const status = (
+                error as unknown as { response: { status: number } }
+              )?.response?.status;
 
               if (status === 404 || status === 401) {
                 return false;
