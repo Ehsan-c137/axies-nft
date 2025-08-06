@@ -119,11 +119,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             user: null,
           };
         });
-        return null;
+        throw new Error("invalid credentials");
       }
     } catch (error) {
       console.error("Error logging in:", error);
-      return null;
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      throw new Error("something went wrong");
     }
   };
 
@@ -150,6 +153,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error) {
       console.error("Error logging out:", error);
+      throw new Error("something went wrong");
     } finally {
       setAuth((prev) => {
         return {
@@ -186,7 +190,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         router.push(callbackUrl);
         return user;
       }
-      return null;
+      throw new Error("invalid credentials");
     } catch (error) {
       console.error("Error signing up:", error);
       setAuth({
@@ -194,7 +198,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         user: null,
         isLoading: false,
       });
-      return null;
+      throw new Error("something went wrong");
     }
   };
 
