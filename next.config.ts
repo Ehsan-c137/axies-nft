@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 import type { RuleSetRule } from "webpack";
 import { withSentryConfig } from "@sentry/nextjs";
+import bundleAnalyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const nextConfig: NextConfig = {
   images: {
@@ -25,6 +30,7 @@ const nextConfig: NextConfig = {
       {
         ...fileLoaderRule,
         test: /\.svg$/i,
+
         resourceQuery: /url/,
       },
       {
@@ -39,7 +45,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+export default withSentryConfig(withBundleAnalyzer(nextConfig), {
   org: "emc-je",
   project: "axies-nextjs",
   silent: !process.env.CI,
