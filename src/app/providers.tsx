@@ -20,6 +20,14 @@ export default function Providers({ children }: IProps) {
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
+            retry: (failureCount, error) => {
+              const status = (error as any)?.response?.status;
+
+              if (status === 404 || status === 401) {
+                return false;
+              }
+              return failureCount < 3;
+            },
           },
         },
       }),
