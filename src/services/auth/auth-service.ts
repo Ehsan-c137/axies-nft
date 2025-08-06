@@ -23,7 +23,9 @@ export function useLoginMutation() {
   return useMutation({
     mutationFn: login,
     onSuccess: (user) => {
-      queryClient.setQueryData([...PROFILE_QUERY.user(), user?.id], user);
+      if (user?.id) {
+        queryClient.setQueryData([...PROFILE_QUERY.user(), user.id], user);
+      }
     },
     onError: (error: Error) => {
       console.error("Login error:", error);
@@ -37,7 +39,10 @@ export function useSignupMutation() {
   return useMutation({
     mutationFn: signup,
     onSuccess: (user) => {
-      queryClient.setQueryData([...PROFILE_QUERY.user(), user?.id], user);
+      console.log(user);
+      if (user?.id) {
+        queryClient.setQueryData([...PROFILE_QUERY.user(), user.id], user);
+      }
     },
     onError: (error: Error) => {
       console.error("Signup error:", error);
