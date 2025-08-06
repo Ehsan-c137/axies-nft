@@ -5,6 +5,7 @@ import {
   type UseMutationOptions,
   type UseQueryOptions,
 } from "@tanstack/react-query";
+import { logger } from "@/lib/utils/logger";
 
 interface ItemFilters {
   page?: number;
@@ -29,7 +30,7 @@ export const getItemDetail = async (id: string): Promise<TItem> => {
     const response = await fetch(`${BASE_URL}/items/${id}`);
     return response.json();
   } catch (error) {
-    console.error("failed to fetch item deatil", error);
+    logger.error("failed to fetch item deatil", error);
     throw new Error("Failed to fetch item detail");
   }
 };
@@ -56,7 +57,7 @@ export const getAllItems = async (args: ItemFilters = {}) => {
     }
     return response.json();
   } catch (error) {
-    console.error("Error fetching items:", error);
+    logger.error("Error fetching items:", error);
     throw new Error("Failed to fetch items");
   }
 };
@@ -90,23 +91,15 @@ export async function putItem({
   body: Partial<TItem>;
 }) {
   try {
-    // const response = await fetch(`${BASE_URL}/items/${id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(body),
-    // });
-
-    // return response.json();
-    return new Promise((resolve) => {
-      console.log(id);
+    return new Promise<TputItemMutation>((resolve) => {
       setTimeout(() => {
-        resolve(body);
+        logger.log(`Simulating PUT for item: ${id} with body:`, body);
+        resolve({ id, body });
       }, 1000);
     });
   } catch (error) {
-    console.log(error);
+    logger.error("Failed to put item:", error);
+    throw new Error("Failed to update item");
   }
 }
 
@@ -119,8 +112,7 @@ export function usePutItemMutation(
   args?: UseMutationOptions<TputItemMutation, Error, TputItemMutation>,
 ) {
   return useMutation<TputItemMutation, Error, TputItemMutation>({
-    mutationFn: ({ id, body }) =>
-      putItem({ id, body }) as Promise<TputItemMutation>,
+    mutationFn: (variables: TputItemMutation) => putItem(variables),
     ...args,
   });
 }
