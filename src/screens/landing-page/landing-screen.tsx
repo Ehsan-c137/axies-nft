@@ -10,7 +10,7 @@ import { PopularCollection } from "./popular-collection";
 import { TopSeller } from "./top-seller";
 import { Hero } from "./hero";
 import { HeroOverview } from "./hero-overview";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 
 export default function LandingScreen() {
   const isAnimationEnabled = useAnimationPerformanceControl(DEFAULT_OPTIONS);
@@ -59,7 +59,9 @@ export default function LandingScreen() {
       <PopularCollection ref={itemRef} />
       <SectionWrapper>
         <TopSeller ref={itemRef} />
-        <TodayPick />
+        <Suspense>
+          <TodayPick />
+        </Suspense>
       </SectionWrapper>
     </div>
   );

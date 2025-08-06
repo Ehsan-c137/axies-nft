@@ -37,22 +37,20 @@ export default function ExploreScreen() {
   return (
     <>
       <div className="flex flex-col md:flex-row gap-10 container mx-auto">
-        <Suspense>
-          {isDesktop && (
-            <FilterDesktop
-              handleParamChange={handleParamChange}
-              paramState={paramState}
-              isPending={isDataPending}
-            />
-          )}
-          {!isDesktop && (
-            <FilterMobile
-              isDataPending={isDataPending}
-              handleParamChange={handleParamChange}
-              paramState={paramState}
-            />
-          )}
-        </Suspense>
+        {isDesktop && (
+          <FilterDesktop
+            handleParamChange={handleParamChange}
+            paramState={paramState}
+            isPending={isDataPending}
+          />
+        )}
+        {!isDesktop && (
+          <FilterMobile
+            isDataPending={isDataPending}
+            handleParamChange={handleParamChange}
+            paramState={paramState}
+          />
+        )}
 
         <div className="flex flex-1 flex-wrap gap-4 justify-center justify-items-center md:justify-items-start md:justify-start">
           <PaginationList<TItem>

@@ -60,12 +60,13 @@ export default function PaginationList<T>({
           );
         })}
       </div>
-
-      <PaginationControl
-        currentPage={paginatedData?.meta?.currentPage || 1}
-        lastPage={paginatedData?.meta?.lastPage || 1}
-        url={url}
-      />
+      <Suspense>
+        <PaginationControl
+          currentPage={paginatedData?.meta?.currentPage || 1}
+          lastPage={paginatedData?.meta?.lastPage || 1}
+          url={url}
+        />
+      </Suspense>
     </div>
   );
 }
