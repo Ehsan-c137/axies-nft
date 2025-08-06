@@ -3,7 +3,6 @@ import type { RuleSetRule } from "webpack";
 import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["@opentelemetry/api", "@opentelemetry/resources"],
   images: {
     remotePatterns: [
       {
