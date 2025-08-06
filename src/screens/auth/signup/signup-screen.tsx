@@ -1,11 +1,6 @@
-import { Input } from "@ui/input";
-import { Label } from "@ui/label";
-import { Checkbox } from "@ui/checkbox";
-import { Button } from "@ui/button";
 import Link from "next/link";
 import { ThemedImage } from "@ui/image";
-import { FacebookIcon } from "@icons/socials";
-import { GoogleIcon } from "@icons/socials";
+import { SignupForm } from "@/modules/auth/forms/signup-form";
 
 export function SignupScreen() {
   return (
@@ -22,35 +17,7 @@ export function SignupScreen() {
             unoptimized
           />
         </Link>
-        <div className="flex flex-col gap-4 justify-center items-center w-full">
-          <Input placeholder="Your Fullname..." />
-          <Input placeholder="Email Address" />
-          <Input placeholder="Password" />
-          <Button variant="outline" className="w-full">
-            Signup
-          </Button>
-        </div>
-        <div className="flex justify-between items-center w-full">
-          <Label htmlFor="remember" className="cursor-pointer">
-            Remember Me <Checkbox name="remember" id="remember" />
-          </Label>
-          <Link href="/login">Have account? Login</Link>
-        </div>
-        <div className="flex flex-col gap-4 items-center mt-8 w-full">
-          <div className="flex items-center gap-4 w-full">
-            <span className="border w-full" />
-            <p className="w-full text-nowrap">Signup with socials</p>
-            <span className="border w-full" />
-          </div>
-          <div className="flex gap-4 items-center">
-            <Button variant="outline" className="flex-1">
-              <GoogleIcon /> Google
-            </Button>
-            <Button variant="outline" className="flex-1">
-              <FacebookIcon /> Facebook
-            </Button>
-          </div>
-        </div>
+        <SignupForm />
       </div>
     </div>
   );
