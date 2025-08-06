@@ -17,7 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const item = await getItemDetail(id);
   if (!item) {
-    notFound();
+    return {
+      title: "Axies NFT | item not found",
+    };
   }
 
   return {
@@ -35,7 +37,7 @@ export async function generateStaticParams() {
     }));
   } catch (error) {
     console.error("Error generating static param:", error);
-    return [];
+    throw new Error(`Failed to generate static params for item `);
   }
 }
 
