@@ -8,6 +8,7 @@ import useSearchParamState from "@/hooks/useSearchParamState";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { TItem, useGetItems } from "@/services/item/item-service";
 import PaginationList from "@/components/common/pagination/pagination-list";
+import { Suspense } from "react";
 
 export default function ExploreScreen() {
   const {
@@ -36,20 +37,22 @@ export default function ExploreScreen() {
   return (
     <>
       <div className="flex flex-col md:flex-row gap-10 container mx-auto">
-        {isDesktop && (
-          <FilterDesktop
-            handleParamChange={handleParamChange}
-            paramState={paramState}
-            isPending={isDataPending}
-          />
-        )}
-        {!isDesktop && (
-          <FilterMobile
-            isDataPending={isDataPending}
-            handleParamChange={handleParamChange}
-            paramState={paramState}
-          />
-        )}
+        <Suspense>
+          {isDesktop && (
+            <FilterDesktop
+              handleParamChange={handleParamChange}
+              paramState={paramState}
+              isPending={isDataPending}
+            />
+          )}
+          {!isDesktop && (
+            <FilterMobile
+              isDataPending={isDataPending}
+              handleParamChange={handleParamChange}
+              paramState={paramState}
+            />
+          )}
+        </Suspense>
 
         <div className="flex flex-1 flex-wrap gap-4 justify-center justify-items-center md:justify-items-start md:justify-start">
           <PaginationList<TItem>

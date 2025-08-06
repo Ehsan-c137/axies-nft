@@ -6,7 +6,7 @@ import { PaginationLoadMore } from "@common/pagination/pagination-load-more";
 import Filter from "./today-pick-filter";
 import { useGetTodayPick } from "@/services/item/today-pick";
 import useSearchParamState from "@/hooks/useSearchParamState";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { TItem } from "@/services/item/item-service";
 import { useRef } from "react";
 
@@ -95,7 +95,9 @@ export function TodayPick() {
           EXPLORE MORE
         </Button>
       </div>
-      <Filter paramState={paramState} handleParamChange={handleParamChange} />
+      <Suspense>
+        <Filter paramState={paramState} handleParamChange={handleParamChange} />
+      </Suspense>
       <PaginationLoadMore
         data={showedData}
         DataCard={LiveAuctionsCard}
