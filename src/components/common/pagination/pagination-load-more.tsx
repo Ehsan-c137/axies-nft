@@ -66,6 +66,7 @@ export function PaginationLoadMore<T extends { id: React.Key }>({
     <div className="flex flex-col gap-8">
       <div
         ref={gridRef}
+        data-testid="pagination-container"
         className={clsx(
           "grid grid-cols-1 justify-items-center md:justify-items-start md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 transition-opacity",
           {

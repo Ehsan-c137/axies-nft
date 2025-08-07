@@ -17,7 +17,10 @@ export function BlogCard({
 }: TBlogDetail) {
   const router = useRouter();
   return (
-    <div className="p-4 grid gap-4 max-w-[450px] bg-[var(--card)] text-[var(--card-foreground)] rounded-2xl not-dark:shadow-sm">
+    <div
+      className="p-4 grid gap-4 max-w-[450px] bg-[var(--card)] text-[var(--card-foreground)] rounded-2xl not-dark:shadow-sm"
+      data-testid="blog-card"
+    >
       <div className="w-full h-[280px] relative">
         <Image
           src={thumbnail}

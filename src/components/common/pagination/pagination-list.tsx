@@ -47,6 +47,7 @@ export default function PaginationList<T>({
   return (
     <div className="flex flex-col gap-8">
       <div
+        data-testid="pagination-container"
         className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 justify-items-center md:justify-items-start gap-6 container mx-auto transition-opacity"
         style={{
           opacity: isPlaceholderData ? 0.5 : 1,
@@ -62,8 +63,8 @@ export default function PaginationList<T>({
       </div>
       <Suspense>
         <PaginationControl
-          currentPage={paginatedData?.meta?.currentPage || 1}
-          lastPage={paginatedData?.meta?.lastPage || 1}
+          currentPage={paginatedData?.meta?.currentPage ?? 1}
+          lastPage={paginatedData?.meta?.lastPage ?? 1}
           url={url}
         />
       </Suspense>

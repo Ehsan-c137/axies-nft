@@ -20,7 +20,10 @@ export default function FilterMobile({
   paramState,
 }: IFilterProps) {
   return (
-    <div className="flex items-center gap-2 justify-between md:hidden">
+    <div
+      className="flex items-center gap-2 justify-between md:hidden"
+      data-testid="explore-filter"
+    >
       {FILTER_CONFIG.map((config, index) => (
         <Select key={index}>
           <SelectTrigger className="w-[180px]">

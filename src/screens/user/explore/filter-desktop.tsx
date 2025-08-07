@@ -34,7 +34,10 @@ export default function Filter({
   isPending?: boolean;
 }) {
   return (
-    <div className="hidden md:flex flex-col gap-5 items-center w-[200px]">
+    <div
+      className="hidden md:flex flex-col gap-5 items-center w-[200px]"
+      data-testid="explore-filter"
+    >
       <Accordion type="multiple" className="w-full">
         {FILTER_CONFIG.map((config) => {
           return (

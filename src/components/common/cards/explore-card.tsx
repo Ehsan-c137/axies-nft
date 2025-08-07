@@ -14,7 +14,10 @@ export function ExploreCard({
   slug,
 }: TItem) {
   return (
-    <div className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-[var(--card)] text-[var(--card-foreground)] max-w-[320px] hover:-translate-y-2 transition ease-in-out duration-[350ms] not-dark:shadow-sm">
+    <div
+      className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-[var(--card)] text-[var(--card-foreground)] max-w-[320px] hover:-translate-y-2 transition ease-in-out duration-[350ms] not-dark:shadow-sm"
+      data-testid="explore-card"
+    >
       <div className="flex justify-center select-none relative group">
         <div className="w-[284px] h-[274px] rounded-4xl overflow-hidden select-none not-dark:shadow-sm relative">
           <Image
@@ -65,6 +68,7 @@ export function ExploreCard({
         </div>
         <Link
           href={`item/${slug}`}
+          data-testid="explore-card-view-history-link"
           className="flex items-center gap-2 bg-[var(--background)] rounded-xl p-2 cursor-pointer"
         >
           <RefreshIcon /> view history
