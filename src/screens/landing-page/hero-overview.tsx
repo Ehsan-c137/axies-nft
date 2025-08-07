@@ -26,7 +26,7 @@ export function HeroOverview({ ref }: Iprops) {
         ];
         const title = [
           "Set Up Your Wallet",
-          "Set Up Your Wallet",
+          "Create your Collection",
           "Add Your NFTs",
           "List Them For Sale",
         ];
