@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ILoginCredentials, IUser } from "@/types/service/auth";
 
 const USER_KEY = "user";
@@ -38,8 +38,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   const router = useRouter();
-  const searcParams = useSearchParams();
-  const callbackUrl = searcParams.get("callbackUrl") || "/";
 
   useEffect(() => {
     const checkUserSession = async () => {
@@ -108,6 +106,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         });
         localStorage.setItem(USER_KEY, JSON.stringify(user));
 
+        const searchParams = new URLSearchParams(window.location.search);
+        const callbackUrl = searchParams.get("callbackUrl") || "/";
         router.push(callbackUrl);
         return user;
       } else {
@@ -137,10 +137,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }));
 
     try {
-      const respone = await fetch("/api/auth/logout", {
+      const response = await fetch("/api/auth/logout", {
         method: "POST",
       });
-      if (respone.ok) {
+      if (response.ok) {
         setAuth((prev) => ({
           ...prev,
           isAuthenticated: false,
@@ -181,12 +181,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
       if (response.ok) {
         const { user } = await response.json();
-        localStorage.setItem(USER_KEY, user);
+        localStorage.setItem(USER_KEY, JSON.stringify(user));
         setAuth({
           isAuthenticated: true,
           user: user,
           isLoading: false,
         });
+        const searchParams = new URLSearchParams(window.location.search);
+        const callbackUrl = searchParams.get("callbackUrl") || "/";
         router.push(callbackUrl);
         return user;
       }
