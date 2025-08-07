@@ -2,6 +2,7 @@ import BlogsScreen from "@/screens/blog/blogs-screen";
 import { Metadata } from "next";
 import { getBlogPosts } from "@/services/blog/blog-service";
 import { TBlogDetail, TPaginatedData } from "@/types/service/index";
+import { logger } from "@/lib/utils/logger";
 
 interface IProps {
   params: Promise<{ page: string }>;
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
       description: `Discover the latest articles on our blog, page ${(await params).page}.`,
     };
   } catch (error) {
-    console.log("error generating metadata ", error);
+    logger.error("error generating metadata ", error);
     return {
       title: "Blogs",
       description: "Discover the latest articles on our blog.",
