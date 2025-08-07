@@ -40,8 +40,6 @@ export default function LikeBox({
     mutate({ id: itemId, body: { likes: newLikeCount } });
   };
 
-  console.log({ prop: count, state: like, isLiked });
-
   return (
     <button
       className={clsx(

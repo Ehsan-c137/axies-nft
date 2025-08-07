@@ -23,7 +23,6 @@ export function ProfileScreen({ username }: Props) {
   const isMe = user?.username === username;
 
   const { data, isError, isLoading, error } = useUserProfile(username);
-  console.log({ isMe, data }, user?.username);
   if (isLoading) {
     return <ProfileScreenPlaceholder />;
   }

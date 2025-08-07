@@ -39,7 +39,6 @@ export function useSignupMutation() {
   return useMutation({
     mutationFn: signup,
     onSuccess: (user) => {
-      console.log(user);
       if (user?.id) {
         queryClient.setQueryData([...PROFILE_QUERY.user(), user.id], user);
       }

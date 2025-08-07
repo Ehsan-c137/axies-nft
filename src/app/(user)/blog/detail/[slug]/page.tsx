@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getBlogDetail, getAllblogPosts } from "@/services/blog/blog-service";
 import BlogDetailScreen from "@/screens/blog/blog-detail/blog-detail-screen";
+import { logger } from "@/lib/utils/logger";
 
 interface IProps {
   params: Promise<{ slug: string }>;
@@ -29,7 +30,7 @@ export async function generateStaticParams() {
       slug: post.slug,
     }));
   } catch (erorr) {
-    console.error("Error generating static params:", erorr);
+    logger.error("Error generating static params:", erorr);
     return [];
   }
 }

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { logger } from "@/lib/utils/logger";
 
 interface IProps {
   error: Error;
@@ -9,7 +10,7 @@ interface IProps {
 
 export default function UnexpectedError({ error }: IProps) {
   const router = useRouter();
-  console.log(error);
+  logger.log(error);
 
   return (
     <div className="w-full flex flex-col justify-center items-center gap-4">

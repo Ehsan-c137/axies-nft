@@ -1,5 +1,6 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import { BASE_URL } from "../config";
+import { logger } from "@/lib/utils/logger";
 
 export const BLOG_QUERY = {
   allBlogs: () => ["blog-posts"],
@@ -21,7 +22,7 @@ export async function getBlogPosts(page: number = 1, limit: number = 8) {
     );
 
     if (!response.ok) {
-      console.log("something went wrong");
+      logger.error("something went wrong", response);
     }
 
     return response.json();
