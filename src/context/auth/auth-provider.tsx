@@ -40,6 +40,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const router = useRouter();
 
+  const setLoggedOutState = (loading = false) => {
+    localStorage.removeItem(USER_KEY);
+    setAuth({
+      isAuthenticated: false,
+      user: null,
+      isLoading: loading,
+    });
+  };
+
   useEffect(() => {
     const checkUserSession = async () => {
       const cachedUser = localStorage.getItem(USER_KEY);
@@ -47,35 +56,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setAuth((prev) => ({
           ...prev,
           isAuthenticated: true,
+          isLoading: true, // Will be verified by the API call
           user: JSON.parse(cachedUser),
         }));
       }
       try {
         const response = await fetch("/api/auth/me");
         if (response.ok) {
-          const user = await response.json();
-          setAuth((prev) => ({
-            ...prev,
-            isAuthenticated: true,
-            user: user,
-          }));
+          const { user } = await response.json();
+          setAuth({ isAuthenticated: true, user: user, isLoading: false });
           localStorage.setItem(USER_KEY, JSON.stringify(user));
         } else {
-          setAuth((prev) => ({
-            ...prev,
-            isAuthenticated: false,
-            user: null,
-          }));
-          localStorage.removeItem(USER_KEY);
+          setLoggedOutState(false);
         }
       } catch (error) {
         console.error("Error checking user session:", error);
-        setAuth({
-          isAuthenticated: false,
-          user: null,
-          isLoading: false,
-        });
-        localStorage.removeItem(USER_KEY);
+        setLoggedOutState(false);
       } finally {
         setAuth((prev) => ({
           ...prev,
@@ -87,9 +83,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     checkUserSession();
   }, []);
 
-  const login = async (
-    credentials: ILoginCredentials,
-  ): Promise<IUser | null> => {
+  const login = async (credentials: ILoginCredentials): Promise<IUser> => {
     setAuth((prev) => ({ ...prev, isLoading: true }));
 
     try {
@@ -98,34 +92,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         body: JSON.stringify(credentials),
       });
 
-      if (response.ok) {
-        const { user } = await response.json();
-        setAuth({
-          isAuthenticated: true,
-          user: user,
-          isLoading: false,
-        });
-        localStorage.setItem(USER_KEY, JSON.stringify(user));
-
-        const searchParams = new URLSearchParams(window.location.search);
-        const callbackUrl = searchParams.get("callbackUrl") || "/";
-        router.push(callbackUrl);
-        return user;
-      } else {
-        setAuth((prev) => {
-          return {
-            ...prev,
-            isAuthenticated: false,
-            isLoading: false,
-            user: null,
-          };
-        });
-        throw new Error("invalid credentials");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Invalid credentials");
       }
+
+      const { user } = await response.json();
+      setAuth({
+        isAuthenticated: true,
+        user: user,
+        isLoading: false,
+      });
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+
+      const searchParams = new URLSearchParams(window.location.search);
+      const callbackUrl = searchParams.get("callbackUrl") || "/";
+      router.push(callbackUrl);
+      return user;
     } catch (error) {
       logger.error("Error logging in:", error);
+      setLoggedOutState(false);
       if (error instanceof Error) {
-        throw new Error(error.message);
+        throw error;
       }
       throw new Error("something went wrong");
     }
@@ -138,36 +126,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }));
 
     try {
-      const response = await fetch("/api/auth/logout", {
+      await fetch("/api/auth/logout", {
         method: "POST",
       });
-      if (response.ok) {
-        setAuth((prev) => ({
-          ...prev,
-          isAuthenticated: false,
-          user: null,
-          isLoading: false,
-        }));
-        localStorage.removeItem(USER_KEY);
-        // redirects are gonna handle with middleware
-        router.refresh();
-      }
+      setLoggedOutState(false);
+      // redirects are gonna handle with middleware
+      router.refresh();
     } catch (error) {
       console.error("Error logging out:", error);
+      setLoggedOutState(false);
       throw new Error("something went wrong");
-    } finally {
-      setAuth((prev) => {
-        return {
-          ...prev,
-          isLoading: false,
-        };
-      });
     }
   };
 
-  const signup = async (
-    credentials: ILoginCredentials,
-  ): Promise<IUser | null> => {
+  const signup = async (credentials: ILoginCredentials): Promise<IUser> => {
     setAuth((prev) => {
       return {
         ...prev,
@@ -180,42 +152,37 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         method: "POST",
         body: JSON.stringify(credentials),
       });
-      if (response.ok) {
-        const { user } = await response.json();
-        localStorage.setItem(USER_KEY, JSON.stringify(user));
-        setAuth({
-          isAuthenticated: true,
-          user: user,
-          isLoading: false,
-        });
-        const searchParams = new URLSearchParams(window.location.search);
-        const callbackUrl = searchParams.get("callbackUrl") || "/";
-        router.push(callbackUrl);
-        return user;
-      } else {
-        setAuth({
-          isAuthenticated: false,
-          user: null,
-          isLoading: false,
-        });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Could not create account");
       }
-      throw new Error("invalid credentials");
+
+      const { user } = await response.json();
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+      setAuth({
+        isAuthenticated: true,
+        user: user,
+        isLoading: false,
+      });
+      const searchParams = new URLSearchParams(window.location.search);
+      const callbackUrl = searchParams.get("callbackUrl") || "/";
+      router.push(callbackUrl);
+      return user;
     } catch (error) {
       logger.error("Error signing up:", error);
+      setLoggedOutState(false);
       if (error instanceof Error) {
-        throw new Error(error.message);
+        throw error;
       }
       throw new Error("something went wrong");
     }
   };
 
-  const values = {
+  const value: AuthContextType = {
     ...auth,
-    setAuth,
     login,
     logout,
     signup,
-  } as AuthContextType;
-
-  return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>; //
+  };
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
