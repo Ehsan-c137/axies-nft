@@ -31,10 +31,9 @@ export default function PaginationControl({
   const searchParams = useSearchParams();
 
   let activePage = currentPage;
-  if (!url) {
+  if (!url && searchParams.has("page")) {
     activePage = Number(searchParams.get("page"));
   }
-
   const paginationRange = useMemo(() => {
     const siblingCount = 1;
     const totalPageNumbers = siblingCount + 5;
@@ -105,6 +104,7 @@ export default function PaginationControl({
                     <PaginationLink
                       href={url ? `/${url}/${page}` : `?page=${page}`}
                       isActive={page === activePage}
+                      data-testid={`pagination-link-${page}`}
                     >
                       {page}
                     </PaginationLink>
