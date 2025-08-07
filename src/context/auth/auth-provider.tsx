@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ILoginCredentials, IUser } from "@/types/service/auth";
+import { logger } from "@/lib/utils/logger";
 
 const USER_KEY = "user";
 
@@ -122,7 +123,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         throw new Error("invalid credentials");
       }
     } catch (error) {
-      console.error("Error logging in:", error);
+      logger.error("Error logging in:", error);
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -191,15 +192,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const callbackUrl = searchParams.get("callbackUrl") || "/";
         router.push(callbackUrl);
         return user;
+      } else {
+        setAuth({
+          isAuthenticated: false,
+          user: null,
+          isLoading: false,
+        });
       }
       throw new Error("invalid credentials");
     } catch (error) {
-      console.error("Error signing up:", error);
-      setAuth({
-        isAuthenticated: false,
-        user: null,
-        isLoading: false,
-      });
+      logger.error("Error signing up:", error);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
       throw new Error("something went wrong");
     }
   };
