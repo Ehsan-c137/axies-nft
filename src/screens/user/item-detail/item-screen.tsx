@@ -47,7 +47,10 @@ export default function ItemDetailScreen({
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 lg:justify-between container mx-auto gap-5">
+      <div
+        className="grid grid-cols-1 lg:grid-cols-2 lg:justify-between container mx-auto gap-5"
+        data-testid="item-detail"
+      >
         <div className="max-w-[690px] max-h-[690px]">
           <Image
             unoptimized
