@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./swiper.module.css";
 import clsx from "clsx";
 import { useStateRef, getRefValue } from "@/lib/hooks";
@@ -23,14 +23,29 @@ const Swiper = <TData extends object>({
   ItemCard,
   datas,
 }: IProps<TData>) => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const { itemPerPage } = config;
   const MIN_SWIPE_Required = 50;
 
   const LoadingContent = () => {
     return (
       <div className="w-full jusitfy-between">
-        {Array.from({ length: itemPerPage }).map((_, i) => (
-          <CardPlaceholder key={i} />
+        {Array.from({ length: itemPerPage }).map((_, index) => (
+          <li
+            key={index}
+            className={styles.swiper_item}
+            style={{
+              width: `calc(100% / ${itemPerPage} )`,
+              userSelect: "none",
+            }}
+          >
+            <CardPlaceholder />
+          </li>
         ))}
       </div>
     );
@@ -136,24 +151,27 @@ const Swiper = <TData extends object>({
           is_swiping: isSwiping,
         })}
       >
-        {isLoading && <LoadingContent />}
-        {datas?.map((data, index) => {
-          return (
-            <li
-              key={index}
-              className={styles.swiper_item}
-              style={{
-                width: `calc(100% / ${itemPerPage} )`,
-                userSelect: "none",
-              }}
-            >
-              <ItemCard {...data} />
-            </li>
-          );
-        })}
+        {isClient && isLoading ? (
+          <LoadingContent />
+        ) : (
+          datas?.map((data, index) => {
+            return (
+              <li
+                key={index}
+                className={styles.swiper_item}
+                style={{
+                  width: `calc(100% / ${itemPerPage} )`,
+                  userSelect: "none",
+                }}
+              >
+                <ItemCard {...data} />
+              </li>
+            );
+          })
+        )}
       </ul>
       <SwiperIndicators
-        count={Math.ceil(datas.length / itemPerPage)}
+        count={Math.ceil(datas?.length / itemPerPage)}
         activeIndex={currentIndex}
         onSelect={indicatorOnClick}
       />
