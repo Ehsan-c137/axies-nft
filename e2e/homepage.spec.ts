@@ -11,16 +11,21 @@ test.describe("Homepage", () => {
     await page.waitForURL("/");
     await expect(page.getByText("Discover and collect")).toBeVisible();
 
-    const sectionLocators = [
-      page.getByText("Set Up Your Wallet"),
-      page.getByRole("heading", { name: "Live Auctions" }),
-      page.getByRole("heading", { name: "Popular Collection" }),
-      page.getByRole("heading", { name: "Top Seller" }),
-      page.getByRole("heading", { name: "Today's Pick" }),
-      page.getByText("Subscribe us"),
+    const sections = [
+      { name: "Set Up Your Wallet", role: "text" as const },
+      { name: "Live Auctions", role: "heading" as const },
+      { name: "Popular Collection", role: "heading" as const },
+      { name: "Top Seller", role: "heading" as const },
+      { name: "Today's Pick", role: "heading" as const },
+      { name: "Subscribe us", role: "text" as const },
     ];
 
-    for (const locator of sectionLocators) {
+    for (const section of sections) {
+      const locator =
+        section.role === "heading"
+          ? page.getByRole("heading", { name: section.name })
+          : page.getByText(section.name);
+
       await locator.scrollIntoViewIfNeeded();
       await expect(locator).toBeVisible();
     }
@@ -29,7 +34,6 @@ test.describe("Homepage", () => {
   test("should load more items when 'Load More' is clicked in Today's Pick", async ({
     page,
   }) => {
-    await page.waitForURL("/");
     const todaysPickHeading = page.getByRole("heading", {
       name: "Today's Pick",
     });
