@@ -11,6 +11,7 @@ interface Iprops {
 }
 
 export function LiveAuctions({ ref }: Iprops) {
+  const LIVE_AUCTIONS_COUNT = 13;
   const isMobile = useMediaQuery("(max-width: 768px)", { defaultValue: false });
   const isTablet = useMediaQuery("(max-width: 1140px)", {
     defaultValue: false,
@@ -38,7 +39,7 @@ export function LiveAuctions({ ref }: Iprops) {
         </Button>
       </div>
       <Swiper
-        datas={data?.slice(0, 15) || []}
+        datas={data?.slice(0, LIVE_AUCTIONS_COUNT)}
         ItemCard={LiveAuctionsCard}
         isLoading={isPending}
         config={swiper_config}
