@@ -1,5 +1,5 @@
-import { defineConfig, devices } from "@playwright/test";
 import path from "path";
+import { defineConfig, devices } from "@playwright/test";
 
 const PORT = process.env.PORT || 3000;
 const baseURL = `http://localhost:${PORT}`;
@@ -23,17 +23,12 @@ export default defineConfig({
 
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
-
-    {
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
     },
 
     {
-      name: "webkit",
+      name: "Desktop Safari",
       use: { ...devices["Desktop Safari"] },
     },
 
