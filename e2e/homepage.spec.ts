@@ -8,6 +8,7 @@ test.describe("Homepage", () => {
   test("should display all section headings as user scrolls", async ({
     page,
   }) => {
+    await page.waitForURL("/");
     await expect(page.getByText("Discover and collect")).toBeVisible();
 
     const sectionLocators = [
@@ -28,6 +29,7 @@ test.describe("Homepage", () => {
   test("should load more items when 'Load More' is clicked in Today's Pick", async ({
     page,
   }) => {
+    await page.waitForURL("/");
     const todaysPickHeading = page.getByRole("heading", {
       name: "Today's Pick",
     });
