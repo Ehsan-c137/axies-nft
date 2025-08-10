@@ -5,7 +5,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { gsap } from "gsap";
 import { cn } from "@/lib/utils";
-import { Spinner } from "./spinner";
+import { Loader2Icon } from "lucide-react";
 
 const buttonVariants = cva(
   "h-[46px] px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive cursor-pointer",
@@ -118,6 +118,21 @@ function Button({
     };
   }, [variant]);
 
+  if (loading) {
+    return (
+      <Comp
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+        ref={buttonRef}
+        disabled={loading || props.disabled}
+      >
+        <Loader2Icon className="animate-spin" />
+        {children}
+      </Comp>
+    );
+  }
+
   return (
     <Comp
       data-slot="button"
@@ -132,15 +147,12 @@ function Button({
             ref={flairRef}
             className="button__flair bottom-0 left-0 right-0 top-0 scale-0 pointer-events-none absolute h-12 rounded-full bg-[var(--theme-primary)] before:aspect-square before:left-0 before:top-0 before:-transform-x-1/2 before:-translate-y-1/2 before:w-[200%]"
           />
-          <span className="relative flex items-center justify-center gap-1">
+          <span className="relative z-10 flex items-center justify-center gap-1">
             {children}
           </span>
         </>
       ) : (
-        <>
-          {children}
-          {loading && <Spinner size={"small"} />}
-        </>
+        children
       )}
     </Comp>
   );
