@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
     "e2e": "playwright test",
     "svgr:build-icons": "npx @svgr/cli --config-file svgr.config.js --out-dir ./src/components/icons ./src/assets/icons",
     "svgr:build-illustrations": "npx @svgr/cli --config-file svgr.config.js --out-dir ./src/components/illustrations ./src/assets/illustrations"
