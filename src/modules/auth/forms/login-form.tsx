@@ -68,7 +68,7 @@ export function LoginForm() {
               <FormItem className="w-full">
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} data-testid="email-input" />
                 </FormControl>
                 <FormMessage />
                 <FormDescription>email is test@example.com</FormDescription>
@@ -82,7 +82,7 @@ export function LoginForm() {
               <FormItem className="w-full">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} data-testid="password-input" />
                 </FormControl>
                 <FormMessage />
                 <FormDescription>password is p@ssword123</FormDescription>
@@ -95,6 +95,7 @@ export function LoginForm() {
             className="w-full"
             disabled={form.formState.isSubmitting}
             loading={isPending}
+            data-testid="login-button"
           >
             Login
           </Button>

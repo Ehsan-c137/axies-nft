@@ -26,7 +26,10 @@ export default function FilterMobile({
     >
       {FILTER_CONFIG.map((config, index) => (
         <Select key={index}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger
+            className="w-[180px]"
+            data-testid={`filter-${config.key}`}
+          >
             <SelectValue placeholder={config.key} />
           </SelectTrigger>
           <SelectContent>
@@ -40,6 +43,7 @@ export default function FilterMobile({
                     onCheckedChange={(e: boolean) =>
                       handleParamChange(config.key, value, e)
                     }
+                    data-testid={`filter-option-${value}`}
                     checked={!!paramState[config.key]?.includes(value) || false}
                     value={value}
                     name={value}

@@ -67,13 +67,14 @@ const FilterSection = ({
   paramState,
 }: IFilterSectionProps) => (
   <AccordionItem value={config.key} key={config.key}>
-    <AccordionTrigger>
+    <AccordionTrigger data-testid={`filter-${config.key}`}>
       {config.key.charAt(0).toUpperCase() + config.key.slice(1)}
     </AccordionTrigger>
     <AccordionContent className="space-y-2">
       {config.value.map((value: string) => (
         <div className="flex items-center gap-2" key={value}>
           <Checkbox
+            data-testid={`filter-option-${value}`}
             id={value}
             onCheckedChange={(e: boolean) =>
               handleParamChange(config.key, value, e)
