@@ -11,7 +11,8 @@
     "test:watch": "jest --watch",
     "e2e": "playwright test",
     "svgr:build-icons": "npx @svgr/cli --config-file svgr.config.js --out-dir ./src/components/icons ./src/assets/icons",
-    "svgr:build-illustrations": "npx @svgr/cli --config-file svgr.config.js --out-dir ./src/components/illustrations ./src/assets/illustrations"
+    "svgr:build-illustrations": "npx @svgr/cli --config-file svgr.config.js --out-dir ./src/components/illustrations ./src/assets/illustrations",
+    "prepare": "husky"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -64,6 +65,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "eslint-config-prettier": "^10.1.5",
+    "husky": "^9.1.7",
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "prettier": "3.5.3",
