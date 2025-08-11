@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  output: "standalone",
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule: RuleSetRule) => {
       if (rule && typeof rule === "object" && rule.test) {
