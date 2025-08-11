@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Swiper from "../../ui/swiper/swiper";
+import Swiper from "../ui/swiper/swiper";
 
 jest.mock("@/components/common/cards/card-placeholder", () => ({
   __esModule: true,

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Button } from "../button";
+import { Button } from "../ui/button";
 import "@testing-library/jest-dom";
 
 describe("Button Component", () => {
@@ -12,9 +12,7 @@ describe("Button Component", () => {
   it("should apply default variant and size classes", () => {
     render(<Button>Default Button</Button>);
     const button = screen.getByRole("button", { name: /default button/i });
-    // Check for a class from the 'default' variant
     expect(button).toHaveClass("bg-primary");
-    // Check for a class from the 'default' size
     expect(button).toHaveClass("h-10");
   });
 
@@ -31,14 +29,11 @@ describe("Button Component", () => {
   });
 
   it("should be disabled and show a spinner when loading is true", () => {
-    // The Spinner component doesn't have a specific role, so we'll look for the SVG
     render(<Button loading>Loading...</Button>);
     const button = screen.getByRole("button", { name: /loading.../i });
 
-    // The button should be disabled while loading
     expect(button).toBeDisabled();
 
-    // The spinner SVG should be present inside the button
     const spinnerSvg = button.querySelector("svg");
     expect(spinnerSvg).toBeInTheDocument();
   });
@@ -62,7 +57,6 @@ describe("Button Component", () => {
     render(<Button variant="outline">Outline Button</Button>);
     const button = screen.getByRole("button", { name: /outline button/i });
 
-    // The flair span is an implementation detail, but its presence is key to the variant's functionality
     const flairElement = button.querySelector(".button__flair");
     expect(flairElement).toBeInTheDocument();
   });
