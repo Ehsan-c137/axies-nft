@@ -1,6 +1,5 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import PaginationList from "../common/pagination/pagination-list";
 import "@testing-library/jest-dom";
 
@@ -12,10 +11,6 @@ const mockItems = [
 
 const MockDataCard = ({ id, name }: { id: number; name: string }) => (
   <div key={id}>{name}</div>
-);
-
-const renderItem = (item: { id: number; name: string }) => (
-  <li key={item.id}>{item.name}</li>
 );
 
 describe("PaginationList", () => {
