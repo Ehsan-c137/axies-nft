@@ -31,8 +31,8 @@ export default function PaginationControl({
   const searchParams = useSearchParams();
 
   let activePage = currentPage;
-  if (!url && searchParams.has("page")) {
-    activePage = Number(searchParams.get("page"));
+  if (!url && searchParams?.has("page")) {
+    activePage = Number(searchParams?.get("page"));
   }
   const paginationRange = useMemo(() => {
     const siblingCount = 1;
@@ -75,11 +75,12 @@ export default function PaginationControl({
   return (
     <Suspense>
       {lastPage > 1 && (
-        <div className="w-full text-center">
+        <div className="w-full text-center" data-testid="pagination-control">
           <Pagination>
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious
+                  data-testid="pagination-previous-button"
                   href={
                     url
                       ? `/${url}/${activePage - 1}`
@@ -105,6 +106,11 @@ export default function PaginationControl({
                       href={url ? `/${url}/${page}` : `?page=${page}`}
                       isActive={page === activePage}
                       data-testid={`pagination-link-${page}`}
+                      {...(page === activePage
+                        ? {
+                            "aria-current": "page",
+                          }
+                        : {})}
                     >
                       {page}
                     </PaginationLink>
@@ -113,6 +119,7 @@ export default function PaginationControl({
               })}
               <PaginationItem>
                 <PaginationNext
+                  data-testid="pagination-next-button"
                   href={
                     url
                       ? `/${url}/${activePage + 1}`
