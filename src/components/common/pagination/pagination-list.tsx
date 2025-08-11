@@ -38,7 +38,7 @@ export default function PaginationList<T>({
 
   if (paginatedData?.data?.length === 0) {
     return (
-      <div className="w-full text-center">
+      <div className="w-full text-center" data-testid="empty-state">
         <p>Ooopes! could&apos;t not find anything</p>
       </div>
     );
