@@ -10,7 +10,7 @@ export default defineConfig({
   retries: 2,
   outputDir: "e2e-results/",
   webServer: {
-    command: "pnpm run dev",
+    command: "pnpm run start",
     url: baseURL,
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
