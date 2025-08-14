@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/utils/logger";
 
 interface IProps {
   error: Error;
