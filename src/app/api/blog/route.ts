@@ -6,6 +6,8 @@ export function GET(request: NextRequest) {
   const page = searchParams.get("page");
   const limit = searchParams.get("limit");
 
+  if (!page && !limit) return NextResponse.json(blogPosts);
+
   if (page || limit) {
     const url = new URL(request.url);
     const page = parseInt(url.searchParams.get("page")!, 10) || 1;
