@@ -17,11 +17,15 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="w-full flex justify-center items-center flex-col gap-4">
-      <h2 className="text-lg">Ooops! Something went wrong.</h2>
-      <Button variant="contained" onClick={() => reset()}>
-        Try again
-      </Button>
-    </div>
+    <html>
+      <body>
+        <div className="w-full flex justify-center items-center flex-col gap-4">
+          <h2 className="text-lg">Ooops! Something went wrong.</h2>
+          <Button variant="contained" onClick={() => reset()}>
+            Try again
+          </Button>
+        </div>
+      </body>
+    </html>
   );
 }
