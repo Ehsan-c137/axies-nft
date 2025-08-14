@@ -8,19 +8,19 @@ import EllipsisIcon from "@icons/ellipsis-icon";
 import { useGetItemDetail, TItem } from "@/services/item/item-service";
 import ItemScreenPlaceholder from "./item-screen-placeholder";
 import ShareCurrentUrlButton from "@/components/common/share-current-url-button";
-import NotFound from "@/components/common/errors/not-found-component";
 import UnexpectedError from "@/components/common/errors/unexpected";
 import CountdownCard from "@/modules/item/countdown-card";
 import UserInfoCard from "@/modules/item/user-info-card";
 import CurrentBidCard from "@/modules/item/currentbid-card";
 import StatusBox from "@/modules/item/status-box";
 import LikeBox from "@/modules/item/like-box";
+import { notFound } from "next/navigation";
 
 export default function ItemDetailScreen({
-  id,
+  slug,
   initialData,
 }: {
-  id: string;
+  slug: string;
   initialData: TItem;
 }) {
   const {
@@ -29,7 +29,7 @@ export default function ItemDetailScreen({
     isPending,
     isError,
     isPlaceholderData,
-  } = useGetItemDetail(id, {
+  } = useGetItemDetail(slug, {
     initialData: initialData,
   });
 
@@ -42,7 +42,7 @@ export default function ItemDetailScreen({
   }
 
   if (!itemDetail || itemDetail?.status == 404) {
-    return <NotFound />;
+    notFound();
   }
 
   return (
@@ -69,7 +69,7 @@ export default function ItemDetailScreen({
               <StatusBox icon={<EyeIcon />} count={itemDetail.seen} />
               <LikeBox
                 count={itemDetail.likes}
-                itemId={id}
+                itemId={slug}
                 isLiked={itemDetail.isFavorite}
               />
             </div>
