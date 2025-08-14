@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ILoginCredentials, IUser } from "@/types/service/auth";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/utils/logger";
 
 const USER_KEY = "user";
 
