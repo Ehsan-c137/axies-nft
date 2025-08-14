@@ -5,7 +5,7 @@ import {
   type UseMutationOptions,
   type UseQueryOptions,
 } from "@tanstack/react-query";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/utils/logger";
 
 interface ItemFilters {
   page?: number;
@@ -25,9 +25,9 @@ export const ITEM_QUERY = {
   itemDetail: (id: string) => [...ITEM_QUERY.items(), id] as const,
 };
 
-export const getItemDetail = async (id: string): Promise<TItem> => {
+export const getItemDetail = async (slug: string): Promise<TItem> => {
   try {
-    const response = await fetch(`${BASE_URL}/items/${id}`);
+    const response = await fetch(`${BASE_URL}/items/${slug}`);
     return response.json();
   } catch (error) {
     logger.error("failed to fetch item deatil", error);
