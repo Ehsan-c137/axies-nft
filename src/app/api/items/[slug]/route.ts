@@ -1,12 +1,15 @@
-import { allProducts } from "@/mocks/data";
-
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
+    const databseResponse = await fetch(
+      "https://raw.githubusercontent.com/Ehsan-c137/axies-nft/main/src/mocks/items.json",
+    );
+    const database = await databseResponse.json();
+
     const postSlug = (await params)?.slug;
-    const post = allProducts.find((p) => p.slug === postSlug);
+    const post = database.find((p: { slug: string }) => p.slug === postSlug);
 
     if (!post) {
       return Response.json(
@@ -19,10 +22,6 @@ export async function GET(
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "An unexpected error occurred";
-    console.error("Unexpected error:", error);
-    return Response.json(
-      { message, error: true, status: 500 },
-      { status: 500 },
-    );
+    return Response.json({ message, error: true }, { status: 500 });
   }
 }
