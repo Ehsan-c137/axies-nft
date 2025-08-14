@@ -1,15 +1,15 @@
 import { Metadata } from "next";
-import { getBlogDetail, getAllblogPosts } from "@/services/blog/blog-service";
+import { getBlogDetail } from "@/services/server/blog";
 import BlogDetailScreen from "@/screens/blog/blog-detail/blog-detail-screen";
-import { logger } from "@/lib/utils/logger";
-
+import { logger } from "@/utils/logger";
+import NotFoundContainer from "@/components/common/errors/not-found-component";
+import { TBlogDetail } from "@/types/service";
 interface IProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const { slug } = await params;
-
   const blog = await getBlogDetail(slug);
 
   if (!blog) {
@@ -20,23 +20,69 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 
   return {
     title: blog.title,
+    authors: blog.authorName ? [{ name: blog.authorName }] : [],
+    description: blog.description?.slice(0, 160),
+    openGraph: {
+      title: blog.title,
+      description: blog?.description,
+      images: [
+        {
+          url: blog?.thumbnail,
+          width: 600,
+          height: 400,
+        },
+      ],
+      type: "website",
+    },
+    twitter: {
+      title: blog.title,
+      description: blog?.description,
+      images: {
+        url: blog?.thumbnail,
+        alt: blog.title,
+      },
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        noimageindex: false,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
   };
 }
 
 export async function generateStaticParams() {
   try {
-    const blogPosts = await getAllblogPosts();
-    return blogPosts.map((post: { slug: string }) => ({
-      slug: post.slug,
-    }));
-  } catch (erorr) {
-    logger.error("Error generating static params:", erorr);
+    const response = await fetch(
+      "https://raw.githubusercontent.com/Ehsan-c137/axies-nft/main/src/mocks/blogs.json",
+    );
+    const allBlogs = await response.json();
+    return allBlogs.map((item: { slug: string }) => {
+      return {
+        slug: String(item.slug),
+      };
+    });
+  } catch (error) {
+    logger.error("Error generating static params for blogs:", error);
     return [];
   }
 }
 
 export default async function Page({ params }: IProps) {
   const { slug } = await params;
-  const blog = await getBlogDetail(slug);
+
+  const blog: TBlogDetail | null = await getBlogDetail(slug);
+
+  if (!blog) {
+    return <NotFoundContainer />;
+  }
+
   return <BlogDetailScreen blog={blog} />;
 }

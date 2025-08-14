@@ -1,8 +1,10 @@
 import BlogsScreen from "@/screens/blog/blogs-screen";
 import { Metadata } from "next";
-import { getBlogPosts } from "@/services/blog/blog-service";
 import { TBlogDetail, TPaginatedData } from "@/types/service/index";
-import { logger } from "@/lib/utils/logger";
+import { logger } from "@/utils/logger";
+import { ToPagination } from "@/utils/toPagination";
+import NotFound from "@/components/common/errors/not-found-component";
+import { getAllBlogs } from "@/services/server/blog";
 
 interface IProps {
   params: Promise<{ page: string }>;
@@ -27,7 +29,15 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 
 export async function generateStaticParams() {
   try {
-    const blogs = await getBlogPosts();
+    const response = await fetch(
+      "https://raw.githubusercontent.com/Ehsan-c137/axies-nft/main/src/mocks/blogs.json",
+    );
+    const allBlogs = await response.json();
+    const blogs = ToPagination({
+      data: allBlogs,
+      limit: 8,
+      page: 1,
+    });
     const totalPages = blogs?.meta.lastPage || 1;
     const page = Array.from({ length: totalPages }, (_, i) => ({
       page: (i + 1).toString(),
@@ -36,14 +46,20 @@ export async function generateStaticParams() {
     return page;
   } catch (error) {
     console.error("Error fetching blog posts:", error);
-    throw new Error("Failed to generate static params for blogs");
+    return [];
   }
 }
 
 export default async function BlogsPage({ params }: IProps) {
   const pageParam = (await params).page;
   const pageNumber = parseInt(pageParam, 10) || 1;
-  const blogs = await getBlogPosts(pageNumber);
+  const blogs = await getAllBlogs({
+    page: pageNumber,
+  });
+
+  if (!blogs) {
+    return <NotFound />;
+  }
 
   return (
     <BlogsScreen
