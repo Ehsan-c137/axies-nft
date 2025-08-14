@@ -173,7 +173,7 @@ function Character() {
       <Image
         className="drop-shadow-[0px_0px_80px_var(--theme-primary)]"
         width={600}
-        src={"/assets/hero/blob-shape.png"}
+        src={"/assets/hero/blob-shape.webp"}
         alt=""
         height={0}
         sizes="100vw"
@@ -181,7 +181,7 @@ function Character() {
       <HeroCharacter className="absolute ellipse-animated will-change-transform backface-hidden lg:w-[296px] lg:h-[480px] w-[196px] h-[384px]" />
       <Image
         className="absolute left-0 top-[20%] -z-1 opacity-10 w-40"
-        src="/assets/hero/saturn.png"
+        src="/assets/hero/saturn.webp"
         alt=""
         width={100}
         height={0}
@@ -218,7 +218,7 @@ const PlusContainer = () => {
   return Array.from({ length: 4 }).map((_, index) => {
     return (
       <Image
-        src={`/assets/hero/plus${index + 1}.png`}
+        src={`/assets/hero/plus${index + 1}.webp`}
         alt=""
         width={40}
         height={0}
