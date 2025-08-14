@@ -16,8 +16,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Axies NFT Marketplace",
-  description: "A marketplace for NFTs",
+  title: {
+    template: "%s | Axies NFT Marketplace",
+    default: "axies NFT marketplace",
+  },
 };
 
 export default async function RootLayout({
