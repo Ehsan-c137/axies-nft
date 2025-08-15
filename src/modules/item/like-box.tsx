@@ -3,7 +3,6 @@
 import { useState } from "react";
 import HeartIcon from "@icons/heart-icon";
 import { usePutItemMutation } from "@/services/item/item-service";
-import clsx from "clsx";
 import { useQueryClient } from "@tanstack/react-query";
 import { ITEM_QUERY } from "@/services/item/item-service";
 
@@ -42,12 +41,9 @@ export default function LikeBox({
 
   return (
     <button
-      className={clsx(
-        "items-center gap-2 flex px-2 py-1 rounded-full bg-[var(--accent)] color-[var(accent-foreground)] cursor-pointer",
-        {
-          "opacity-50 pointer-events-none animate-pulse": isPending,
-        },
-      )}
+      className={
+        "items-center gap-2 flex px-2 py-1 rounded-full bg-[var(--accent)] color-[var(accent-foreground)] cursor-pointer"
+      }
       disabled={isPending}
       aria-disabled={isPending}
       onClick={handleClick}
