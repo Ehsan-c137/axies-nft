@@ -5,8 +5,7 @@ import FilterMobile from "./filter-mobile";
 import { ExploreCard } from "@/components/common/cards/explore-card";
 import CardPlaceholder from "@/components/common/cards/card-placeholder";
 import useSearchParamState from "@/hooks/useSearchParamState";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { TItem, useGetItems } from "@/services/item/item-service";
+import { TItem, useGetItemsQuery } from "@/services/item/item-service";
 import PaginationList from "@/components/common/pagination/pagination-list";
 
 export default function ExploreScreen() {
@@ -16,16 +15,12 @@ export default function ExploreScreen() {
     isPending: isFilterPending,
   } = useSearchParamState();
 
-  const isDesktop = useMediaQuery("(min-width: 768px)", {
-    initializeWithValue: false,
-  });
-
   const {
     data,
     isPending: isDataPending,
     isPlaceholderData,
     error,
-  } = useGetItems({
+  } = useGetItemsQuery({
     page: Number(paramState.page) || 1,
     limit: Number(paramState.limit) || 12,
     category: paramState.category,
@@ -36,20 +31,20 @@ export default function ExploreScreen() {
   return (
     <>
       <div className="flex flex-col md:flex-row gap-10 container mx-auto">
-        {isDesktop && (
+        <div className="hidden md:block">
           <FilterDesktop
             handleParamChange={handleParamChange}
             paramState={paramState}
             isPending={isDataPending}
           />
-        )}
-        {!isDesktop && (
+        </div>
+        <div className="block md:hidden">
           <FilterMobile
             isDataPending={isDataPending}
             handleParamChange={handleParamChange}
             paramState={paramState}
           />
-        )}
+        </div>
 
         <div className="flex flex-1 flex-wrap gap-4 justify-center justify-items-center md:justify-items-start md:justify-start">
           <PaginationList<TItem>
