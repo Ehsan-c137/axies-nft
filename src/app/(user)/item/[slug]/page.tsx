@@ -3,17 +3,17 @@ import ItemDetailScreen from "@/screens/user/item-detail/item-screen";
 import { getItemDetail } from "@/services/server/items";
 import NotFoundContainer from "@/components/common/errors/not-found-component";
 import { logger } from "@/utils/logger";
-import { BASE_URL } from "@/services/config";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const response = await fetch(`${BASE_URL}/items/${slug}`);
-    const item = await response.json();
+    const item = await getItemDetail(slug);
     return {
       title: item.name,
       description: item.description,
@@ -23,23 +23,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: "Item not found",
     };
-  }
-}
-
-export async function generateStaticParams() {
-  try {
-    const response = await fetch(
-      "https://raw.githubusercontent.com/Ehsan-c137/axies-nft/main/src/mocks/items.json",
-    );
-    const allProducts = await response.json();
-    return allProducts.map((item: { slug: string }) => {
-      return {
-        slug: String(item.slug),
-      };
-    });
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    return [];
   }
 }
 
