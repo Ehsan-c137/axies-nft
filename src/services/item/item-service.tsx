@@ -74,7 +74,7 @@ export function useGetItemDetail<TData = TItem>(
   });
 }
 
-export const useGetItems = (args: ItemFilters = {}) => {
+export const useGetItemsQuery = (args: ItemFilters = {}) => {
   return useQuery({
     queryKey: ITEM_QUERY.itemWithFilter(args),
     queryFn: () => getAllItems(args),
