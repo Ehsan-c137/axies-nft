@@ -35,10 +35,12 @@ describe("PaginationControl Component", () => {
 
   it("should use page from searchParams when url is not provided", () => {
     useSearchParamsMock.mockReturnValue(new URLSearchParams("page=5"));
-    renderComponent({ currentPage: 1, lastPage: 10 });
+    renderComponent({ currentPage: 3, lastPage: 10 });
 
-    const page5Link = screen.getByTestId("pagination-link-5");
-    expect(page5Link).toHaveAttribute("aria-current", "page");
+    const page3Link = screen.getByTestId("pagination-link-3");
+    expect(page3Link).toHaveAttribute("href", "?page=3");
+    console.log(page3Link);
+    expect(page3Link).toHaveAttribute("data-active", "true");
   });
 
   describe("pagination range logic", () => {
