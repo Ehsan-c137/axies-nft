@@ -1,41 +1,30 @@
 import { logger } from "@/utils/logger";
-import { BASE_URL } from "../config";
-import { TBlogDetail } from "@/types/service";
+import type { TBlogDetail } from "@/types/service";
 
-export async function getBlogDetail(slug: string): Promise<TBlogDetail | null> {
+const BLOGS_URL =
+  "https://raw.githubusercontent.com/Ehsan-c137/axies-nft/main/src/mocks/blogs.json";
+
+export async function getAllBlogs(): Promise<TBlogDetail[]> {
   try {
-    const response = await fetch(`${BASE_URL}/blog/detail/${slug}`);
-    return response.json();
+    const response = await fetch(BLOGS_URL);
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch blogs: ${response.status} ${response.statusText}`,
+      );
+    }
+    return await response.json();
   } catch (error) {
-    logger.log(error);
-    return null;
+    logger.error("Failed to fetch blogs:", error);
+    throw error;
   }
 }
 
-export async function getAllBlogs(params?: { page?: number; limit?: number }) {
-  const url = new URL(`${BASE_URL}/blog`);
-  if (params?.page) {
-    url.searchParams.append("page", String(params.page));
-  }
-  if (params?.limit) {
-    url.searchParams.append("limit", String(params.limit));
-  }
+export async function getBlogDetail(slug: string): Promise<TBlogDetail> {
+  const blogs = await getAllBlogs();
+  const blog = blogs.find((b) => b.slug === slug);
 
-  try {
-    const response = await fetch(url.toString());
-
-    if (!response.ok) {
-      const errorInfo = {
-        status: response.status,
-        statusText: response.statusText,
-      };
-      logger.error("Failed to fetch blog posts", errorInfo);
-      return null;
-    }
-
-    return response.json();
-  } catch (error) {
-    logger.error("Error fetching blog posts:", error);
-    return null;
+  if (!blog) {
+    throw new Error(`Blog with slug "${slug}" not found.`);
   }
+  return blog;
 }
