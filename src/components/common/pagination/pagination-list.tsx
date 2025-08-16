@@ -48,7 +48,7 @@ export default function PaginationList<T>({
     <div className="flex flex-col gap-8">
       <div
         data-testid="pagination-container"
-        className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 justify-items-center md:justify-items-start gap-6 container mx-auto transition-opacity"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 justify-items-center md:justify-items-start gap-6 container mx-auto transition-opacity"
         style={{
           opacity: isPlaceholderData ? 0.5 : 1,
         }}

@@ -15,7 +15,7 @@ export function ExploreCard({
 }: TItem) {
   return (
     <div
-      className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-[var(--card)] text-[var(--card-foreground)] max-w-[320px] hover:-translate-y-2 transition ease-in-out duration-[350ms] not-dark:shadow-sm"
+      className="flex flex-col w-full gap-3 rounded-4xl p-4 bg-[var(--card)] text-[var(--card-foreground)] min-w-[284px] max-w-[320px] hover:-translate-y-2 transition ease-in-out duration-[350ms] not-dark:shadow-sm"
       data-testid="explore-card"
     >
       <div className="flex justify-center select-none relative group">
