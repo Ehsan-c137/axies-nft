@@ -1,4 +1,3 @@
-import { FILTER_CONFIG } from "./filter-desktop";
 import {
   Select,
   SelectTrigger,
@@ -6,8 +5,8 @@ import {
   SelectGroup,
   SelectValue,
 } from "@ui/select";
-import { Checkbox } from "@ui/checkbox";
-import { Label } from "@radix-ui/react-label";
+import { FilterOptions } from "./filter-options";
+import { FILTER_CONFIG } from "./filter-config";
 
 interface IFilterProps {
   handleParamChange: (key: string, value: string, checked: boolean) => void;
@@ -30,29 +29,15 @@ export default function FilterMobile({
             className="w-[180px]"
             data-testid={`filter-${config.key}`}
           >
-            <SelectValue placeholder={config.key} />
+            <SelectValue
+              placeholder={
+                config.key.charAt(0).toUpperCase() + config.key.slice(1)
+              }
+            />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup className="flex flex-col gap-2 p-1">
-              {config.value.map((value) => (
-                <Label
-                  key={value}
-                  className="w-full flex items-center gap-2 text-sm"
-                >
-                  <Checkbox
-                    onCheckedChange={(e: boolean) =>
-                      handleParamChange(config.key, value, e)
-                    }
-                    data-testid={`filter-option-${value}`}
-                    checked={!!paramState[config.key]?.includes(value) || false}
-                    value={value}
-                    name={value}
-                  >
-                    {value}
-                  </Checkbox>
-                  {value}
-                </Label>
-              ))}
+              <FilterOptions {...{ config, handleParamChange, paramState }} />
             </SelectGroup>
           </SelectContent>
         </Select>

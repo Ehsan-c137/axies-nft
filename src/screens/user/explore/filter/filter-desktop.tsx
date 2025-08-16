@@ -4,23 +4,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@ui/accordion";
-import { Checkbox } from "@ui/checkbox";
-import { Label } from "@ui/label";
-
-export const FILTER_CONFIG = [
-  {
-    key: "category",
-    value: ["art", "music", "virtual world", "sports", "utility"],
-  },
-  {
-    key: "chains",
-    value: ["ethereium", "polygon", "klaytn"],
-  },
-  {
-    key: "collections",
-    value: ["abstraction", "Patternlicious", "Cartoonism"],
-  },
-];
+import { FilterOptions } from "./filter-options";
+import { FILTER_CONFIG } from "./filter-config";
+import { Skeleton } from "@ui/skeleton";
 
 interface IFilterProps {
   handleParamChange: (key: string, value: string, checked: boolean) => void;
@@ -30,9 +16,21 @@ interface IFilterProps {
 export default function Filter({
   handleParamChange,
   paramState,
+  isPending,
 }: IFilterProps & {
   isPending?: boolean;
 }) {
+  if (isPending) {
+    return (
+      <div className="w-[200px] h-[200px] py-2 gap-4 flex flex-col items-center justify-center">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10  w-full" />
+        <Skeleton className="h-10  w-full" />
+      </div>
+    );
+  }
+
   return (
     <div
       className="hidden md:flex flex-col gap-5 items-center w-[200px]"
@@ -71,21 +69,7 @@ const FilterSection = ({
       {config.key.charAt(0).toUpperCase() + config.key.slice(1)}
     </AccordionTrigger>
     <AccordionContent className="space-y-2">
-      {config.value.map((value: string) => (
-        <div className="flex items-center gap-2" key={value}>
-          <Checkbox
-            data-testid={`filter-option-${value}`}
-            id={value}
-            onCheckedChange={(e: boolean) =>
-              handleParamChange(config.key, value, e)
-            }
-            checked={!!paramState[config.key]?.includes(value) || false}
-          />
-          <Label htmlFor={value} className="cursor-pointer text-sm">
-            {value}
-          </Label>
-        </div>
-      ))}
+      <FilterOptions {...{ config, handleParamChange, paramState }} />
     </AccordionContent>
   </AccordionItem>
 );
