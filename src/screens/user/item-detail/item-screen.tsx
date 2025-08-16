@@ -56,8 +56,8 @@ export default function ItemDetailScreen({
             unoptimized
             src={itemDetail?.image}
             alt={`${itemDetail.name} image`}
-            width="0"
-            height="0"
+            width="300"
+            height="300"
             sizes="100vw"
             className="w-full h-auto rounded-xl"
           />
