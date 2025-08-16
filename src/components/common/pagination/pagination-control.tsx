@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo } from "react";
 import {
   Pagination,
@@ -8,7 +10,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@ui/pagination";
-import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 interface IProps {
@@ -28,12 +29,7 @@ export default function PaginationControl({
   lastPage,
   url,
 }: IProps) {
-  const searchParams = useSearchParams();
-
-  let activePage = currentPage;
-  if (!url && searchParams?.has("page")) {
-    activePage = Number(searchParams?.get("page"));
-  }
+  const activePage = currentPage;
   const paginationRange = useMemo(() => {
     const siblingCount = 1;
     const totalPageNumbers = siblingCount + 5;
