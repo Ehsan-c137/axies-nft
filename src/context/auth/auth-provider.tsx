@@ -1,16 +1,15 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ILoginCredentials, IUser } from "@/types/service/auth";
 import { logger } from "@/utils/logger";
-
-const USER_KEY = "user";
 
 type AuthContextType = {
   isAuthenticated: boolean;
   user: IUser | null;
   isLoading: boolean;
+  accessToken: string | null;
   logout: () => Promise<void>;
   login: (credentials: ILoginCredentials) => Promise<IUser | null>;
   signup: (credentials: ILoginCredentials) => Promise<IUser | null>;
@@ -37,11 +36,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     user: null,
     isLoading: true,
   });
+  const [accessToken, setAccessToken] = useState<string | null>(null);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const setLoggedOutState = (loading = false) => {
-    localStorage.removeItem(USER_KEY);
+  const setLoggedOutState = (loading: boolean = false) => {
+    setAccessToken(null);
     setAuth({
       isAuthenticated: false,
       user: null,
@@ -50,37 +51,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    const checkUserSession = async () => {
-      const cachedUser = localStorage.getItem(USER_KEY);
-      if (cachedUser) {
-        setAuth((prev) => ({
-          ...prev,
-          isAuthenticated: true,
-          isLoading: true, // Will be verified by the API call
-          user: JSON.parse(cachedUser),
-        }));
-      }
+    const initializeAuth = async () => {
       try {
-        const response = await fetch("/api/auth/me");
+        const response = await fetch("/api/auth/refresh", { method: "POST" });
+
         if (response.ok) {
-          const { user } = await response.json();
+          const { accessToken, user } = await response.json();
+          setAccessToken(accessToken);
           setAuth({ isAuthenticated: true, user: user, isLoading: false });
-          localStorage.setItem(USER_KEY, JSON.stringify(user));
         } else {
-          setLoggedOutState(false);
+          setLoggedOutState();
         }
       } catch (error) {
-        console.error("Error checking user session:", error);
-        setLoggedOutState(false);
-      } finally {
-        setAuth((prev) => ({
-          ...prev,
-          isLoading: false,
-        }));
+        logger.error("Failed to initialize auth:", error);
+        setLoggedOutState();
       }
     };
 
-    checkUserSession();
+    initializeAuth();
   }, []);
 
   const login = async (credentials: ILoginCredentials): Promise<IUser> => {
@@ -97,15 +85,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         throw new Error(errorData.message || "Invalid credentials");
       }
 
-      const { user } = await response.json();
+      const { accessToken, user } = await response.json();
+      setAccessToken(accessToken);
       setAuth({
         isAuthenticated: true,
         user: user,
         isLoading: false,
       });
-      localStorage.setItem(USER_KEY, JSON.stringify(user));
 
-      const searchParams = new URLSearchParams(window.location.search);
       const callbackUrl = searchParams.get("callbackUrl") || "/";
       router.push(callbackUrl);
       return user;
@@ -157,14 +144,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         throw new Error(errorData.message || "Could not create account");
       }
 
-      const { user } = await response.json();
-      localStorage.setItem(USER_KEY, JSON.stringify(user));
+      const { accessToken, user } = await response.json();
+      setAccessToken(accessToken);
       setAuth({
         isAuthenticated: true,
         user: user,
         isLoading: false,
       });
-      const searchParams = new URLSearchParams(window.location.search);
       const callbackUrl = searchParams.get("callbackUrl") || "/";
       router.push(callbackUrl);
       return user;
@@ -180,6 +166,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const value: AuthContextType = {
     ...auth,
+    accessToken,
     login,
     logout,
     signup,
