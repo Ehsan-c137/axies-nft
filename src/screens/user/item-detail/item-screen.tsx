@@ -5,7 +5,7 @@ import { Button } from "@ui/button";
 import { Tabs } from "./tabs";
 import EyeIcon from "@icons/eye-icon";
 import EllipsisIcon from "@icons/ellipsis-icon";
-import { useGetItemDetail, TItem } from "@/services/item/item-service";
+import { useGetItemDetail, TItem } from "@/services/client/item/item-service";
 import ItemScreenPlaceholder from "./item-screen-placeholder";
 import ShareCurrentUrlButton from "@/components/common/share-current-url-button";
 import UnexpectedError from "@/components/common/errors/unexpected";

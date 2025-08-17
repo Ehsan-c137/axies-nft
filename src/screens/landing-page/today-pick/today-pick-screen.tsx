@@ -4,10 +4,10 @@ import { Button } from "@ui/button";
 import { LiveAuctionsCard } from "@common/cards/live-auctions-card";
 import { PaginationLoadMore } from "@common/pagination/pagination-load-more";
 import Filter from "./today-pick-filter";
-import { useGetTodayPick } from "@/services/item/today-pick";
+import { useGetTodayPick } from "@/services/client/item/today-pick";
 import useSearchParamState from "@/hooks/useSearchParamState";
 import { Suspense, useEffect, useState } from "react";
-import { TItem } from "@/services/item/item-service";
+import { TItem } from "@/services/client/item/item-service";
 import { useRef } from "react";
 
 const PARAM_KEYS = {

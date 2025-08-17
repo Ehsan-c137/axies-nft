@@ -2,10 +2,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "@ui/popover";
 import { Divider } from "@ui/divider";
 import { Button } from "@ui/button";
 import Link from "next/link";
-import { useGetMeProfile } from "@/services/users/me";
+import { useGetMeProfile } from "@/services/client/users/me";
 import UserIcon from "@icons/user-icon";
 import { toast } from "sonner";
-import { useLogoutMutation } from "@/services/auth/auth-service";
+import { useLogoutMutation } from "@/services/client/auth/auth-service";
 import { useAuth } from "@/context/auth/auth-provider";
 import { usePathname } from "next/navigation";
 

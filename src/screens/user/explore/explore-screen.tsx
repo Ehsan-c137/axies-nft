@@ -6,7 +6,7 @@ import { ExploreCard } from "@/components/common/cards/explore-card";
 import CardPlaceholder from "@/components/common/cards/card-placeholder";
 import useSearchParamState from "@/hooks/useSearchParamState";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { TItem, useGetItemsQuery } from "@/services/item/item-service";
+import { TItem, useGetItemsQuery } from "@/services/client/item/item-service";
 import PaginationList from "@/components/common/pagination/pagination-list";
 
 export default function ExploreScreen() {

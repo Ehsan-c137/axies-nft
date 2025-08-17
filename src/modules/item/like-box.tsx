@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import HeartIcon from "@icons/heart-icon";
-import { usePutItemMutation } from "@/services/item/item-service";
+import { usePutItemMutation } from "@/services/client/item/item-service";
 import { useQueryClient } from "@tanstack/react-query";
-import { ITEM_QUERY } from "@/services/item/item-service";
+import { ITEM_QUERY } from "@/services/client/item/item-service";
 
 interface IProps {
   count: number;
