@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../../config";
 import { allProducts } from "@/mocks/data";
 import {
   type UseMutationOptions,

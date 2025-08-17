@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../../config";
 import { logger } from "@/utils/logger";
 
 export const BLOG_QUERY = {

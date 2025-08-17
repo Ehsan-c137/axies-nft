@@ -1,4 +1,4 @@
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../../config";
 import { useQuery } from "@tanstack/react-query";
 import { UserM } from "./user-model";
 
