@@ -35,6 +35,9 @@ export default function PaginationControl({
     const totalPageNumbers = siblingCount + 5;
 
     if (totalPageNumbers >= lastPage) {
+      if (url) {
+        return range(1, lastPage - 1);
+      }
       return range(1, lastPage);
     }
 
