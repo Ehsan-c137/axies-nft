@@ -22,17 +22,20 @@ test.describe("blog page", async () => {
   }) => {
     await page.goto("/blog/1");
     await page.waitForURL("/blog/1");
-
-    const paginationLinks = page.locator('[data-testid^="pagination-link-"]');
+    const paginationLinks = page.locator('a[data-testid^="pagination-link-"]');
     const linkCount = await paginationLinks.count();
     const totalPages = linkCount + 1;
+    let currentPage = 1;
 
-    for (let i = 2; i <= totalPages; i++) {
-      const linkToClick = page.locator(`[data-testid="pagination-link-${i}"]`);
+    while (currentPage < totalPages) {
+      const nextPage = currentPage + 1;
+      const linkToClick = page.locator(
+        `[data-testid="pagination-link-${nextPage}"]`,
+      );
       await linkToClick.click();
-
-      await page.waitForURL(`**/blog/${i}`);
-      expect(page.url()).toContain(`/blog/${i}`);
+      await page.waitForURL(`**/blog/${nextPage}`);
+      expect(page.url()).toContain(`/blog/${nextPage}`);
+      currentPage = nextPage;
     }
   });
 

@@ -7,6 +7,9 @@ test.describe("explore page", () => {
   });
 
   test("should show the filter controls", async ({ page }) => {
+    await expect(
+      page.locator('[data-testid="explore-card"]').first(),
+    ).toBeVisible();
     const filterContainer = page.locator('[data-testid="explore-filter"]');
     await expect(filterContainer).toBeVisible();
   });
