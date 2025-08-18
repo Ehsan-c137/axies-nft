@@ -14,6 +14,7 @@ import {
 import { Checkbox } from "@ui/checkbox";
 import { Input } from "@ui/input";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -30,6 +31,9 @@ const signupSchema = z.object({
 type TSignupForm = z.infer<typeof signupSchema>;
 
 export function SignupForm() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+  const router = useRouter();
   const { mutate, isPending } = useLoginMutation();
   const form = useForm<TSignupForm>({
     resolver: zodResolver(signupSchema),
@@ -45,6 +49,13 @@ export function SignupForm() {
     mutate(credentials, {
       onError: (error) => {
         toast.error(error.message || "Failed to signup. Please try again.");
+      },
+      onSuccess: () => {
+        if (callbackUrl) {
+          router.push(callbackUrl);
+        } else {
+          router.push("/");
+        }
       },
     });
   };
