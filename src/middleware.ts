@@ -1,13 +1,15 @@
 import { NextResponse, NextRequest } from "next/server";
-import { ACCESS_TOKEN } from "./services/config";
+import { REFRESH_TOKEN } from "./services/config";
 
 export function middleware(request: NextRequest) {
-  const session = request.cookies.get(ACCESS_TOKEN);
+  const sessionRefreshToken = request.cookies.get(REFRESH_TOKEN);
 
-  if (!session) {
+  if (!sessionRefreshToken) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
+  // If the refresh token exists, we can assume the user has an active session.
+  // The client-side is responsible for managing the access token (fetching a new one if needed).
   return NextResponse.next();
 }
 
