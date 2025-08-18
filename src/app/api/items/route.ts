@@ -1,12 +1,19 @@
-import { allProducts } from "@/mocks/data";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const page = searchParams.get("page");
   const limit = searchParams.get("limit");
+  try {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/Ehsan-c137/axies-nft/main/src/mocks/items.json",
+    );
+    const allProducts = await response.json();
 
-  if (page || limit) {
+    if (!page || !limit) {
+      return NextResponse.json(allProducts);
+    }
+
     const url = new URL(request.url);
     const pageNum = parseInt(url.searchParams.get("page") || "1", 10);
     const limitNum = parseInt(url.searchParams.get("limit") || "10", 10);
@@ -39,7 +46,16 @@ export async function GET(request: NextRequest) {
     };
 
     return NextResponse.json(responseBody);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: "something went wrong",
+        error: error,
+        status: 500,
+      },
+      {
+        status: 500,
+      },
+    );
   }
-
-  return NextResponse.json(allProducts);
 }

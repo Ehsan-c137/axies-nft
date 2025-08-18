@@ -49,6 +49,7 @@ export function BlogCard({
       </div>
       <p className="line-clamp-2">{description}</p>
       <Button
+        data-testid="read-more-button"
         variant="outline"
         onClick={() => router.push(`/blog/detail/${slug}`)}
       >

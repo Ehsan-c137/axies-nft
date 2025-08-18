@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { BASE_URL } from "../config";
+import { BASE_URL } from "../../config";
 import { allProducts } from "@/mocks/data";
 import {
   type UseMutationOptions,
@@ -74,7 +74,7 @@ export function useGetItemDetail<TData = TItem>(
   });
 }
 
-export const useGetItems = (args: ItemFilters = {}) => {
+export const useGetItemsQuery = (args: ItemFilters = {}) => {
   return useQuery({
     queryKey: ITEM_QUERY.itemWithFilter(args),
     queryFn: () => getAllItems(args),

@@ -3,7 +3,7 @@ import RefreshIcon from "@icons/refresh-icon";
 import ShoppingBagIcon from "@icons/shopping-bag-icon";
 import { Button } from "@ui/button";
 import Link from "next/link";
-import { TItem } from "@/services/item/item-service";
+import { TItem } from "@/services/client/item/item-service";
 
 export function LiveAuctionsCard({
   name,

@@ -1,3 +1,6 @@
+export const MOCK_ACCESS_TOKEN = "mock-access-token";
+export const MOCK_REFRESH_TOKEN = "mock-refresh-token";
+
 const CATEGORY = ["art", "music", "virtual_world", "sports", "utility"];
 const CHAINS = ["ethereum", "polygon", "klaytn"];
 const COLLECTION = ["abstraction", "patternlicious", "cartoonism"];
@@ -29,7 +32,9 @@ export const MOCK_USER = {
   name: "Mock User",
   role: "admin",
   balance: "24.04 ETH",
-  username: "mock-user",
+  username: "ehsanmc",
+  ACCESS_TOKEN: "mock-access-token",
+  refresh_token: "mock-refresh-token",
 };
 
 export const userDetail = {
@@ -38,7 +43,7 @@ export const userDetail = {
   name: "Mock User",
   role: "admin",
   balance: "24.04 ETH",
-  username: "mock-user",
+  username: "ehsanmc",
   image: "https://placehold.co/600x400/EEE/4e3fee",
   backgroundImage: "https://placehold.co/1920x1080/EEE/4e3fee",
   createdAt: MOCK_DATE,

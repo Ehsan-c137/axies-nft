@@ -1,12 +1,12 @@
 "use client";
 
-import FilterDesktop from "./filter-desktop";
-import FilterMobile from "./filter-mobile";
+import FilterDesktop from "./filter/filter-desktop";
+import FilterMobile from "./filter/filter-mobile";
 import { ExploreCard } from "@/components/common/cards/explore-card";
 import CardPlaceholder from "@/components/common/cards/card-placeholder";
 import useSearchParamState from "@/hooks/useSearchParamState";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { TItem, useGetItems } from "@/services/item/item-service";
+import { TItem, useGetItemsQuery } from "@/services/client/item/item-service";
 import PaginationList from "@/components/common/pagination/pagination-list";
 
 export default function ExploreScreen() {
@@ -25,7 +25,7 @@ export default function ExploreScreen() {
     isPending: isDataPending,
     isPlaceholderData,
     error,
-  } = useGetItems({
+  } = useGetItemsQuery({
     page: Number(paramState.page) || 1,
     limit: Number(paramState.limit) || 12,
     category: paramState.category,

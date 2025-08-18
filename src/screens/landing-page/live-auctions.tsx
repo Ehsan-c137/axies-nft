@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { LiveAuctionsCard } from "@/components/common/cards/live-auctions-card";
-import { useGetItems } from "@/services/item/item-service";
+import { useGetItemsQuery } from "@/services/client/item/item-service";
 import Swiper from "@ui/swiper/swiper";
 
 interface Iprops {
@@ -21,7 +21,7 @@ export function LiveAuctions({ ref }: Iprops) {
     itemPerPage: isMobile ? 1 : isTablet ? 3 : 5,
   };
 
-  const { data, isPending } = useGetItems();
+  const { data, isPending } = useGetItemsQuery();
 
   return (
     <section

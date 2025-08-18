@@ -1,9 +1,6 @@
 import BlogsScreen from "@/screens/blog/blogs-screen";
 import { Metadata } from "next";
-import { TBlogDetail, TPaginatedData } from "@/types/service/index";
 import { logger } from "@/utils/logger";
-import { ToPagination } from "@/utils/toPagination";
-import NotFound from "@/components/common/errors/not-found-component";
 import { getAllBlogs } from "@/services/server/blog";
 
 interface IProps {
@@ -16,7 +13,7 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
     const title = page ? ` - Page ${page}` : "";
     return {
       title: `Blogs${title}`,
-      description: `Discover the latest articles on our blog, page ${(await params).page}.`,
+      description: `Discover the latest articles on our blog, page ${page}.`,
     };
   } catch (error) {
     logger.error("error generating metadata ", error);
@@ -29,21 +26,20 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 
 export async function generateStaticParams() {
   try {
-    const response = await fetch(
-      "https://raw.githubusercontent.com/Ehsan-c137/axies-nft/main/src/mocks/blogs.json",
-    );
-    const allBlogs = await response.json();
-    const blogs = ToPagination({
-      data: allBlogs,
-      limit: 8,
+    const blogs = await getAllBlogs({
+      limit: 12,
       page: 1,
     });
-    const totalPages = blogs?.meta.lastPage || 1;
-    const page = Array.from({ length: totalPages }, (_, i) => ({
-      page: (i + 1).toString(),
-    }));
 
-    return page;
+    const lastPage = blogs?.meta?.lastPage || 0;
+
+    if (lastPage === 0) {
+      return [];
+    }
+
+    return Array.from({ length: lastPage }, (_, index) => ({
+      page: (index + 1).toString(),
+    }));
   } catch (error) {
     console.error("Error fetching blog posts:", error);
     return [];
@@ -51,20 +47,19 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogsPage({ params }: IProps) {
-  const pageParam = (await params).page;
-  const pageNumber = parseInt(pageParam, 10) || 1;
+  const { page } = await params;
+  const pageNumber = parseInt(page, 10) || 1;
   const blogs = await getAllBlogs({
     page: pageNumber,
+    limit: 12,
   });
 
   if (!blogs) {
-    return <NotFound />;
+    console.log(blogs);
+    throw new Error(
+      `Failed to fetch blog data for page: ${pageNumber}. Check build logs for details on the data fetching error.`,
+    );
   }
 
-  return (
-    <BlogsScreen
-      blogs={blogs as TPaginatedData<TBlogDetail>}
-      currentPage={pageNumber}
-    />
-  );
+  return <BlogsScreen blogs={blogs} currentPage={pageNumber} />;
 }

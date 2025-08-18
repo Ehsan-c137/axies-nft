@@ -19,7 +19,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { GoogleAuthButton } from "../components/google-auth-button";
 import FacebookIcon from "@icons/socials/facebook-icon";
-import { useLoginMutation } from "@/services/auth/auth-service";
+import { useLoginMutation } from "@/services/client/auth/auth-service";
 import { toast } from "sonner";
 
 const loginSchema = z.object({

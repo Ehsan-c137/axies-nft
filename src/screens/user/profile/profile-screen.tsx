@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth/auth-provider";
-import { useUserProfile } from "@/services/users/user-service";
+import { useUserProfile } from "@/services/client/users/user-service";
 import UnexpectedError from "@/components/common/errors/unexpected";
 import { ProfileScreenPlaceholder } from "./profile-screen-placeholder";
 import NotFoundContainer from "@/components/common/errors/not-found-component";

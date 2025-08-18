@@ -3,7 +3,7 @@
 import PaginationList from "@/components/common/pagination/pagination-list";
 import { BlogCard } from "./blog-card";
 import CardPlaceholder from "@/components/common/cards/card-placeholder";
-import { useBlogPosts } from "@/services/blog/blog-service";
+import { useBlogPosts } from "@/services/client/blog/blog-service";
 import { TPaginatedData, TBlogDetail } from "@/types/service/index";
 
 interface IProps<T> {
@@ -17,9 +17,15 @@ export default function BlogScreen<T>({ blogs, currentPage }: IProps<T>) {
     isPending,
     error,
     isPlaceholderData,
-  } = useBlogPosts(currentPage, {
-    initialData: blogs,
-  });
+  } = useBlogPosts(
+    {
+      page: currentPage,
+      limit: 12,
+    },
+    {
+      initialData: blogs,
+    },
+  );
 
   return (
     <PaginationList<TBlogDetail>

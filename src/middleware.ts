@@ -1,12 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
+import { REFRESH_TOKEN } from "./services/config";
 
 export function middleware(request: NextRequest) {
-  const session = request.cookies.get("session");
+  const sessionRefreshToken = request.cookies.get(REFRESH_TOKEN);
 
-  if (!session) {
+  if (!sessionRefreshToken) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-
   return NextResponse.next();
 }
 

@@ -1,8 +1,8 @@
 import { ILoginCredentials } from "@/types/service/auth";
-import { MOCK_USER, MOCK_JWT } from "@/mocks/data";
+import { MOCK_USER, MOCK_ACCESS_TOKEN, MOCK_REFRESH_TOKEN } from "@/mocks/data";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { COOKIE_KEY } from "@/services/config";
+import { REFRESH_TOKEN } from "@/services/config";
 
 export async function POST(request: Request) {
   const cookieStore = await cookies();
@@ -14,10 +14,10 @@ export async function POST(request: Request) {
       credentials.password === "p@ssword123"
     ) {
       cookieStore.set({
-        name: COOKIE_KEY,
-        value: MOCK_JWT,
+        name: REFRESH_TOKEN,
+        value: MOCK_REFRESH_TOKEN,
         httpOnly: true,
-        path: "/",
+        path: "/api/auth",
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         maxAge: 60 * 60 * 24 * 7,
@@ -25,6 +25,7 @@ export async function POST(request: Request) {
 
       return NextResponse.json(
         {
+          accessToken: MOCK_ACCESS_TOKEN,
           user: MOCK_USER,
         },
         { status: 200 },

@@ -1,4 +1,4 @@
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useOptimistic, useTransition, useMemo } from "react";
 
 const parseSearchParamsToRecord = (
@@ -29,6 +29,7 @@ const parseSearchParamsToRecord = (
 export default function useAllSearchParamsState() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
   const actualParams = useMemo(() => {
@@ -57,20 +58,14 @@ export default function useAllSearchParamsState() {
     const currentValuesForParam = optimisticParams[paramName] || [];
     let newValuesForParam: string[] = [];
 
-    if (checked && !replace) {
-      if (!currentValuesForParam.includes(value)) {
-        newValuesForParam = [...currentValuesForParam, value];
-      } else {
-        newValuesForParam = [...currentValuesForParam];
-      }
+    if (replace) {
+      newValuesForParam = checked ? [value] : [];
+    } else if (checked) {
+      newValuesForParam = [...new Set([...currentValuesForParam, value])];
     } else {
       newValuesForParam = currentValuesForParam.filter(
         (item) => item !== value,
       );
-    }
-
-    if (replace) {
-      newValuesForParam = [value];
     }
 
     if (newValuesForParam.length > 0) {
@@ -89,9 +84,10 @@ export default function useAllSearchParamsState() {
       }
     }
     const newQueryString = newUrlSearchParamsInstance.toString();
+    const newUrl = `${pathname}${newQueryString ? `?${newQueryString}` : ""}`;
     startTransition(() => {
       setOptimisticParams(newOptimisticParamsState);
-      router.push(`${newQueryString ? `?${newQueryString}` : ""}`, {
+      router.push(newUrl, {
         scroll: false,
       });
     });

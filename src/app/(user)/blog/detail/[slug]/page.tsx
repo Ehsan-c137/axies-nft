@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getBlogDetail } from "@/services/server/blog";
+import { getAllBlogs, getBlogDetail } from "@/services/server/blog";
 import BlogDetailScreen from "@/screens/blog/blog-detail/blog-detail-screen";
 import { logger } from "@/utils/logger";
 import NotFoundContainer from "@/components/common/errors/not-found-component";
@@ -60,17 +60,14 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 
 export async function generateStaticParams() {
   try {
-    const response = await fetch(
-      "https://raw.githubusercontent.com/Ehsan-c137/axies-nft/main/src/mocks/blogs.json",
-    );
-    const allBlogs = await response.json();
+    const allBlogs = await getAllBlogs();
     return allBlogs.map((item: { slug: string }) => {
       return {
         slug: String(item.slug),
       };
     });
   } catch (error) {
-    logger.error("Error generating static params for blogs:", error);
+    logger.error("error generateStaticParams", error);
     return [];
   }
 }
