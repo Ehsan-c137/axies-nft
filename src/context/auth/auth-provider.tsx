@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  Suspense,
   useCallback,
   useContext,
   useEffect,
@@ -40,8 +41,7 @@ export function useAuth() {
   }
   return context;
 }
-
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+const AuthProviderContainer = ({ children }: { children: React.ReactNode }) => {
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
     user: null,
@@ -175,4 +175,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     [authState, login, logout, signup, updateUser],
   );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <Suspense>
+      <AuthProviderContainer>{children}</AuthProviderContainer>
+    </Suspense>
+  );
 };
