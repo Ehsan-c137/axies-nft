@@ -10,4 +10,5 @@ export interface IUser {
   email: string;
   image: string;
   role: string;
+  balance: string;
 }
