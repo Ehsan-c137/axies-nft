@@ -1,9 +1,17 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ILoginCredentials, IUser } from "@/types/service/auth";
 import { logger } from "@/utils/logger";
+import { apiClient } from "@/services/client/api-client";
 
 type AuthContextType = {
   isAuthenticated: boolean;
@@ -13,12 +21,15 @@ type AuthContextType = {
   logout: () => Promise<void>;
   login: (credentials: ILoginCredentials) => Promise<IUser | null>;
   signup: (credentials: ILoginCredentials) => Promise<IUser | null>;
+  updateUser: (data: Partial<IUser>) => void;
 };
 
-type AuthProviderValue = Pick<
-  AuthContextType,
-  "isAuthenticated" | "isLoading" | "user"
->;
+type AuthState = {
+  isAuthenticated: boolean;
+  user: IUser | null;
+  isLoading: boolean;
+  accessToken: string | null;
+};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -31,24 +42,24 @@ export function useAuth() {
 }
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [auth, setAuth] = useState<AuthProviderValue>({
+  const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
     user: null,
     isLoading: true,
+    accessToken: null,
   });
-  const [accessToken, setAccessToken] = useState<string | null>(null);
 
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const setLoggedOutState = (loading: boolean = false) => {
-    setAccessToken(null);
-    setAuth({
+  const setLoggedOutState = useCallback(() => {
+    setAuthState({
       isAuthenticated: false,
       user: null,
-      isLoading: loading,
+      isLoading: false,
+      accessToken: null,
     });
-  };
+  }, []);
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -57,8 +68,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         if (response.ok) {
           const { accessToken, user } = await response.json();
-          setAccessToken(accessToken);
-          setAuth({ isAuthenticated: true, user: user, isLoading: false });
+          apiClient.setAuthToken(accessToken);
+          setAuthState({
+            isAuthenticated: true,
+            user: user,
+            isLoading: false,
+            accessToken,
+          });
         } else {
           setLoggedOutState();
         }
@@ -69,107 +85,94 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     initializeAuth();
-  }, []);
+  }, [setLoggedOutState]);
 
-  const login = async (credentials: ILoginCredentials): Promise<IUser> => {
-    setAuth((prev) => ({ ...prev, isLoading: true }));
+  const handleAuthRequest = useCallback(
+    async (
+      endpoint: string,
+      credentials: ILoginCredentials,
+      errorContext: string,
+    ): Promise<IUser> => {
+      setAuthState((prev) => ({ ...prev, isLoading: true }));
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          body: JSON.stringify(credentials),
+        });
 
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        body: JSON.stringify(credentials),
-      });
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || "Authentication failed");
+        }
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Invalid credentials");
+        const { accessToken, user } = await response.json();
+        apiClient.setAuthToken(accessToken);
+        setAuthState({
+          isAuthenticated: true,
+          user,
+          isLoading: false,
+          accessToken,
+        });
+
+        const callbackUrl = searchParams.get("callbackUrl") || "/";
+        router.push(callbackUrl);
+        return user;
+      } catch (error) {
+        logger.error(errorContext, error);
+        setLoggedOutState();
+        if (error instanceof Error) {
+          throw error;
+        }
+        throw new Error("An unexpected error occurred.");
       }
+    },
+    [router, searchParams, setLoggedOutState],
+  );
 
-      const { accessToken, user } = await response.json();
-      setAccessToken(accessToken);
-      setAuth({
-        isAuthenticated: true,
-        user: user,
-        isLoading: false,
-      });
+  const login = useCallback(
+    (credentials: ILoginCredentials) =>
+      handleAuthRequest("/api/auth/login", credentials, "Error logging in:"),
+    [handleAuthRequest],
+  );
 
-      const callbackUrl = searchParams.get("callbackUrl") || "/";
-      router.push(callbackUrl);
-      return user;
-    } catch (error) {
-      logger.error("Error logging in:", error);
-      setLoggedOutState(false);
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("something went wrong");
-    }
-  };
+  const signup = useCallback(
+    (credentials: ILoginCredentials) =>
+      handleAuthRequest("/api/auth/signup", credentials, "Error signing up:"),
+    [handleAuthRequest],
+  );
 
-  const logout = async () => {
-    setAuth((prev) => ({
-      ...prev,
-      isLoading: true,
-    }));
-
+  const logout = useCallback(async () => {
     try {
       await fetch("/api/auth/logout", {
         method: "POST",
       });
-      setLoggedOutState(false);
-      // redirects are gonna handle with middleware
+    } catch (error) {
+      logger.error("Error logging out:", error);
+    } finally {
+      setLoggedOutState();
+      // This will trigger the middleware to redirect if the cookie was successfully cleared
       router.refresh();
-    } catch (error) {
-      console.error("Error logging out:", error);
-      setLoggedOutState(false);
-      throw new Error("something went wrong");
     }
-  };
+  }, [router, setLoggedOutState]);
 
-  const signup = async (credentials: ILoginCredentials): Promise<IUser> => {
-    setAuth((prev) => {
-      return {
-        ...prev,
-        isLoading: true,
-      };
+  const updateUser = useCallback((data: Partial<IUser>) => {
+    setAuthState((prev) => {
+      if (!prev.user) {
+        return prev;
+      }
+      return { ...prev, user: { ...prev.user, ...data } };
     });
+  }, []);
 
-    try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        body: JSON.stringify(credentials),
-      });
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Could not create account");
-      }
-
-      const { accessToken, user } = await response.json();
-      setAccessToken(accessToken);
-      setAuth({
-        isAuthenticated: true,
-        user: user,
-        isLoading: false,
-      });
-      const callbackUrl = searchParams.get("callbackUrl") || "/";
-      router.push(callbackUrl);
-      return user;
-    } catch (error) {
-      logger.error("Error signing up:", error);
-      setLoggedOutState(false);
-      if (error instanceof Error) {
-        throw error;
-      }
-      throw new Error("something went wrong");
-    }
-  };
-
-  const value: AuthContextType = {
-    ...auth,
-    accessToken,
-    login,
-    logout,
-    signup,
-  };
+  const value = useMemo(
+    () => ({
+      ...authState,
+      login,
+      logout,
+      signup,
+      updateUser,
+    }),
+    [authState, login, logout, signup, updateUser],
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
