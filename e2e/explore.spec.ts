@@ -3,10 +3,10 @@ import { test, expect } from "@playwright/test";
 test.describe("explore page", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/explore");
-    await page.waitForURL("/explore");
   });
 
   test("should show the filter controls", async ({ page }) => {
+    await page.waitForURL("/explore");
     await expect(
       page.locator('[data-testid="explore-card"]').first(),
     ).toBeVisible();
@@ -17,6 +17,7 @@ test.describe("explore page", () => {
   test("should navigate to item details page on card click", async ({
     page,
   }) => {
+    await page.waitForURL("/explore");
     const exploreCard = page.locator('[data-testid="explore-card"]').first();
 
     const viewHistoryLink = exploreCard.locator(
@@ -36,6 +37,7 @@ test.describe("explore page", () => {
   });
 
   test("should update URL when a filter is applied", async ({ page }) => {
+    await page.waitForURL("/explore");
     const categoryFilterButton = page.locator(
       '[data-testid="filter-category"]',
     );

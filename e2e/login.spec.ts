@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { ACCESS_TOKEN } from "@/services/config";
+import { REFRESH_TOKEN } from "@/services/config";
 
 async function performLogin(page: Page) {
   const emailInput = page.locator('[data-testid="email-input"]');
@@ -32,7 +32,7 @@ test.describe("login page", () => {
     await expect(page).toHaveURL("/");
 
     const cookies = await page.context().cookies();
-    const sessionCookie = cookies.find((c) => c.name === ACCESS_TOKEN);
+    const sessionCookie = cookies.find((c) => c.name === REFRESH_TOKEN);
     expect(
       sessionCookie,
       "Session cookie should be set after login",

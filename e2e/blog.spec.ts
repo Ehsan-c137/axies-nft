@@ -20,18 +20,16 @@ test.describe("blog page", async () => {
   test("should loop through pagination links and verify page loads", async ({
     page,
   }) => {
-    await page.goto("/blog/1");
-    await page.waitForURL("/blog/1");
-    const paginationLinks = page.locator('a[data-testid^="pagination-link-"]');
-    const linkCount = await paginationLinks.count();
-    const totalPages = linkCount + 1;
+    await page.waitForURL("**/blog/1");
     let currentPage = 1;
-
-    while (currentPage < totalPages) {
+    while (true) {
       const nextPage = currentPage + 1;
       const linkToClick = page.locator(
-        `[data-testid="pagination-link-${nextPage}"]`,
+        `a[data-testid="pagination-link-${nextPage}"]`,
       );
+      if ((await linkToClick.count()) === 0) {
+        break; // No more pages, exit the loop.
+      }
       await linkToClick.click();
       await page.waitForURL(`**/blog/${nextPage}`);
       expect(page.url()).toContain(`/blog/${nextPage}`);
@@ -42,13 +40,14 @@ test.describe("blog page", async () => {
   test("should navigate to a blog detail page on item click", async ({
     page,
   }) => {
-    await page.goto("/blog/1");
-    await page.waitForURL("/blog/1");
+    await page.waitForURL("**/blog/1");
 
-    const firstBlogItem = page.locator('[data-testid="blog-card"]').first();
+    const firstBlogItem = page
+      .locator('[data-testid="read-more-button"]')
+      .first();
     await expect(firstBlogItem).toBeVisible();
 
-    await firstBlogItem.getByRole("button").click();
+    await firstBlogItem.click();
 
     await page.waitForURL("**/blog/detail/**");
     expect(page.url()).not.toMatch(/\/blog\/\d+$/);
