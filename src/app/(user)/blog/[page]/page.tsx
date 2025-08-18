@@ -1,6 +1,5 @@
 import BlogsScreen from "@/screens/blog/blogs-screen";
 import { Metadata } from "next";
-import { ToPagination } from "@/utils/toPagination";
 import { logger } from "@/utils/logger";
 import { getAllBlogs } from "@/services/server/blog";
 
@@ -27,13 +26,12 @@ export async function generateMetadata({ params }: IProps): Promise<Metadata> {
 
 export async function generateStaticParams() {
   try {
-    const blogs = await getAllBlogs();
-    const pagination = ToPagination({
-      page: 1,
+    const blogs = await getAllBlogs({
       limit: 12,
-      data: blogs,
+      page: 1,
     });
-    const lastPage = pagination?.meta?.lastPage || 0;
+
+    const lastPage = blogs?.meta?.lastPage || 0;
 
     if (lastPage === 0) {
       return [];
