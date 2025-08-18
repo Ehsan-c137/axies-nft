@@ -17,9 +17,15 @@ export default function BlogScreen<T>({ blogs, currentPage }: IProps<T>) {
     isPending,
     error,
     isPlaceholderData,
-  } = useBlogPosts(currentPage, {
-    initialData: blogs,
-  });
+  } = useBlogPosts(
+    {
+      page: currentPage,
+      limit: 12,
+    },
+    {
+      initialData: blogs,
+    },
+  );
 
   return (
     <PaginationList<TBlogDetail>

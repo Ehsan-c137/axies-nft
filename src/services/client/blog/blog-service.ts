@@ -62,7 +62,8 @@ export async function getBlogDetail(slug: string) {
 }
 
 export function useBlogPosts<TItem, TData = TItem>(
-  page = 1,
+  { page = 1, limit = 8 },
+
   options?: Omit<
     UseQueryOptions<TItem, Error, TData>,
     "queryKey" | "queryFn" | "placeholderData"
@@ -70,7 +71,7 @@ export function useBlogPosts<TItem, TData = TItem>(
 ) {
   return useQuery({
     queryKey: [...BLOG_QUERY.allBlogs(), page],
-    queryFn: () => getBlogPosts({ page, limit: 8 }),
+    queryFn: () => getBlogPosts({ page, limit }),
     placeholderData: (previousData) => previousData,
     ...options,
   });
