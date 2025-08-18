@@ -2,7 +2,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@ui/popover";
 import { Divider } from "@ui/divider";
 import { Button } from "@ui/button";
 import Link from "next/link";
-import { useGetMeProfile } from "@/services/client/users/me";
 import UserIcon from "@icons/user-icon";
 import { toast } from "sonner";
 import { useLogoutMutation } from "@/services/client/auth/auth-service";
@@ -24,9 +23,8 @@ export function Profile() {
 }
 
 const PopOverContentContainer = () => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, user } = useAuth();
   const currentPath = usePathname();
-  const { data, isPending, isError, error } = useGetMeProfile();
 
   const {
     mutate: logoutUser,
@@ -43,7 +41,7 @@ const PopOverContentContainer = () => {
     }
   };
 
-  if (isLoading || isPending) {
+  if (isLoading) {
     return (
       <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
         <Placeholder />
@@ -59,25 +57,17 @@ const PopOverContentContainer = () => {
     );
   }
 
-  if (isError) {
-    return (
-      <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
-        <ErrorPlaceholder message={error?.message} />
-      </PopoverContent>
-    );
-  }
-
   return (
     <PopoverContent className="w-[200px] bg-[var(--popover)] text-[var(--popover-foreground)]">
-      {!isPending && !isError && !isLoading && (
+      {!isLoading && (
         <div className="flex flex-col gap-2">
-          <h4 className="font-bold">{data?.name}</h4>
+          <h4 className="font-bold">{user?.name}</h4>
           <div className="flex items-center justify-between">
             <p>Balance</p>
-            <p>{data?.balance}</p>
+            <p>{user?.balance}</p>
           </div>
           <Divider />
-          <Link href={`/profile/${data?.username}`}>My Profile</Link>
+          <Link href={`/profile/${user?.username}`}>My Profile</Link>
           <Button
             disabled={isLogoutPending}
             loading={isLogoutPending}
@@ -101,15 +91,6 @@ const Placeholder = () => {
       <div className="w-full h-10 bg-[rgba(0,0,0,0.3)] rounded-sm animate-pulse"></div>
       <div className="w-full h-10 bg-[rgba(0,0,0,0.3)] rounded-sm animate-pulse"></div>
       <div className="w-full h-10 bg-[rgba(0,0,0,0.3)] rounded-sm animate-pulse"></div>
-    </div>
-  );
-};
-
-const ErrorPlaceholder = ({ message }: { message: string }) => {
-  console.error(message);
-  return (
-    <div className="flex items-center justify-center w-full">
-      <div className="text-red-500">Something went wrong</div>
     </div>
   );
 };
