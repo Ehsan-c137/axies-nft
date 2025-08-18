@@ -68,6 +68,9 @@ export default function PaginationControlContainer({
     return null;
   }
 
+  const isPrevDisabled = activePage <= 1;
+  const isNextDisabled = activePage >= lastPage;
+
   return (
     <div className="w-full text-center" data-testid="pagination-control">
       <Pagination>
@@ -78,10 +81,8 @@ export default function PaginationControlContainer({
               href={
                 url ? `/${url}/${activePage - 1}` : `?page=${activePage - 1}`
               }
-              aria-disabled={activePage === 1}
-              className={
-                activePage <= 1 ? "pointer-events-none opacity-50" : ""
-              }
+              aria-disabled={isPrevDisabled}
+              className={isPrevDisabled ? "pointer-events-none opacity-50" : ""}
             />
           </PaginationItem>
           {paginationRange?.map((page, index) => {
@@ -111,10 +112,8 @@ export default function PaginationControlContainer({
               href={
                 url ? `/${url}/${activePage + 1}` : `?page=${activePage + 1}`
               }
-              aria-disabled={activePage >= lastPage}
-              className={
-                activePage >= lastPage ? "pointer-events-none opacity-50" : ""
-              }
+              aria-disabled={isNextDisabled}
+              className={isNextDisabled ? "pointer-events-none opacity-50" : ""}
             />
           </PaginationItem>
         </PaginationContent>
