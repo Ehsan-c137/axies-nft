@@ -28,9 +28,9 @@ test.describe("login page", () => {
 
     await performLogin(page);
 
+    await responsePromise;
     await navigationPromise;
     await expect(page).toHaveURL("/");
-    await responsePromise;
 
     const cookies = await page.context().cookies();
     const sessionCookie = cookies.find((c) => c.name === REFRESH_TOKEN);
