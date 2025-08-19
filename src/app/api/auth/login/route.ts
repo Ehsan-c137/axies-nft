@@ -1,11 +1,9 @@
 import { ILoginCredentials } from "@/types/service/auth";
 import { MOCK_USER, MOCK_ACCESS_TOKEN, MOCK_REFRESH_TOKEN } from "@/mocks/data";
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import { REFRESH_TOKEN } from "@/services/config";
 
 export async function POST(request: Request) {
-  const cookieStore = await cookies();
   const isCI = process.env.CI === "true";
   const isProduction = process.env.NODE_ENV === "production";
 
@@ -22,7 +20,16 @@ export async function POST(request: Request) {
       } else if (!isProduction) {
         sameSite = "lax";
       }
-      cookieStore.set({
+
+      const response = NextResponse.json(
+        {
+          accessToken: MOCK_ACCESS_TOKEN,
+          user: MOCK_USER,
+        },
+        { status: 200 },
+      );
+
+      response.cookies.set({
         name: REFRESH_TOKEN,
         value: MOCK_REFRESH_TOKEN,
         httpOnly: true,
@@ -32,13 +39,7 @@ export async function POST(request: Request) {
         maxAge: 60 * 60 * 24 * 7,
       });
 
-      return NextResponse.json(
-        {
-          accessToken: MOCK_ACCESS_TOKEN,
-          user: MOCK_USER,
-        },
-        { status: 200 },
-      );
+      return response;
     }
 
     return NextResponse.json(
