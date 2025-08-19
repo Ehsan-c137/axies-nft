@@ -1,12 +1,15 @@
 import { NextResponse, NextRequest } from "next/server";
 import { REFRESH_TOKEN } from "./services/config";
 
-export async function middleware(request: NextRequest) {
-  const sessionCookie = request.cookies.get(REFRESH_TOKEN);
+export function middleware(request: NextRequest) {
+  const refreshToken = request.cookies.get(REFRESH_TOKEN);
 
-  if (!sessionCookie?.value) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  if (!refreshToken?.value) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("from", request.nextUrl.pathname);
+    return NextResponse.redirect(loginUrl);
   }
+
   return NextResponse.next();
 }
 
