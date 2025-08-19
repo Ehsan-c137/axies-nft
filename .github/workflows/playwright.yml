@@ -7,11 +7,10 @@ on:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, macos-latest]    
+        runner: [ubuntu-latest, macos-latest]
     env:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
     runs-on: ${{ matrix.runner }}
