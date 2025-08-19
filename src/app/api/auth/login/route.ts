@@ -5,7 +5,7 @@ import { REFRESH_TOKEN } from "@/services/config";
 
 export async function POST(request: Request) {
   const isCI = process.env.CI === "true";
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = process.env.APP_ENV === "production";
 
   try {
     const credentials: ILoginCredentials = await request.json();

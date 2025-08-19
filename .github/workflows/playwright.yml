@@ -12,6 +12,7 @@ jobs:
       fail-fast: false
     env:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+      APP_ENV: ${{ secrets.APP_ENV }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
