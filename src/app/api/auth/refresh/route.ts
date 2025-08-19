@@ -7,8 +7,7 @@ export async function POST() {
   try {
     const cookieStore = await cookies();
     const refreshToken = cookieStore.get(REFRESH_TOKEN);
-
-    if (!refreshToken) {
+    if (!refreshToken?.value) {
       return NextResponse.json(
         { message: "Authentication required. No refresh token found." },
         { status: 401 },
