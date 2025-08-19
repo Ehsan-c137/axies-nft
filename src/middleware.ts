@@ -1,12 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import { REFRESH_TOKEN } from "./services/config";
-import { cookies } from "next/headers";
 
 export async function middleware(request: NextRequest) {
-  const sessionCookie = await cookies();
-  const sessionRefreshToken = sessionCookie.get(REFRESH_TOKEN);
+  const sessionCookie = request.cookies.get(REFRESH_TOKEN);
 
-  if (!!sessionRefreshToken?.value) {
+  if (!!sessionCookie?.value) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
   return NextResponse.next();
