@@ -6,6 +6,8 @@ const CHAINS = ["ethereum", "polygon", "klaytn"];
 const COLLECTION = ["abstraction", "patternlicious", "cartoonism"];
 
 const MOCK_DATE = new Date("2025-08-01T12:00:00Z");
+export const TEST_USER_EMAIL = "test@example.com";
+export const TEST_USER_PASSWORD = "p@ssword123";
 
 export const profileData = {
   id: 1,
