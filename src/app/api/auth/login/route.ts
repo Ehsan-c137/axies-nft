@@ -7,6 +7,7 @@ import { REFRESH_TOKEN } from "@/services/config";
 export async function POST(request: Request) {
   const cookieStore = await cookies();
   const isCI = process.env.CI === "true";
+  const isProduction = process.env.NODE_ENV === "production";
 
   try {
     const credentials: ILoginCredentials = await request.json();
@@ -15,13 +16,19 @@ export async function POST(request: Request) {
       credentials.email === MOCK_USER.email &&
       credentials.password === "p@ssword123"
     ) {
+      let sameSite: "strict" | "lax" | "none" = "strict";
+      if (isCI) {
+        sameSite = "none";
+      } else if (!isProduction) {
+        sameSite = "lax";
+      }
       cookieStore.set({
         name: REFRESH_TOKEN,
         value: MOCK_REFRESH_TOKEN,
         httpOnly: true,
         path: "/api/auth",
-        secure: process.env.NODE_ENV === "production",
-        sameSite: isCI ? "none" : "strict",
+        secure: isProduction || isCI,
+        sameSite: sameSite,
         maxAge: 60 * 60 * 24 * 7,
       });
 
