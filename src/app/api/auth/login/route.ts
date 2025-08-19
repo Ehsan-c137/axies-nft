@@ -6,6 +6,8 @@ import { REFRESH_TOKEN } from "@/services/config";
 
 export async function POST(request: Request) {
   const cookieStore = await cookies();
+  const isCI = process.env.CI === "true";
+
   try {
     const credentials: ILoginCredentials = await request.json();
 
@@ -19,7 +21,7 @@ export async function POST(request: Request) {
         httpOnly: true,
         path: "/api/auth",
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: isCI ? "none" "strict",
         maxAge: 60 * 60 * 24 * 7,
       });
 
