@@ -35,7 +35,7 @@ export async function POST(request: Request) {
         httpOnly: true,
         path: "/api/auth",
         domain: isCI ? "localhost" : undefined,
-        secure: isProduction || isCI,
+        secure: isProduction,
         sameSite: sameSite,
         maxAge: 60 * 60 * 24 * 7,
       });
