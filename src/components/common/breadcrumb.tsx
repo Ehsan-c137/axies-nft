@@ -9,6 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@ui/breadcrumb";
 import { usePathname } from "next/navigation";
+import { Fragment } from "react";
 
 export function Breadcrumbs({}) {
   const pathname = usePathname().split("/").filter(Boolean);
@@ -25,7 +26,7 @@ export function Breadcrumbs({}) {
             const newItem = item.replace("-", " ");
             if (item == header) {
               return (
-                <div className="contents" key={index}>
+                <Fragment key={index}>
                   <BreadcrumbSeparator key={index} />
                   <BreadcrumbItem
                     key={item + index}
@@ -35,16 +36,16 @@ export function Breadcrumbs({}) {
                   >
                     <BreadcrumbPage>{newItem}</BreadcrumbPage>
                   </BreadcrumbItem>
-                </div>
+                </Fragment>
               );
             }
             return (
-              <div className="contents" key={index}>
+              <Fragment key={index}>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   <BreadcrumbLink href={`/${item}`}>{newItem}</BreadcrumbLink>
                 </BreadcrumbItem>
-              </div>
+              </Fragment>
             );
           })}
         </BreadcrumbList>
