@@ -33,7 +33,7 @@ const Swiper = <TData extends object>({
 
   const LoadingContent = () => {
     return (
-      <div className="w-full jusitfy-between">
+      <div className="w-full flex jusitfy-between">
         {Array.from({ length: itemPerPage }).map((_, index) => (
           <li
             key={index}
