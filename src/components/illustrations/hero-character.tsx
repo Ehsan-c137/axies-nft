@@ -10,6 +10,8 @@ export function HeroCharacter(props: TProps) {
           src="/assets/hero/hero-character.webp"
           className="w-full h-full object-cover"
           alt="Hero Character"
+          loading="eager"
+          fetchPriority="high"
           width={800}
           height={500}
         />
