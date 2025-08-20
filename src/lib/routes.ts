@@ -5,6 +5,7 @@ export const ROUTE_CONFIG = {
   items: {
     itemCreation: "/item-creation",
   },
+  blog: "/blog",
   user: {
     profile: "/profile",
     editProfile: "/edit-profile",
