@@ -17,7 +17,7 @@ export function Profile() {
         className="w-10 h-10 p-2 rounded-full flex items-center justify-center border cursor-pointer"
         aria-label="profile"
       >
-        <UserIcon width={40} />
+        <UserIcon width={40} aria-label="user icon" />
       </PopoverTrigger>
       <PopOverContentContainer />
     </Popover>
