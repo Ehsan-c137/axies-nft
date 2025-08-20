@@ -1,3 +1,4 @@
+import Image from "next/image";
 type TProps = React.ComponentPropsWithoutRef<"div">;
 
 export function HeroCharacter(props: TProps) {
@@ -6,12 +7,14 @@ export function HeroCharacter(props: TProps) {
       <picture className="w-full h-full object-cover">
         <source srcSet="/assets/hero/hero-character.webp" type="image/webp" />
 
-        <img
+        <Image
           src="/assets/hero/hero-character.webp"
           className="w-full h-full object-cover"
           alt="Hero Character"
-          loading="eager"
           fetchPriority="high"
+          loading="lazy"
+          priority
+          unoptimized
           width={800}
           height={500}
         />
