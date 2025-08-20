@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
-import styles from "./swiper.module.css";
 
 type imageProp = {
   src: string;
@@ -23,7 +22,7 @@ export default function SwiperItem({
 }) {
   return (
     <li
-      className={styles.swiper_item}
+      className="flex flex-col justify-center items-center w-full max-w-full max-h-[600px] overflow-hidden touch-pan-y p-4 list-none"
       style={{
         width: `calc(100% / ${itemPerPage} )`,
       }}
@@ -31,7 +30,7 @@ export default function SwiperItem({
       <Image
         src={image.src + "?imwidth=320"}
         alt={`Slide ${index} ${image.name}`}
-        className={clsx(styles.swiper_img, {
+        className={clsx("w-full h-auto select-none", {
           "active opacity-100": index === activeIndex,
         })}
         style={{
