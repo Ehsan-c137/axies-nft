@@ -31,7 +31,7 @@ export default function Filter({ paramState, handleParamChange }: IProps) {
         const configKey = `today_pick_${config.key}`;
         return (
           <Select key={index}>
-            <SelectTrigger className="w-[180px] rounded-full">
+            <SelectTrigger className="w-[180px] rounded-full" aria-label={config.key}>
               <SelectValue placeholder={config.key} aria-label={config.key} />
             </SelectTrigger>
             <SelectContent>
