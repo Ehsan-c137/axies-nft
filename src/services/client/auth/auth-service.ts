@@ -1,7 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { PROFILE_QUERY } from "../users/user-service";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/context/auth/auth-provider";
+import { apiClient } from "../api-client";
+import { IUser } from "@/types/service/auth";
 
 export function useLogoutMutation() {
   const { logout } = useAuth();
@@ -46,5 +48,23 @@ export function useSignupMutation() {
     onError: (error: Error) => {
       console.error("Signup error:", error);
     },
+  });
+}
+
+export function useGetRefreshToken() {
+  return useQuery({
+    queryKey: ["refreshToken"],
+    queryFn: async () => {
+      const response = await apiClient.post<
+        { accessToken: string; user: IUser },
+        { refreshToken: string }
+      >("/auth/refresh", {
+        refreshToken: "some_refresh_token",
+      });
+      return response;
+    },
+    staleTime: 0,
+    refetchOnWindowFocus: false,
+    retry: false,
   });
 }
