@@ -8,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useGetRefreshToken } from "@/services/client/auth/auth-service";
 import { ILoginCredentials, IUser } from "@/types/service/auth";
 import { logger } from "@/utils/logger";
 import { apiClient } from "@/services/client/api-client";
@@ -41,6 +42,8 @@ export function useAuth() {
 }
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const { data: refreshTokenData, isLoading: isTokenRefreshing } =
+    useGetRefreshToken();
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
     user: null,
@@ -59,30 +62,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        const response = await fetch("/api/auth/refresh", { method: "POST" });
+    if (isTokenRefreshing) {
+      return;
+    }
 
-        if (response.ok) {
-          const { accessToken, user } = await response.json();
-          apiClient.setAuthToken(accessToken);
-          setAuthState({
-            isAuthenticated: true,
-            user: user,
-            isLoading: false,
-            accessToken,
-          });
-        } else {
-          setLoggedOutState();
-        }
-      } catch (error) {
-        logger.error("Failed to initialize auth:", error);
-        setLoggedOutState();
-      }
-    };
-
-    initializeAuth();
-  }, [setLoggedOutState]);
+    if (refreshTokenData?.accessToken) {
+      const { accessToken, user } = refreshTokenData;
+      apiClient.setAuthToken(accessToken);
+      setAuthState({
+        isAuthenticated: true,
+        user: user,
+        isLoading: false,
+        accessToken,
+      });
+    } else {
+      setLoggedOutState();
+    }
+  }, [refreshTokenData, isTokenRefreshing, setLoggedOutState]);
 
   const handleAuthRequest = useCallback(
     async (
