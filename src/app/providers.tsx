@@ -21,12 +21,12 @@ export default function Providers({ children }: IProps) {
         defaultTheme="dark"
         disableTransitionOnChange
       >
-        <AuthProvider>
-          <ReactQueryClientProvider>
+        <ReactQueryClientProvider>
+          <AuthProvider>
             <Toaster />
             {children}
-          </ReactQueryClientProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </ReactQueryClientProvider>
       </ThemeProvider>
     </>
   );
