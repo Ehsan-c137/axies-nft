@@ -38,5 +38,7 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
             ghcr.io/${{ env.IMAGE_NAME }}:latest
       - name: Trigger Render.com Deployment
+        if: github.event_name == 'push' && github.ref == 'refs/heads/docker'
         uses: render-examples/deploy-to-render@v1
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        with:
+          deploy_hook_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
