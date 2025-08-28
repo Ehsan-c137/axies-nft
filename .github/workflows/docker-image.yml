@@ -39,6 +39,6 @@ jobs:
             ghcr.io/${{ env.IMAGE_NAME }}:latest
       - name: Trigger Render.com Deployment
         if: github.event_name == 'push' && github.ref == 'refs/heads/docker'
-        uses: render-examples/deploy-to-render@v1
+        uses: render-actions/deploy-to-render@v1
         with:
           deploy_hook_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
