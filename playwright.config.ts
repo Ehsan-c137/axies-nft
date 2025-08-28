@@ -2,6 +2,9 @@ import path from "path";
 import { defineConfig, devices } from "@playwright/test";
 
 const PORT = process.env.PORT || 3000;
+
+const STORAGE_STATE = path.join(__dirname, "e2e/.auth/user.json");
+
 const baseURL = `http://localhost:${PORT}`;
 
 export default defineConfig({
@@ -17,10 +20,11 @@ export default defineConfig({
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
   },
-
+  globalSetup: require.resolve("./e2e/global.setup.ts"),
   use: {
     baseURL,
     trace: "on-first-retry",
+    storageState: STORAGE_STATE,
   },
 
   projects: [

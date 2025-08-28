@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useLogoutMutation } from "@/services/client/auth/auth-service";
 import { useAuth } from "@/context/auth/auth-provider";
 import { usePathname } from "next/navigation";
+import { logger } from "@/utils/logger";
 
 export function Profile() {
   return (
@@ -14,8 +15,9 @@ export function Profile() {
       <PopoverTrigger
         asChild
         className="w-10 h-10 p-2 rounded-full flex items-center justify-center border cursor-pointer"
+        aria-label="profile"
       >
-        <UserIcon width={40} />
+        <UserIcon width={40} aria-label="user icon" />
       </PopoverTrigger>
       <PopOverContentContainer />
     </Popover>
@@ -37,7 +39,7 @@ const PopOverContentContainer = () => {
       logoutUser();
     } catch (error) {
       toast.error("Logout failed. Please try again.");
-      console.error("Logout error:", logoutError?.message || error);
+      logger.error("Logout error:", logoutError?.message || error);
     }
   };
 

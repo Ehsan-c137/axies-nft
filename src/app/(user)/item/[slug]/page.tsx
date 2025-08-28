@@ -14,9 +14,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
     const item = await getItemDetail(slug);
+    const imageUrl = item.image || "/default-og-image.png";
     return {
       title: item.name,
       description: item.description,
+      openGraph: {
+        title: item.name,
+        description: item.description,
+        images: [imageUrl],
+        type: "website",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: item.name,
+        description: item.description,
+        images: [imageUrl],
+      },
     };
   } catch (error) {
     logger.log(error);

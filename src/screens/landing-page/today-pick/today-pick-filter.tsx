@@ -31,8 +31,11 @@ export default function Filter({ paramState, handleParamChange }: IProps) {
         const configKey = `today_pick_${config.key}`;
         return (
           <Select key={index}>
-            <SelectTrigger className="w-[180px] rounded-full">
-              <SelectValue placeholder={config.key} />
+            <SelectTrigger
+              className="w-[180px] rounded-full"
+              aria-label={config.key}
+            >
+              <SelectValue placeholder={config.key} aria-label={config.key} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup className="flex flex-col gap-2 p-1">
@@ -40,6 +43,7 @@ export default function Filter({ paramState, handleParamChange }: IProps) {
                   <Label
                     key={value}
                     className="w-full flex items-center gap-2 text-sm cursor-pointer"
+                    aria-label={value}
                   >
                     <Checkbox
                       onCheckedChange={(e: boolean) =>

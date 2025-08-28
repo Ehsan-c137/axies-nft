@@ -88,7 +88,10 @@ export function Footer() {
             placeholder="info@youreamil.com"
             className="outline-none py-2 flex-1"
           />
-          <button className="bg-[#5142FB] flex items-center justify-center w-full h-full max-w-[50px] px-3 rounded-r-sm rounded-br-sm">
+          <button
+            className="bg-[#5142FB] flex items-center justify-center w-full h-full max-w-[50px] px-3 rounded-r-sm rounded-br-sm"
+            aria-label="subscribe"
+          >
             <SendHorizontalIcon />
           </button>
         </form>
@@ -146,6 +149,8 @@ const SocialWrapper = ({
     }}
     className={`w-10 h-10 flex items-center justify-center cursor-pointer bg-[var(--card)] border-[1px] rounded-xl hover:rounded-[50px]`}
   >
-    <Link href={path}>{children}</Link>
+    <Link aria-label={path} href={path}>
+      {children}
+    </Link>
   </li>
 );

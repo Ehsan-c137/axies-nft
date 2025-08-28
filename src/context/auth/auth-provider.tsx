@@ -2,14 +2,13 @@
 
 import {
   createContext,
-  Suspense,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useGetRefreshToken } from "@/services/client/auth/auth-service";
 import { ILoginCredentials, IUser } from "@/types/service/auth";
 import { logger } from "@/utils/logger";
 import { apiClient } from "@/services/client/api-client";
@@ -20,8 +19,8 @@ type AuthContextType = {
   isLoading: boolean;
   accessToken: string | null;
   logout: () => Promise<void>;
-  login: (credentials: ILoginCredentials) => Promise<IUser | null>;
-  signup: (credentials: ILoginCredentials) => Promise<IUser | null>;
+  login: (credentials: ILoginCredentials) => Promise<IUser>;
+  signup: (credentials: ILoginCredentials) => Promise<IUser>;
   updateUser: (data: Partial<IUser>) => void;
 };
 
@@ -37,20 +36,20 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("use Auth must be whitin an Auth provider");
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
-const AuthProviderContainer = ({ children }: { children: React.ReactNode }) => {
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const { data: refreshTokenData, isLoading: isTokenRefreshing } =
+    useGetRefreshToken();
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
     user: null,
     isLoading: true,
     accessToken: null,
   });
-
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   const setLoggedOutState = useCallback(() => {
     setAuthState({
@@ -59,33 +58,27 @@ const AuthProviderContainer = ({ children }: { children: React.ReactNode }) => {
       isLoading: false,
       accessToken: null,
     });
+    apiClient.setAuthToken(null);
   }, []);
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        const response = await fetch("/api/auth/refresh", { method: "POST" });
+    if (isTokenRefreshing) {
+      return;
+    }
 
-        if (response.ok) {
-          const { accessToken, user } = await response.json();
-          apiClient.setAuthToken(accessToken);
-          setAuthState({
-            isAuthenticated: true,
-            user: user,
-            isLoading: false,
-            accessToken,
-          });
-        } else {
-          setLoggedOutState();
-        }
-      } catch (error) {
-        logger.error("Failed to initialize auth:", error);
-        setLoggedOutState();
-      }
-    };
-
-    initializeAuth();
-  }, [setLoggedOutState]);
+    if (refreshTokenData?.accessToken) {
+      const { accessToken, user } = refreshTokenData;
+      apiClient.setAuthToken(accessToken);
+      setAuthState({
+        isAuthenticated: true,
+        user: user,
+        isLoading: false,
+        accessToken,
+      });
+    } else {
+      setLoggedOutState();
+    }
+  }, [refreshTokenData, isTokenRefreshing, setLoggedOutState]);
 
   const handleAuthRequest = useCallback(
     async (
@@ -114,8 +107,6 @@ const AuthProviderContainer = ({ children }: { children: React.ReactNode }) => {
           accessToken,
         });
 
-        const callbackUrl = searchParams.get("callbackUrl") || "/";
-        router.push(callbackUrl);
         return user;
       } catch (error) {
         logger.error(errorContext, error);
@@ -126,7 +117,7 @@ const AuthProviderContainer = ({ children }: { children: React.ReactNode }) => {
         throw new Error("An unexpected error occurred.");
       }
     },
-    [router, searchParams, setLoggedOutState],
+    [setLoggedOutState],
   );
 
   const login = useCallback(
@@ -150,10 +141,8 @@ const AuthProviderContainer = ({ children }: { children: React.ReactNode }) => {
       logger.error("Error logging out:", error);
     } finally {
       setLoggedOutState();
-      // This will trigger the middleware to redirect if the cookie was successfully cleared
-      router.refresh();
     }
-  }, [router, setLoggedOutState]);
+  }, [setLoggedOutState]);
 
   const updateUser = useCallback((data: Partial<IUser>) => {
     setAuthState((prev) => {
@@ -175,12 +164,4 @@ const AuthProviderContainer = ({ children }: { children: React.ReactNode }) => {
     [authState, login, logout, signup, updateUser],
   );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Suspense>
-      <AuthProviderContainer>{children}</AuthProviderContainer>
-    </Suspense>
-  );
 };

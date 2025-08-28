@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import styles from "./swiper.module.css";
 import clsx from "clsx";
 import { useStateRef, getRefValue } from "@/lib/hooks";
 import { getTouchEventData } from "@/lib/dom";
@@ -34,11 +33,11 @@ const Swiper = <TData extends object>({
 
   const LoadingContent = () => {
     return (
-      <div className="w-full jusitfy-between">
+      <div className="w-full flex jusitfy-between">
         {Array.from({ length: itemPerPage }).map((_, index) => (
           <li
             key={index}
-            className={styles.swiper_item}
+            className="flex flex-col items-center gap-2 w-full shrink-0 p-3 cursor-pointer"
             style={{
               width: `calc(100% / ${itemPerPage} )`,
               userSelect: "none",
@@ -135,7 +134,7 @@ const Swiper = <TData extends object>({
   };
 
   return (
-    <div className={styles.swiper_container}>
+    <div className="flex flex-col justify-center items-center w-full max-w-full max-h-[600px] overflow-hidden touch-pan-y p-4 list-none">
       <ul
         ref={containerRef}
         aria-label="swiper-list"
@@ -146,10 +145,13 @@ const Swiper = <TData extends object>({
         style={{
           transform: `translateX(${offsetX}px)`,
         }}
-        className={clsx(styles.swiper_list, {
-          "animate-pulse bg-inputBackground duration-[350]": isLoading,
-          is_swiping: isSwiping,
-        })}
+        className={clsx(
+          "transition-transform w-full flex flex-row list-none p-0 m-0",
+          {
+            "animate-pulse bg-inputBackground duration-[350]": isLoading,
+            is_swiping: isSwiping,
+          },
+        )}
       >
         {isClient && isLoading ? (
           <LoadingContent />
@@ -158,7 +160,7 @@ const Swiper = <TData extends object>({
             return (
               <li
                 key={index}
-                className={styles.swiper_item}
+                className="flex flex-col items-center gap-2 w-full shrink-0 p-3 cursor-pointer"
                 style={{
                   width: `calc(100% / ${itemPerPage} )`,
                   userSelect: "none",

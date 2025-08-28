@@ -9,6 +9,7 @@ import useSearchParamState from "@/hooks/useSearchParamState";
 import { Suspense, useEffect, useState } from "react";
 import { TItem } from "@/services/client/item/item-service";
 import { useRef } from "react";
+import Link from "next/link";
 
 const PARAM_KEYS = {
   page: "today_pick_page",
@@ -91,9 +92,15 @@ export function TodayPick() {
     >
       <div className="flex items-center justify-between">
         <h3 className="text-xl lg:text-3xl font-bold">Today&apos;s Pick</h3>
-        <Button variant="link" className="explore_more text-sm lg:text-xl">
-          EXPLORE MORE
-        </Button>
+        <Link href="/explore" aria-label="explore">
+          <Button
+            aria-label="explore more"
+            variant="link"
+            className="explore_more text-sm lg:text-xl"
+          >
+            EXPLORE MORE
+          </Button>
+        </Link>
       </div>
       <Suspense>
         <Filter paramState={paramState} handleParamChange={handleParamChange} />

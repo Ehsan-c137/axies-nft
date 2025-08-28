@@ -1,4 +1,3 @@
-import styles from "./swiper.module.css";
 import clsx from "clsx";
 
 interface IIndicatorsProps {
@@ -20,9 +19,12 @@ export const SwiperIndicators = ({
         <li
           data-testid="indicator"
           key={index}
-          className={clsx(styles.swiper_indicator, {
-            [styles.swiper_indicator_active]: index === activeIndex,
-          })}
+          className={clsx(
+            "bg-[#e0e0e0] w-2 h-2 transition-[background-color] cursor-pointer rounded",
+            {
+              "bg-[#dd8560]!": index === activeIndex,
+            },
+          )}
           onClick={() => onSelect(index)}
         ></li>
       ))}
