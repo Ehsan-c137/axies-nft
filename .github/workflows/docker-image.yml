@@ -37,3 +37,6 @@ jobs:
           tags: |
             ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
             ghcr.io/${{ env.IMAGE_NAME }}:latest
+      - name: Trigger Render.com Deployment
+        uses: render-examples/deploy-to-render@v1
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
