@@ -13,11 +13,11 @@ jobs:
       packages: write
       contents: read
 
-    env:
-      IMAGE_NAME: ${{ toLower(github.repository) }}
-
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set lower case image name
+        run: echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
