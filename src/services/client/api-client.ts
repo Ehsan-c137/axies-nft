@@ -1,5 +1,4 @@
 import { logger } from "@/utils/logger";
-import { BASE_URL } from "../config";
 
 let currentAccessToken: string | null = null;
 let isRefreshing = false;
@@ -14,6 +13,18 @@ export class HttpError extends Error {
     this.data = data;
   }
 }
+
+export const getBaseUrl = (): string => {
+  const url = process.env.NEXT_PUBLIC_API_URL;
+  if (!url) {
+    // This check helps determine if the error is happening on the server or the client.
+    const isServer = typeof window === "undefined";
+    throw new Error(
+      `NEXT_PUBLIC_API_URL is not defined. This error happened on the ${isServer ? "server" : "client"}.`,
+    );
+  }
+  return url;
+};
 
 let failedRequestsQueue: Array<{
   resolve: () => void;
@@ -42,7 +53,7 @@ const customFetch = async <TResponse>(
     headers.set("Authorization", `Bearer ${currentAccessToken}`);
   }
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, {
+  const response = await fetch(`${getBaseUrl()}${endpoint}`, {
     ...options,
     headers,
     credentials: "same-origin",
@@ -77,7 +88,7 @@ const handleTokenRefresh = async <TResponse>(
   options: RequestInit,
 ): Promise<TResponse | null> => {
   try {
-    const refreshResponse = await fetch(`${BASE_URL}/auth/refresh`, {
+    const refreshResponse = await fetch(`${getBaseUrl()}/auth/refresh`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "same-origin",

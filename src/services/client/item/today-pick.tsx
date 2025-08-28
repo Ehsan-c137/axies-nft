@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { BASE_URL } from "../../config";
+import { getBaseUrl } from "../api-client";
 
 interface IFilter {
   page: number;
@@ -28,7 +28,7 @@ const getTodayPick = async (args: IFilter) => {
 
   try {
     const response = await fetch(
-      `${BASE_URL}/items/today-pick?${params.toString()}`,
+      `${getBaseUrl()}/items/today-pick?${params.toString()}`,
     );
     return response.json();
   } catch (error) {

@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-import { BASE_URL } from "../../config";
+import { getBaseUrl } from "../api-client";
 import { logger } from "@/utils/logger";
 
 export const BLOG_QUERY = {
@@ -16,7 +16,7 @@ export const BLOG_QUERY = {
 };
 
 export async function getBlogPosts(params?: { page?: number; limit?: number }) {
-  const url = new URL(`${BASE_URL}/blog`);
+  const url = new URL(`${getBaseUrl()}/blog`);
   if (params?.page) {
     url.searchParams.append("page", String(params.page));
   }
@@ -45,7 +45,7 @@ export async function getBlogPosts(params?: { page?: number; limit?: number }) {
 
 export async function getBlogDetail(slug: string) {
   try {
-    const response = await fetch(`${BASE_URL}/blog/detail/${slug}`);
+    const response = await fetch(`${getBaseUrl()}/blog/detail/${slug}`);
     if (!response.ok) {
       const errorInfo = {
         status: response.status,

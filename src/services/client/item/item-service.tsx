@@ -1,11 +1,11 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { BASE_URL } from "../../config";
 import { allProducts } from "@/mocks/data";
 import {
   type UseMutationOptions,
   type UseQueryOptions,
 } from "@tanstack/react-query";
 import { logger } from "@/utils/logger";
+import { getBaseUrl } from "../api-client";
 
 interface ItemFilters {
   page?: number;
@@ -27,7 +27,7 @@ export const ITEM_QUERY = {
 
 export const getItemDetail = async (slug: string): Promise<TItem> => {
   try {
-    const response = await fetch(`${BASE_URL}/items/${slug}`);
+    const response = await fetch(`${getBaseUrl()}/items/${slug}`);
     return response.json();
   } catch (error) {
     logger.error("failed to fetch item deatil", error);
@@ -46,12 +46,12 @@ export const getAllItems = async (args: ItemFilters = {}) => {
   if (collection?.length) params.append("collection", collection.join(","));
 
   if (page !== undefined && limit !== undefined) {
-    const response = await fetch(`${BASE_URL}/items?${params.toString()}`);
+    const response = await fetch(`${getBaseUrl()}/items?${params.toString()}`);
     return response.json();
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/items`);
+    const response = await fetch(`${getBaseUrl()}/items`);
     if (!response.ok) {
       throw new Error("Http error! failed to get items");
     }

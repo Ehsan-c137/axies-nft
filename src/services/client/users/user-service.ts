@@ -1,4 +1,4 @@
-import { BASE_URL } from "../../config";
+import { getBaseUrl } from "../api-client";
 import { useQuery } from "@tanstack/react-query";
 import { TUserFull } from "./user-model";
 
@@ -15,7 +15,7 @@ export const fetchUserProfile = async (
   username: string,
 ): Promise<TUserFull> => {
   try {
-    const response = await fetch(`${BASE_URL}/users/${username}`);
+    const response = await fetch(`${getBaseUrl()}/users/${username}`);
     return response.json();
   } catch (error) {
     console.error("Error fetching user profile:", error);
