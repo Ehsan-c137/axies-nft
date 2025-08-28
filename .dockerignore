@@ -34,3 +34,11 @@ test-results/
 jest.config.ts
 playwright.config.ts
 svgr.config.js
+tests/
+playwright-report/
+test-results/
+
+# Build/config files
+jest.config.ts
+playwright.config.ts
+svgr.config.js
