@@ -1,4 +1,6 @@
-# in progress
+Axies NFT Marketplace (in progress)
+
+Switch to the `docker` branch if you want to see the dockerized version.
 
 ## Getting Started
 
