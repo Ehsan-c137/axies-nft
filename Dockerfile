@@ -24,7 +24,10 @@ COPY --from=builder --chown=appuser:appgroup /app/public ./public
 COPY --from=builder --chown=appuser:appgroup /app/.next/static ./.next/static
 
 USER appuser
-
-EXPOSE 3000
+ 
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+ 
+EXPOSE $PORT
 
 CMD ["node", "server.js"]
