@@ -1,13 +1,14 @@
-# in progress
+# Axies NFT Marketplace (In Progress)
+
+[DEMO](https://axies-nft.onrender.com/)
+
+> **Note**
+> This demo will only be available until September 29th, as it is hosted on a free instance from [Render.com](https://render.com) which has an expiration date.
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
-npm dev
+npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
