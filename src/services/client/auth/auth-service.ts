@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PROFILE_QUERY } from "../users/user-service";
-import { useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/context/auth/auth-provider";
 import { apiClient } from "../api-client";
 import { IUser } from "@/types/service/auth";
@@ -66,5 +65,21 @@ export function useGetRefreshToken() {
     staleTime: 0,
     refetchOnWindowFocus: false,
     retry: false,
+  });
+}
+
+export function useVerifyOTPMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (otp: string): Promise<{ user: IUser } | null> => {
+      const response = await apiClient.post<{ user: IUser }, { otp: string }>(
+        "/auth/verify",
+        { otp },
+      );
+      return response;
+    },
+    onSuccess: (data: { user: IUser } | null) => {
+      queryClient.setQueryData(["user"], data?.user);
+    },
   });
 }
